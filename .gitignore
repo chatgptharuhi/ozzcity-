@@ -1,0 +1,11 @@
+# Local saves, audit results and generated files
+**/audit-results/
+**/audit-*/
+**/*.before-*
+**/odds-city.before-*
+node_modules/
+.env
+.env.*
+*.log
+.DS_Store
+Thumbs.db
