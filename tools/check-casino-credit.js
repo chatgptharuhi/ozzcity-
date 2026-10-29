@@ -1,0 +1,24 @@
+// Isolated VM checks: no real browser or save.
+{
+const near=(a,b)=>assert.ok(Math.abs(a-b)<1e-7,a+' != '+b);
+function creditFixture(){fixture();state.protectionPlans={guard:false,medical:false};state.protectionThrough={guard:-1,medical:-1};state.money=0;state.personalDebt=dollarsToUnits(3664);state.livingDebt=0;state.casinoSession=null;state.diceSession=null;delete state.casinoCredit;state.gamblingNet=0;state.earned=0}
+function issued(amount=2000,dice=false){creditFixture();const s={game:dice?'chinchiro':'holdem',stage:'betting',origin:'casino',budget:0,stake:0};if(dice)state.diceSession=s;else state.casinoSession=s;casinoChooseLoan(amount,dice);near(state.personalDebt,dollarsToUnits(3664));near(state.money,0);assert.ok(casinoIssueLoan(s));assert.ok(!casinoIssueLoan(s));near(state.personalDebt,dollarsToUnits(3664+amount/100));near(state.money,0);return s}
+for(const amount of [2000,10000]){const n=casinoLoanStake(amount);assert.equal(n+Math.round(n*.05),amount)}
+let s=issued();s.winner=1;casinoCreditSettlement(s,0);near(state.personalDebt,dollarsToUnits(3686));near(casinoCredit().outstanding,dollarsToUnits(22));near(s.net,dollarsToUnits(-22));const snapshot=JSON.stringify(state);casinoCreditSettlement(s,0);assert.equal(JSON.stringify(state),snapshot);state=JSON.parse(snapshot);casinoCreditSettlement(state.casinoSession,0);assert.equal(JSON.stringify(state),snapshot);assert.ok(!casinoCreditAllowed());
+repayDebt(dollarsToUnits(22));near(casinoCredit().outstanding,0);assert.ok(!casinoCreditAllowed());state.month+=3;assert.ok(casinoCreditAllowed());
+s=issued();s.winner=-1;casinoCreditSettlement(s,casinoLoanStake(2000));near(casinoCredit().outstanding,dollarsToUnits(.95));near(state.personalDebt,dollarsToUnits(3664.95));near(s.net,dollarsToUnits(-.95));
+s=issued();s.winner=0;casinoCreditSettlement(s,3810);near(state.personalDebt,dollarsToUnits(3645.90));near(state.money,0);near(casinoCredit().outstanding,0);near(s.net,dollarsToUnits(18.10));
+s=issued(10000);state.livingDebt=dollarsToUnits(10);state.personalDebt=dollarsToUnits(105);s.winner=0;casinoCreditSettlement(s,19048);near(debtTotal(),0);near(state.money,dollarsToUnits(75.48));
+s=issued();s.winner=1;casinoCreditSettlement(s,1000);near(casinoCredit().outstanding,dollarsToUnits(11));near(s.net,dollarsToUnits(-11));
+s=issued(10000,true);s.outcome=-1;s.stage='rolling';tableSettle();near(casinoCredit().outstanding,dollarsToUnits(110));near(state.personalDebt,dollarsToUnits(3774));
+s=issued(2000,true);s.outcome=0;s.stage='rolling';tableSettle();near(casinoCredit().outstanding,dollarsToUnits(.95));
+creditFixture();state.phase='prison';assert.ok(!casinoCreditAllowed());casinoOpen();assert.equal(state.casinoSession,null);
+creditFixture();state.diceSession={game:'chinchiro',stage:'betting'};casinoChooseLoan(2000,true);assert.ok(!state.diceSession.creditOffer);
+// Monthly automatic repayments must also release the credit limit once, not twice.
+s=issued();s.winner=1;casinoCreditSettlement(s,0);state.money=dollarsToUnits(1000);const personalBefore=state.personalDebt,creditBefore=casinoCredit().outstanding;settleMonth();near(casinoCredit().outstanding,Math.max(0,creditBefore-Math.max(0,personalBefore-state.personalDebt)));
+// Real deal, decision loop, JSON reload and settlement integration.
+for(let i=0;i<40;i++){creditFixture();resetSeed(23400+i);const month=state.month;state.currentEvent={id:'credit-preserve',options:[]};casinoOpen();casinoChooseLoan(i%2?2000:10000);const principal=state.casinoSession.creditOffer;holdStart();near(state.money,0);let steps=0;while(state.casinoSession.stage==='playing'){assert.ok(++steps<100);state=JSON.parse(JSON.stringify(state));const legal=holdLegal(state.casinoSession.h,0);holdPlayer(legal.includes('call')?'call':legal.includes('check')?'check':legal[0])}s=state.casinoSession;assert.ok(s.creditLoan.settled);const worth=state.money-debtTotal();near(worth,-dollarsToUnits(3664)+s.net);const saved=JSON.stringify(state);holdSettle(0);assert.equal(JSON.stringify(state),saved);assert.equal(state.month,month);assert.equal(state.currentEvent.id,'credit-preserve');assert.equal(s.creditLoan.principal,principal)}
+// Casino dice commitment and resume settle once, with no wallet advance.
+creditFixture();openDice();state.diceSession.origin='casino';casinoChooseLoan(2000,true);tableCommit();s=state.diceSession;near(state.money,0);assert.ok(s.creditLoan);state=JSON.parse(JSON.stringify(state));s=state.diceSession;while(s.outcome===undefined)tableChinRoll();tableSettle();assert.ok(s.creditLoan.settled);const savedDice=JSON.stringify(state);resumeDice();assert.equal(JSON.stringify(state),savedDice);
+console.log('PASS: casino credit $20/$100, fee included, wallet isolation, cancel/eligibility, principal/old-debt repayment, one-time loss interest, tie/fold remainder, cooldown, 40 Holdem hands, dice commit/reload/idempotency and preserved life decision.');
+}
