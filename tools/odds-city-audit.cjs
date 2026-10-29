@@ -28,7 +28,7 @@ fixture();Math.random=()=>0;resolveContextChoice(careerReviewEvent(),{careerRevi
 fixture();assert.ok(!effectRows({health:2}).includes('健康'),'zero health effect hidden at cap');assert.ok(!effectRows({heat:6,threat:4}).includes('捜査の注目'),'raw risk input hidden');
 `,ctx,{timeout:15000});
 checks.push('Promotion reacts to age/history; integer odds; real success/failure resolver; cooldown and highlighted result; zero effects and raw risk inputs hidden.');
-const focusedChecks=args.includes('--extra-checks')?[path.resolve(value('--extra-checks',''))]:[...(script.includes('function leaveActive()')?['check-prison-leave.js']:[]),...(script.includes('function holdStart()')?['check-risk-casino.js']:[]),...(script.includes('function personalBudget()')?['check-career-spending.js']:[]),...(script.includes('function resolvePrisonWager(')?['check-paid-risk-prison.js']:[]),...(script.includes('function custodySeatChance(')?['check-custody-career.js']:[]),...(script.includes('function rolePayBase(')?['check-role-based-pay.js']:[]),...(script.includes('function richLife(')?['check-spending-lifestyle.js']:[])].map(name=>path.join(__dirname,name)).filter(file=>fs.existsSync(file));
+const focusedChecks=args.includes('--extra-checks')?[path.resolve(value('--extra-checks',''))]:[...(script.includes('function leaveActive()')?['check-prison-leave.js']:[]),...(script.includes('function holdStart()')?['check-risk-casino.js']:[]),...(script.includes('function personalBudget()')?['check-career-spending.js']:[]),...(script.includes('function resolvePrisonWager(')?['check-paid-risk-prison.js']:[]),...(script.includes('function custodySeatChance(')?['check-custody-career.js']:[]),...(script.includes('function rolePayBase(')?['check-role-based-pay.js']:[]),...(script.includes('function richLife(')?['check-spending-lifestyle.js']:[]),...(script.includes('function essentialBudget(')?['check-essential-budget.js']:[])].map(name=>path.join(__dirname,name)).filter(file=>fs.existsSync(file));
 for(const file of focusedChecks)vm.runInContext(fs.readFileSync(file,'utf8'),ctx,{timeout:20000});
 if(focusedChecks.length)checks.push('Additional focused regression checks passed.');
 if(args.includes('--checks-only')){console.log(checks.join('\n'));process.exit(0)}
@@ -108,3 +108,4 @@ const lines=['# オッズシティ 周回検証',report.createdAt,'',...checks,'
 fs.writeFileSync(path.join(output,'summary.md'),lines.join('\n'));
 console.log(JSON.stringify({sourceHash:hash.slice(0,12),totalRuns:report.runs.length,summary:report.summary,errors:report.errors.slice(0,3),topFlags:report.flags.slice(0,5),report:path.join(output,'summary.md')}));
 if(report.errors.length)process.exitCode=1;
+

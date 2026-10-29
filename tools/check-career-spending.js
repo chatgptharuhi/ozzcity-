@@ -6,7 +6,7 @@ assert.equal(state.career.stage,1);assert.equal(state.career.months,12);assert.e
 fixture();state.rank=149;assert.equal(careerRequirements().ready,true);state.career.months=0;assert.equal(careerRequirements().ready,false,'credit does not skip service');
 fixture();state.career.stage=2;state.career.months=36;state.career.total=84;state.rank=119;state.skill=20;state.leadershipSupport=1;assert.equal(careerRequirements().ready,false);state.rank=120;assert.equal(careerRequirements().ready,true);assert.ok(promotionChance()<=.55);
 fixture();state.money=10000;const livingBefore=localLife().living;state.month=20;
-budgetAction('rent');assert.equal(state.money,9950);assert.equal(personalBudget().deposit,40);assert.equal(localLife().living,livingBefore*.6+40);
+budgetAction('rent');assert.equal(state.money,9950);assert.equal(personalBudget().deposit,40);assert.equal(localLife().living,typeof monthlyLivingParts==='function'?livingBefore+40-pesos(livingRegion().housing):livingBefore*.6+40);
 const afterRent=state.money;budgetAction('rent');assert.equal(state.money,afterRent,'cannot sign twice');
 budgetAction('leaveRent');assert.equal(state.money,9990);assert.equal(localLife().living,livingBefore);
 budgetAction('car');assert.equal(state.money,8490);assert.equal(budgetCarMonth(),0,'starts following month');state.month++;const beforeCar=state.money;assert.equal(budgetCarMonth(),15);assert.equal(state.money,beforeCar-15);
