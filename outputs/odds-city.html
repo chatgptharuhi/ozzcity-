@@ -418,7 +418,7 @@ document.querySelectorAll('#decisionOptions .option').forEach(b=>b.onclick=()=>c
 renderPlaybackControls();if(!dialog.open)dialog.showModal();
 }
 function deferDecision(){deferredDecisionMonth=state.month;document.getElementById('decisionDialog').close();renderPlaybackControls()}
-function journalHTML(){
+function journalHTML(animate=true){
 const months=new Map();
 state.feed.forEach(f=>{if(!months.has(f.month))months.set(f.month,[]);months.get(f.month).push(f)});
 return [...months.entries()].map(([month,rows])=>{
@@ -426,10 +426,10 @@ const event=rows.filter(f=>f.type==='event').at(-1),outcomes=rows.filter(f=>['ch
 const fallback=rows.find(f=>f.type==='normal')||rows.find(f=>f.type!=='world')||rows[0];
 const text=(event?event.text:fallback.text).replace(/（\d+歳・[^）]*）$/,'');
 const current=month===state.month&&['game','custody','prison'].includes(state.phase)&&!!state.currentEvent;
-const revealed=rows.some(f=>f.reveal),ledger=state.monthlyLedger?.[month];
+const revealed=animate&&rows.some(f=>f.reveal),ledger=state.monthlyLedger?.[month];
 const result=outcomes.filter(f=>event||f!==fallback).map(f=>'<small class="month-result '+((f.important||f.type==='risk'||/推薦.*通|後継争/.test(f.text))?((f.type==='risk'||/通らな|失敗|敗れ/.test(f.text))?'result-loss':'result-important'):'')+'">'+escapeHTML(f.text)+(f.detail?' · '+escapeHTML(f.detail):'')+'</small>').join('');
 const accounting=ledger?'<details class="month-ledger"><summary>収支の内訳</summary><p>受取 '+moneyText(ledger.income)+' · 家族への送金 '+moneyText(ledger.remittance||0)+' · 借金返済 '+moneyText(ledger.debtPayment||0)+' · 生活費支払 '+moneyText(ledger.paidLiving)+' · 手当の未受取 '+moneyText(ledger.payArrears)+' · 未払い生活費 '+moneyText(ledger.livingDebt)+'</p></details>':'';
-return '<div class="feedrow '+(revealed?'reveal':'')+'" style="--delay:0s"><div class="feedage">'+ageText(month)+'</div><div class="feedtext">'+escapeHTML(text)+result+accounting+(current?'<button type="button" class="secondary reopen-decision">選択する</button>':'')+'</div></div>';
+return '<div class="feedrow '+(revealed?'reveal':'')+'" style="--delay:0s"><div class="feedage">'+ageText(month)+'</div><div class="feedtext">'+escapeHTML(text)+(!event&&fallback.detail?'<small class="month-result">'+escapeHTML(fallback.detail)+'</small>':'')+result+accounting+(current?'<button type="button" class="secondary reopen-decision">選択する</button>':'')+'</div></div>';
 }).join('');
 }
 function settleMonth(){
@@ -2061,9 +2061,9 @@ custodyTime=function(months){const before=state.month;essentialCustodyTime(month
 renderExpenseOverview=function(){
  const active=state.phase==='game',e=essentialBudget(),next=state.month+1,settings=e.pending&&next>=e.pending.effective?e.pending:e,p=monthlyLivingParts(settings,next),b=personalBudget(),r=currentRich(),v=vehicleInfo();
  const income=active&&!(next>=state.leaveStartMonth&&next<state.leaveEndMonth)?salaryForecast(state.organization,state.rank,state.boss).monthly:0,inactiveHousing=r.home?pesos(1500):b.rent?pesos(4000):0,living=active?livingTotal(p):inactiveHousing+p.family;
- const contracts=active?Object.entries(PROTECTION).reduce((n,[k,v])=>n+(state.protectionPlans?.[k]?dollarsToUnits(v.fee):0),0):0,car=v?pesos(active&&b.car.using?v.monthly:v.parked):0,rate=state.pendingRemittanceRate!==null&&next>=state.remittanceEffectiveMonth?state.pendingRemittanceRate:state.remittanceRate,remit=income*rate,left=income-living-contracts-car-remit,shortage=Math.max(0,living+state.livingDebt-state.money);
+ const contracts=active?Object.entries(PROTECTION).reduce((n,[k,v])=>n+(state.protectionPlans?.[k]?dollarsToUnits(v.fee):0),0):0,car=v?pesos(active&&b.car.using?v.monthly:v.parked):0,rate=state.pendingRemittanceRate!==null&&next>=state.remittanceEffectiveMonth?state.pendingRemittanceRate:state.remittanceRate,remit=income*rate,left=income-living-contracts-car-remit,shortage=Math.max(0,living-state.money);
  const rows=active?livingBreakdownRows(p):[['住居費',moneyText(inactiveHousing)],...(p.family?[['家族の扶養分',moneyText(p.family)]]:[])];
- document.getElementById('expenseOverview').innerHTML='<h3>翌月の収支目安</h3>'+(active&&!state.boss&&payRoleStage()===0?'<p>初任の呼出し勤務：月23日相当の仕事量。未払いあり。</p>':'')+spendEffects([['受取手当',moneyText(income)],...rows,['護衛・医療等',moneyText(contracts)],['乗り物の維持',moneyText(car)],['任意の送金',moneyText(remit)],['通常月の差引',(left<0?'−':'+')+moneyText(Math.abs(left))]])+'<p>月末の必要生活費 '+moneyText(living)+'。'+(shortage?'手当が届かなければ '+moneyText(shortage)+'不足する。':'今の手持ちで必要生活費を払える。')+'</p>'+(state.livingDebt?'<p>過去の生活費未払 '+moneyText(state.livingDebt)+'は別に返す。</p>':'')+'<small>差引は過去の返済前。未受取回収・追加仕事・店の配当・臨時支出は含まない。</small>';
+ document.getElementById('expenseOverview').innerHTML='<h3>翌月の収支目安</h3>'+(active&&!state.boss&&payRoleStage()===0?'<p>初任の呼出し勤務：月23日相当の仕事量。未払いあり。</p>':'')+spendEffects([['支払予定の手当',moneyText(active&&!(next>=state.leaveStartMonth&&next<state.leaveEndMonth)?salaryForecast(state.organization,state.rank,state.boss).scheduledMonthly:0)],['手当の未払い率',active?Math.round(salaryForecast(state.organization,state.rank,state.boss).delay*100)+'%':'—'],['未払い込みの平均受取',moneyText(income)],...rows,['護衛・医療等',moneyText(contracts)],['乗り物の維持',moneyText(car)],['任意の送金',moneyText(remit)],['未払い込みの平均差引',(left<0?'−':'+')+moneyText(Math.abs(left))]])+'<p>手当が届く月の差引 '+signedMoney((active&&!(next>=state.leaveStartMonth&&next<state.leaveEndMonth)?salaryForecast(state.organization,state.rank,state.boss).scheduledMonthly:0)*(1-rate)-living-contracts-car)+'（過去の返済前）。</p><p>翌月の必要生活費 '+moneyText(living)+'。'+(shortage?'手当が届かなければ '+moneyText(shortage)+'不足する。':'今の手持ちで必要生活費を払える。')+'</p>'+(state.livingDebt?'<p>過去の生活費未払 '+moneyText(state.livingDebt)+'は別に返す。</p>':'')+'<small>平均受取は支払予定×（1−未払い率）。届かない月は0。差引は過去の返済前で、未受取回収・追加仕事・臨時手当・店の配当・臨時支出は別。</small>';
 };
 const essentialSpending=renderSpending;
 renderSpending=function(message=''){essentialSpending(message);const e=essentialBudget(),next=e.pending||e,box=document.getElementById('essentialBudgetOptions');box.innerHTML='<h3>毎月の生活予算</h3><p>共同生活・扶養なしが初期条件。費用は受取額に比例せず、未払い月も必要。不足は生活費未払（借金）へ。</p>'+spendEffects([['節約する','食費・日用品を月 '+moneyText(pesos(700))+'抑える。ストレス 月＋3'],['家族の生活費を負担','月 '+moneyText(pesos(2000))+'。任意送金とは別。変更だけで関係点は増えない']])+'<p>現在：'+(e.mode==='frugal'?'節約':'標準')+' · '+(e.dependent?'扶養分を負担中':'扶養分なし')+(e.pending?'。翌月から '+(next.mode==='frugal'?'節約':'標準')+'・'+(next.dependent?'扶養分あり':'扶養分なし'):'')+'</p><button type="button" class="secondary" data-living-mode="standard">標準で暮らす</button> <button type="button" class="secondary" data-living-mode="frugal">節約する</button><p><button type="button" class="secondary" id="toggleDependent">'+(next.dependent?'扶養分の負担をやめる':'家族1人の生活費の一部を引き受ける')+'</button></p>';box.querySelectorAll('[data-living-mode]').forEach(b=>b.onclick=()=>setEssentialBudget('mode',b.dataset.livingMode));document.getElementById('toggleDependent').onclick=()=>setEssentialBudget('dependent',next.dependent?0:1)};
@@ -2114,6 +2114,34 @@ eventWeight=function(e){const tier=debtJobTier();if(['debt_relief_work','debt_fr
 const debtPersonalizeEvent=personalizeEvent;
 personalizeEvent=function(e){const result=debtPersonalizeEvent(e);if(['debt_relief_work','debt_front_work'].includes(result.id))state.debtJobAfter=state.month+3;return result};
 
+
+// Keep the visible life record in sync with optional money actions, without advancing time.
+function refreshSpendingJournal(){
+ const feed=document.getElementById('feed');if(!feed)return;
+ feed.innerHTML=journalHTML(false);
+ feed.querySelectorAll('.reopen-decision').forEach(b=>b.onclick=()=>showDecision(true));
+ feed.scrollTo({top:feed.scrollHeight,behavior:'auto'});
+}
+const optionalJournalAddFeed=addFeed;
+addFeed=function(...args){optionalJournalAddFeed(...args);if(document.getElementById('spendDialog').open)refreshSpendingJournal()};
+
+// Rare fictional organization windfalls, not an annual salary entitlement.
+function organizationBonusState(){return state.organizationBonus||(state.organizationBonus={checkedMonth:-1,nextMonth:0,last:null})}
+function organizationBonusChance(){return (state.organization?.delay??.12)>=.30?.004:(state.organization?.delay??.12)<=.05?.010:.007}
+function organizationBonusTerms(){const org=state.organization||{pay:1},stage=state.boss?4:payRoleStage(),profit=dollarsToUnits(Math.round(100000*(org.pay||1))),bonus=dollarsToUnits(Math.round([100,250,600,1500,3500][stage]*(org.pay||1))),forecast=salaryForecast(org,state.rank,state.boss);return {stage,profit,bonus,arrears:Math.min(state.payArrears||0,forecast.scheduledMonthly*2)}}
+function settleOrganizationBonus(){
+ if(state.phase!=='game')return;const b=organizationBonusState();if(b.checkedMonth===state.month)return;b.checkedMonth=state.month;
+ if(state.month<12||state.month<b.nextMonth||leaveActive())return;
+ if(Math.random()>=organizationBonusChance())return;
+ const t=organizationBonusTerms(),room=Math.max(0,1000000-state.money),arrears=Math.min(t.arrears,room),bonus=Math.min(t.bonus,Math.max(0,room-arrears));
+ state.payArrears=Math.max(0,(state.payArrears||0)-arrears);state.money+=arrears+bonus;state.earned+=arrears+bonus;state.orgFunds=(state.orgFunds||0)+t.profit-arrears-bonus;
+ b.nextMonth=state.month+36;b.last={month:state.month,organization:state.organization?.name,stage:t.stage,profit:t.profit,bonus,arrears};
+ const ledger=state.monthlyLedger?.[state.month];if(ledger){ledger.organizationBonus=bonus;ledger.windfallArrears=arrears;ledger.payArrears=state.payArrears}
+ addFeed('組織の臨時利益から、役目に応じた手当が配られた。','choice',(state.boss?'ボス':workTitle())+' · 臨時手当 '+moneyText(bonus)+(arrears?' · 未受取手当の清算 '+moneyText(arrears):'')+'。通常給与とは別。',{important:true});save();
+}
+const bonusMonthlySettlement=settleMonth;
+settleMonth=function(){bonusMonthlySettlement();settleOrganizationBonus()};
+
 document.querySelectorAll('[data-playback-pause]').forEach(b=>b.onclick=togglePlayback);
 document.querySelectorAll('[data-speed]').forEach(b=>b.onclick=()=>setPlaybackSpeed(+b.dataset.speed));
 document.getElementById('diceRoll').onclick=rollDice;
@@ -2121,7 +2149,7 @@ document.getElementById('diceLeave').onclick=finishDice;
 document.getElementById('diceContinue').onclick=finishDice;
 document.getElementById('diceDialog').addEventListener('cancel',e=>{e.preventDefault();if(state.diceSession?.stage==='betting')finishDice()});
 document.getElementById('openSpending').onclick=openSpending;
-document.getElementById('closeSpending').onclick=()=>document.getElementById('spendDialog').close();
+document.getElementById('closeSpending').onclick=()=>{document.getElementById('spendDialog').close();refreshSpendingJournal();renderStats()};
 document.getElementById('spendDialog').addEventListener('close',()=>{render();scheduleProgress()});
 document.getElementById('repayDebtButton').onclick=payDebtFromAssets;
 document.getElementById('skipOrigin').onclick=finishOriginReveal;document.getElementById('originContinue').onclick=continueOrigin;
