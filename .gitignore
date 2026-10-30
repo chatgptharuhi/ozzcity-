@@ -1,5 +1,6 @@
 # Local saves, audit results and generated files
 **/audit-results/
+**/daily-review/
 **/audit-*/
 **/*.before-*
 **/odds-city.before-*
@@ -9,3 +10,6 @@ node_modules/
 *.log
 .DS_Store
 Thumbs.db
+
+# Draft-generated copies are not authoritative
+drafts/*.html

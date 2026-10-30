@@ -1,0 +1,9 @@
+// Read-only game review. Cache unchanged mechanics; reuse hourly simulation results.
+const fs=require('fs'),path=require('path'),crypto=require('crypto'),cp=require('child_process');
+const localGame='C:/Users/Haruhi/Documents/Codex/2026-10-27/sek/outputs/odds-city.html',game=fs.existsSync(localGame)?localGame:path.join(__dirname,'..','outputs','odds-city.html'),dir=path.join(__dirname,'daily-review');fs.mkdirSync(dir,{recursive:true});
+const html=fs.readFileSync(game,'utf8'),hash=crypto.createHash('sha256').update(html).digest('hex'),cacheFile=path.join(dir,'metrics.json');let old=null;if(fs.existsSync(cacheFile))old=JSON.parse(fs.readFileSync(cacheFile,'utf8'));
+let metrics=old?.metrics,sourceChanged=old?.sourceHash!==hash;
+if(sourceChanged){const output=cp.execFileSync(process.execPath,[path.join(__dirname,'odds-city-audit.cjs'),'--game',game,'--extra-checks',path.join(__dirname,'daily-balance-metrics.js'),'--checks-only'],{encoding:'utf8',windowsHide:true});const line=output.split(/\r?\n/).find(x=>x.startsWith('DAILY_METRICS:'));if(!line)throw Error('Daily review returned no metrics');metrics=JSON.parse(line.slice('DAILY_METRICS:'.length))}
+let hourly=null;const digest=path.join(__dirname,'audit-results','digest.json');if(fs.existsSync(digest)){const d=JSON.parse(fs.readFileSync(digest,'utf8'));hourly={at:d.at,totalRuns:d.totalRuns,newErrors:d.newErrors||[],summary:d.summary||[],newCandidates:d.newCandidates||[]}}
+const result={at:new Date().toISOString(),sourceHash:hash,sourceChanged,metrics,hourly,installedModules:{organizationTraits:html.includes('function attachOrganizationProfile('),casinoPresentation:html.includes('function tableEffectsOn(')},reviewNotes:'Only the authoritative installed HTML is measured. Workspace stages are excluded. No browser or real save was accessed.'};
+fs.writeFileSync(cacheFile,JSON.stringify(result,null,2));console.log(JSON.stringify(result));

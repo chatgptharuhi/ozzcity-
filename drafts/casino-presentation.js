@@ -1,0 +1,51 @@
+// Saved game outcomes are independent of cosmetic timing and optional synthesized sound.
+let tableEffectTimer=null,tableVisual={busy:false,rolling:false,session:null,board:0,result:null,message:''};
+function tableEffectsOn(){return !window.matchMedia('(prefers-reduced-motion: reduce)').matches}
+function tableCue(kind){if(!state.tableSound)return;try{const Audio=window.AudioContext||window.webkitAudioContext;if(!Audio)return;const context=tableCue.context||(tableCue.context=new Audio());context.resume();const tone=context.createOscillator(),gain=context.createGain(),now=context.currentTime;tone.type='sine';tone.frequency.value=kind==='chips'?250:kind==='win'?620:410;gain.gain.setValueAtTime(.035,now);gain.gain.exponentialRampToValueAtTime(.001,now+.09);tone.connect(gain);gain.connect(context.destination);tone.start(now);tone.stop(now+.10)}catch{}}
+function tableSoundButton(box){casinoAppend(box,'<button type="button" class="secondary table-sound" data-table-sound>卓の音：'+(state.tableSound?'ON':'OFF')+'</button>');box.querySelectorAll('[data-table-sound]').forEach(b=>b.onclick=()=>{state.tableSound=!state.tableSound;save();tableCue('tap');if(state.casinoSession)renderCasino();else renderDice()})}
+function holdMinimumPayment(h,actor){return Math.max(0,h.target-h.street[actor])+(h.minRaise||h.big)}
+function holdChosenPayment(h,actor){const min=holdMinimumPayment(h,actor);return actor===0?Math.min(h.stacks[actor],Math.max(min,Math.round(state.casinoSession.raisePayment||min))):Math.min(h.stacks[actor],min)}
+const presentationHoldLegal=holdLegal;
+holdLegal=function(h,actor){if(!state.casinoSession?.noLimit)return presentationHoldLegal(h,actor);if(state.casinoSession.settled)return [];const due=Math.max(0,h.target-h.street[actor]),actions=[due?'call':'check'];if(h.stacks[1-actor]>0&&h.stacks[actor]>=holdMinimumPayment(h,actor))actions.push(h.target?'raise':'bet');if(h.stacks[actor]>due&&h.stacks[1-actor]>0)actions.push('allin');actions.push('fold');return actions};
+function tableActionLabel(action,h,due){const payment=state.casinoSession?.noLimit?holdChosenPayment(h,0):Math.min(h.stacks[0],due+holdUnit(h));return {check:'チェック',call:'コール '+holdMoney(Math.min(due,h.stacks[0])),bet:'ベット '+holdMoney(payment),raise:'レイズ（投入 '+holdMoney(payment)+'）',allin:'オールイン '+holdMoney(h.stacks[0]),fold:'フォールド'}[action]}
+const presentationHoldApply=holdApply;
+holdApply=function(actor,action){const s=state.casinoSession,h=s?.h;if(!s?.noLimit)return presentationHoldApply(actor,action);if(!h||s.settled||h.turn!==actor||!holdLegal(h,actor).includes(action))return false;
+ if(action==='fold'){h.log.push((actor?'相手':'あなた')+'：フォールド');holdSettle(1-actor,actor===0?'player_fold':'opponent_fold');return true}
+ const beforeTarget=h.target,due=Math.max(0,h.target-h.street[actor]);let amount=0;
+ if(action==='call')amount=holdPay(h,actor,due);
+ if(['raise','bet','allin'].includes(action)){amount=holdPay(h,actor,action==='allin'?h.stacks[actor]:holdChosenPayment(h,actor));h.target=Math.max(h.target,h.street[actor]);const increase=h.target-beforeTarget;if(increase>0){h.acted[1-actor]=false;if(increase>=(h.minRaise||h.big))h.minRaise=increase}}
+ s.raisePayment=null;h.acted[actor]=true;h.log.push((actor?'相手':'あなた')+'：'+({check:'チェック',call:'コール',bet:'ベット',raise:'レイズ',allin:'オールイン'})[action]+(amount?' '+holdMoney(amount):''));
+ const equal=h.street[0]===h.street[1];
+ if((equal&&(h.stacks[0]===0||h.stacks[1]===0))||(action==='call'&&h.stacks.some(n=>n===0))){const excess=h.total[0]-h.total[1];if(excess){const over=excess>0?0:1,refund=Math.abs(excess);h.total[over]-=refund;h.stacks[over]+=refund;h.street[over]-=Math.min(refund,h.street[over])}holdShowdown();return true}
+ if(equal&&h.acted.every(Boolean)){if(h.round===3){holdShowdown();return true}h.round++;holdDeal(h);h.street=[0,0];h.target=0;h.raises=0;h.minRaise=h.big;h.acted=[false,false];h.turn=1-h.dealer}else h.turn=1-actor;
+ save();return true;
+};
+const presentationHoldOpponent=holdOpponentAction;
+holdOpponentAction=function(h){if(!state.casinoSession?.noLimit)return presentationHoldOpponent(h);const legal=holdLegal(h,1),due=Math.max(0,h.target-h.street[1]),pot=h.total[0]+h.total[1],own=h.opponent.map(c=>c%13+2),rank=h.board.length>=3?holdemBest([...h.opponent,...h.board]):null,strength=rank?rank[0]+rank[1]/25:(own[0]===own[1]?2:Math.max(...own)>=12?1:.25),roll=Math.random();if(legal.includes('allin')&&strength>=3&&roll<.10)return 'allin';if((strength>=2&&roll<.3)||roll<.045){if(legal.includes('raise'))return 'raise';if(legal.includes('bet'))return 'bet'}if(!due)return 'check';if(strength>=2||due<=h.big||(strength>=1&&due/Math.max(1,pot+due)<.35)||roll<.15)return 'call';return 'fold'};
+const presentationHoldStart=holdStart;
+holdStart=function(){const s=state.casinoSession;if(s?.stage==='betting'){s.noLimit=true;tableVisual={busy:false,rolling:false,session:s,board:0,result:null,message:'札を配っています'};tableCue('tap')}presentationHoldStart()};
+const presentationHoldPump=holdPump;
+holdPump=function(){const s=state.casinoSession;if(!tableEffectsOn()){presentationHoldPump();return}if(!s||s.stage!=='playing'||s.h.turn!==1)return;
+ clearTimeout(tableEffectTimer);tableVisual.busy=true;tableVisual.message='相手が考えている…';renderCasino();tableEffectTimer=setTimeout(()=>{if(state.casinoSession!==s||s.stage!=='playing')return;tableVisual.busy=false;holdApply(1,holdOpponentAction(s.h));tableVisual.message=s.h.log.at(-1)||'';tableCue('chips');save();renderStats();renderCasino();if(s.stage==='playing'&&s.h.turn===1)holdPump()},600);
+};
+const presentationHoldPlayer=holdPlayer;
+holdPlayer=function(action){if(tableVisual.busy&&tableEffectsOn())return;if(state.casinoSession?.h?.turn!==0)return;tableVisual.message=tableActionLabel(action,state.casinoSession.h,Math.max(0,state.casinoSession.h.target-state.casinoSession.h.street[0]));tableCue(action==='check'||action==='fold'?'tap':'chips');presentationHoldPlayer(action)};
+const presentationRenderCasino=renderCasino;
+renderCasino=function(){presentationRenderCasino();const s=state.casinoSession;if(!s)return;const box=document.getElementById('casinoContent');tableSoundButton(box);if(s.stage==='betting')return;const h=s.h;
+ if(tableVisual.session!==s)tableVisual={busy:false,rolling:false,session:s,board:0,result:null,message:''};
+ const result=s.stage==='result',message=result?(s.reason==='showdown'?POKER_NAMES[holdemBest([...h.player,...h.board])[0]]:s.winner===0?'相手がフォールド':'フォールドで勝負を終えた'):h.turn===1?'相手が考えている…':h.log.at(-1)||'あなたの番';
+ const feedback='<div class="table-feedback" role="status" aria-live="polite">'+escapeHTML(message)+'</div>';if(box.insertAdjacentHTML)box.insertAdjacentHTML('afterbegin',feedback);else casinoAppend(box,feedback);
+ box.querySelectorAll('[data-hold-action]').forEach(b=>{b.disabled=h.turn!==0||tableVisual.busy;if(b.dataset.holdAction==='allin')b.classList.add('table-allin')});
+ if(s.noLimit&&!result&&h.turn===0&&holdLegal(h,0).some(a=>a==='raise'||a==='bet')){const min=holdMinimumPayment(h,0),chosen=holdChosenPayment(h,0);casinoAppend(box,'<label class="table-sizing">投入額 <output id="holdSizeValue">'+holdMoney(chosen)+'</output><input type="range" id="holdSize" min="'+min+'" max="'+h.stacks[0]+'" step="1" value="'+chosen+'" aria-label="ベット・レイズで投入する金額"></label>');document.getElementById('holdSize').oninput=e=>{s.raisePayment=+e.target.value;document.getElementById('holdSizeValue').textContent=holdMoney(s.raisePayment);box.querySelectorAll('[data-hold-action]').forEach(b=>{if(['raise','bet'].includes(b.dataset.holdAction))b.textContent=tableActionLabel(b.dataset.holdAction,h,Math.max(0,h.target-h.street[0]))});save()}}
+ if(tableEffectsOn()){if(!tableVisual.dealt){const rows=box.querySelectorAll('.card-row');rows.forEach((row,r)=>{if(r!==1)row.querySelectorAll('.playing-card').forEach((card,i)=>{card.classList.add('table-card-enter');card.style.setProperty('--card-delay',i*.12+'s')})});tableVisual.dealt=true}box.querySelectorAll('.casino-board .playing-card').forEach((card,i)=>{if(i>=tableVisual.board&&i<h.board.length){card.classList.add('table-card-enter');card.style.setProperty('--card-delay',(i-tableVisual.board)*.16+'s')}});if(result&&tableVisual.result!==s){tableVisual.result=s;const node=box.querySelector('.casino-result');if(node){node.classList.add(s.net>0?'table-win':s.net<0?'table-loss':'table-tie');node.style.animationDelay=(Math.max(0,h.board.length-tableVisual.board)*.16+.15)+'s'}tableCue(s.net>0?'win':'tap')}}
+ tableVisual.board=h.board.length;
+};
+function chinHandName(d){const rank=chinRank(d);return rank===100?'ピンゾロ':rank>=80?'ゾロ目':rank===70?'シゴロ':rank===0?'ヒフミ':rank===5?'役なし':(rank-10)+'の目'}
+const presentationChinRoll=tableChinRoll;
+tableChinRoll=function(){const s=state.diceSession;if(s?.origin!=='casino'||!tableEffectsOn()){presentationChinRoll();return}if(tableVisual.rolling||s.settled||s.outcome!==undefined||s.playerRolls.length>=3)return;
+ tableVisual.rolling=true;tableCue('chips');presentationChinRoll();clearTimeout(diceTimer);diceTimer=setTimeout(()=>{if(state.diceSession!==s)return;tableVisual.rolling=false;if(s.outcome!==undefined)tableSettle();else renderDice();tableCue(s.net>0?'win':'tap')},850);
+};
+const presentationRenderDice=renderDice;
+renderDice=function(){presentationRenderDice();const s=state.diceSession;if(s?.origin!=='casino'||s.game!=='chinchiro')return;document.getElementById('diceResult').classList.remove('table-win','table-loss','table-tie');const board=document.getElementById('tableBoard'),terms=document.getElementById('diceTerms');tableSoundButton(terms);if(s.stage==='betting')return;
+ if(tableVisual.rolling){board.classList.add('table-bowl-rolling');board.querySelectorAll('.dice-bowl .table-dice').forEach(n=>n.innerHTML='<span>⚄</span><span>⚂</span><span>⚅</span>');const button=document.getElementById('tableReroll');if(button){button.disabled=true;button.textContent='サイコロが転がっている…'}document.getElementById('diceResult').textContent='転がる音が止まるまで…'}else{board.classList.remove('table-bowl-rolling');if(s.playerRolls.length)casinoAppend(board,'<div class="table-feedback" role="status">あなた：'+chinHandName(s.playerRolls.at(-1))+(s.stage==='result'?' ／ 相手：'+chinHandName(s.opponentRolls.at(-1)):'')+'</div>');if(s.stage==='result')document.getElementById('diceResult').classList.add(s.net>0?'table-win':s.net<0?'table-loss':'table-tie')}
+};

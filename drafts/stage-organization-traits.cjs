@@ -1,0 +1,5 @@
+const fs=require('fs'),vm=require('vm'),path=require('path'),target=path.resolve(__dirname,'../outputs/odds-city.html'),source=fs.readFileSync(target,'utf8');let h=source;function one(a,b){if(h.split(a).length!==2)throw Error('Changed anchor '+a.slice(0,100));h=h.replace(a,()=>b)}
+one('state.organization={...ORGANIZATIONS[Math.floor(Math.random()*ORGANIZATIONS.length)]};save();revealOrigin()', 'state.organization=attachOrganizationProfile({...ORGANIZATIONS[Math.floor(Math.random()*ORGANIZATIONS.length)]});save();revealOrigin()');
+one('state.month>=12&&Math.random()<.035','state.month>=12&&Math.random()<organizationWarChance()');
+const anchor="document.querySelectorAll('[data-playback-pause]').forEach(b=>b.onclick=togglePlayback);";one(anchor,fs.readFileSync('organization-traits.js','utf8')+'\n'+anchor);
+new vm.Script(h.match(/<script>([\s\S]*?)<\/script>/)[1]);fs.writeFileSync('organization-traits-source.html',source);fs.writeFileSync('odds-city-organization-traits.html',h);console.log('Staged persistent organization culture, jobs/promotion/support/conflict effects and rare changes.');
