@@ -21,6 +21,136 @@
 
 .spend-effects{display:grid;grid-template-columns:95px 1fr;gap:5px 10px;font-size:13px;line-height:1.6}.spend-effects dt{color:var(--muted)}.spend-effects dd{margin:0}#workRiskActions article,#personalPurchases article,#protectionOptions article{padding:12px 0;border-bottom:1px solid var(--line)}#personalPurchases summary{font-weight:800;font-size:18px;cursor:pointer}#personalPurchases section{margin:20px 0}
 #hobbyOptions{margin:20px 0;border-top:1px solid #46564d;padding-top:15px}#hobbyOptions>details>summary{font-size:19px;font-weight:750;cursor:pointer}#hobbyOptions article{border:1px solid #41564b;border-radius:10px;padding:14px;margin:12px 0}#hobbyOptions article h4{margin:0 0 8px}#hobbyOptions article p{font-size:13px}#hobbyOptions article details{font-size:12px;margin:10px 0}
+
+/* Spending layout: preserve all amounts, effects and existing action handlers. */
+#spendDialog{width:min(840px,calc(100vw - 24px));max-height:calc(100dvh - 24px);padding:0;background:#161e21;border-color:#344145;border-radius:8px;scroll-padding-top:130px}
+#spendDialog .spend-header{position:sticky;top:0;z-index:3;background:#161e21;border-bottom:1px solid #344145;padding:18px 22px 14px}
+#spendDialog .spend-header .decision-top{gap:20px}
+#spendDialog #spendTitle{font-size:18px;font-weight:600;color:#d88797}
+#spendDialog #closeSpending{border:0;padding:4px;background:transparent;font-size:16px;color:#bbc7c8}
+#spendDialog #spendSummary{font-size:14px;line-height:1.6;margin:10px 0 0;color:#d9e1df;font-variant-numeric:tabular-nums}
+#spendDialog #spendMessage:empty{display:none}
+#spendDialog #spendMessage{margin:10px 0 0;font-size:14px}
+#spendDialog .spend-body{padding:20px 22px 28px}
+#spendDialog .spend-body>h3{font-size:15px;color:#9eaeae;margin:0 0 14px}
+#spendDialog section{border:0;margin:0;padding:0}
+#spendDialog #personalPurchases>details>summary{display:none}
+#spendDialog #personalPurchases>details>p:first-of-type{font-size:13px;color:#a9b8b6;margin:0 0 14px}
+#spendDialog h3,#spendDialog h4{font-size:18px;line-height:1.5;margin:0 0 6px;color:#e0e7e4}
+#spendDialog p,#spendDialog label{font-size:15px;line-height:1.7;color:#b7c4c1;margin:6px 0 12px}
+#spendDialog small,#spendDialog .risknote{font-size:13px;line-height:1.7;color:#a3b3b0}
+#spendDialog .spend-card{position:relative;display:flow-root;padding:17px 18px;margin:0 0 10px;border:1px solid #344145;border-radius:4px;background:#0f171a}
+#spendDialog .spend-card article:last-child{margin-bottom:0}
+#spendDialog .spend-price{float:right;max-width:44%;margin:0 0 8px 20px;text-align:right;color:#dde6e1;font-size:15px;line-height:1.65;font-variant-numeric:tabular-nums}
+#spendDialog .spend-price span{display:block}
+#spendDialog .spend-effects{display:grid;grid-template-columns:64px minmax(0,1fr);gap:4px 10px;font-size:14px;line-height:1.7;margin:8px 0 12px}
+#spendDialog .spend-effects dt{color:#9baead}
+#spendDialog .spend-effects dd{margin:0;color:#c0ceca}
+#spendDialog .spend-card .spend-effects{clear:both}
+#spendDialog button.secondary,#spendDialog .rate-buttons button{border:1px solid #3d4d50;border-radius:24px;background:transparent;padding:10px 16px;font-size:15px;line-height:1.5;margin:4px 5px 2px 0;color:#dce5e0;max-width:100%;white-space:normal;text-align:left}
+#spendDialog button:disabled{opacity:.48;cursor:not-allowed}
+#spendDialog button:focus-visible,#spendDialog summary:focus-visible{outline:2px solid var(--mint);outline-offset:4px}
+#spendDialog .rate-buttons [aria-pressed=true]{background:#e0e9e3;color:#15231c;border-color:#e0e9e3}
+#spendDialog .spend-fold{border-top:1px solid #344145;margin:24px 0 0;padding:18px 0 0}
+#spendDialog .spend-fold>summary,#spendDialog #hobbyMenu>summary{font-size:17px;font-weight:700;color:#c0ceca;cursor:pointer;line-height:1.6}
+#spendDialog .spend-fold>summary{margin-bottom:12px}
+#spendDialog #hobbyOptions{margin:20px 0}
+#spendDialog #hobbyMenu>p{font-size:13px}
+#spendDialog #hobbyMenu>article:first-of-type{margin-top:14px}
+#spendDialog #personalPurchases section:has(>article)>h3{margin:20px 0 10px;font-size:15px;color:#9eaeae}
+#spendDialog #expenseOverview .spend-effects{grid-template-columns:minmax(0,1fr) auto;font-variant-numeric:tabular-nums}
+#spendDialog #expenseOverview dd{text-align:right}
+#spendDialog #expenseOverview dd:last-child,#spendDialog #expenseOverview dt:nth-last-child(2){border-top:1px solid #344145;margin-top:8px;padding-top:10px;color:#e0e7e4;font-weight:700}
+#spendDialog #repayDollars{font-size:16px;max-width:100%;box-sizing:border-box}
+#spendDialog [hidden]{display:none!important}
+@media(max-width:560px){#spendDialog .spend-header{padding:15px 16px 12px}#spendDialog .spend-body{padding:16px}#spendDialog .spend-card{padding:15px 14px}#spendDialog .spend-price{float:none;max-width:none;margin:0 0 8px;text-align:left;font-size:14px}#spendDialog .spend-effects{grid-template-columns:58px minmax(0,1fr)}#spendDialog .spend-card h3,#spendDialog .spend-card h4{font-size:18px}}
+
+#casinoDialog{width:min(850px,calc(100vw - 24px));padding:22px;scrollbar-gutter:stable}
+.casino-round{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:14px;margin:10px 0 16px;color:#b9cec5}
+.casino-stage{position:relative;overflow:hidden;padding:24px 12px;border-width:6px;border-radius:38% / 14%;isolation:isolate}
+.casino-stage .card-row{gap:8px;min-height:90px;position:relative;z-index:1}
+.casino-stage .table-seat{font-size:13px;padding:8px}
+.casino-stage .playing-card,.casino-flip{box-sizing:border-box;width:61px;height:89px;min-width:0;flex-shrink:0}
+.casino-stage .playing-card{font-size:24px;padding:8px}
+.casino-stage .playing-card small{font-size:34px;line-height:1.1}
+.casino-stage .card-back{display:inline-flex;align-items:center;justify-content:center}
+.casino-flip{display:inline-block;perspective:700px;vertical-align:top}
+.casino-flip-inner{position:relative;display:block;width:100%;height:100%;transform-style:preserve-3d;animation:casino-turn-card .4s ease both}
+.casino-card-face,.casino-card-back{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.casino-card-face{transform:rotateY(180deg)}
+@keyframes casino-turn-card{from{transform:rotateY(0) translateY(-5px)}to{transform:rotateY(180deg) translateY(0)}}
+.casino-pot-area{position:relative;height:36px;display:flex;align-items:center;justify-content:center;margin:6px 0}
+.casino-pot{font-size:13px;font-weight:700;color:#e0cd96;border:1px solid #b6a16c55;border-radius:20px;padding:5px 16px;background:#102e27}
+.casino-moving-chips,.casino-award-chips{position:absolute;z-index:2;color:#e8c36e;font-size:25px;letter-spacing:-5px;text-shadow:0 2px #674517;pointer-events:none}
+.casino-from-0{animation:casino-chip-up .4s ease-out both}.casino-from-1{animation:casino-chip-down .4s ease-out both}
+@keyframes casino-chip-up{from{transform:translateY(140px) scale(.8);opacity:1}to{transform:translateY(0);opacity:0}}
+@keyframes casino-chip-down{from{transform:translateY(-70px) scale(.8);opacity:1}to{transform:translateY(0);opacity:0}}
+.casino-to-0{animation:casino-award-player .65s ease-in both}.casino-to-1{animation:casino-award-opponent .65s ease-in both}.casino-to--1{animation:casino-award-split .65s ease-in both}
+@keyframes casino-award-player{to{transform:translateY(190px);opacity:0}}@keyframes casino-award-opponent{to{transform:translateY(-90px);opacity:0}}@keyframes casino-award-split{to{letter-spacing:40px;opacity:0}}
+.casino-table-status{min-height:28px;text-align:center;font-size:16px;font-weight:700;color:#ead8aa;margin:14px 0;letter-spacing:.04em}
+.casino-fold{animation:casino-fold-away .4s ease-in both}@keyframes casino-fold-away{to{opacity:0;transform:translateX(45px) rotate(7deg) scale(.85)}}
+.casino-tap{animation:casino-check-tap .35s ease}@keyframes casino-check-tap{35%,75%{transform:translateY(3px)}55%,100%{transform:translateY(0)}}
+.casino-best{outline:2px solid #e7d28a;outline-offset:3px;box-shadow:0 0 22px #e8d08a66!important}
+.casino-lost .card-row:has(+.table-seat){opacity:.65}
+.casino-outcome{text-align:center;border-top:1px solid #4c6055;margin:18px 0;padding:18px 10px}
+.casino-result-enter{animation:casino-result-arrive .5s ease both}
+.casino-outcome strong{display:block;font-size:32px;letter-spacing:.18em;margin-bottom:8px}
+.casino-outcome p{font-size:14px;line-height:1.7;margin:6px 0}.casino-outcome small{font-size:11px;color:#adbbb2}
+.casino-result-win strong{color:#b6eacb;text-shadow:0 0 25px #8ad6ad55}.casino-result-lose strong{color:#cba7a3}.casino-result-draw strong{color:#e0d0a1}
+@keyframes casino-result-arrive{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.casino-sizing{display:block;margin:14px 0;padding:14px;border:1px solid #455b50;border-radius:8px;font-size:14px}.casino-sizing output{float:right;color:#e0cd96;font-weight:700}.casino-sizing input{display:block;width:100%;margin:14px 0 8px;min-height:28px;accent-color:#91d7c2}.casino-sizing small{font-size:11px;color:#b0bfb5}
+.casino-actions{margin:12px 0}.casino-actions button,.casino-allin-confirm button{font-size:14px;padding:12px 16px}
+.casino-allin{background:#6a3e38;color:#fff0d9;border:1px solid #c68e72;border-radius:8px;cursor:pointer;font:inherit;padding:12px 16px}
+.casino-allin-confirm{padding:14px;border:1px solid #b58a68;border-radius:8px;margin:14px 0;background:#31281f}.casino-allin-confirm p{font-size:14px}
+.casino-preferences{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 8px}.casino-preferences button{font-size:11px;padding:7px 10px}.casino-note{font-size:12px;color:#b4c5ba;line-height:1.7}
+@media(max-width:520px){#casinoDialog{padding:14px}.casino-stage{padding:16px 4px;border-width:4px}.casino-stage .card-row{gap:5px;min-height:71px}.casino-stage .playing-card,.casino-flip{width:46px;height:70px}.casino-stage .playing-card{font-size:19px;padding:5px}.casino-stage .playing-card small{font-size:27px}.casino-actions button{font-size:13px;padding:10px}.casino-table-status{font-size:14px}}
+@media(prefers-reduced-motion:reduce){.casino-flip-inner{animation:none;transform:rotateY(180deg)}.casino-moving-chips,.casino-award-chips{display:none}.casino-fold,.casino-tap,.casino-outcome{animation:none}}
+
+.money-record{padding:16px 0}.money-record .money-record-title{font-size:16px;line-height:1.65;font-weight:700;color:#e5ece7}.money-record .money-record-effect{font-size:14px;line-height:1.7;margin:6px 0;color:#bbd5c7}.money-record .money-record-detail{font-size:12px;color:#aabbb1;margin-top:8px}.money-record-detail summary,.month-hobby-records summary{cursor:pointer}.money-record-detail p{font-size:12px;line-height:1.8}.month-hobby-records{font-size:12px;line-height:1.7;color:#aabbb1;margin:10px 0}.month-hobby-records p{font-size:12px;margin:8px 0}
+#spendDialog #expenseOverview>.spend-effects{grid-template-columns:minmax(0,1fr) minmax(100px,auto);gap:12px 20px;font-size:16px}#spendDialog #expenseOverview>details{margin-top:18px;border-top:1px solid #344145;padding-top:14px}#spendDialog #expenseOverview>details>summary{font-size:14px;cursor:pointer;color:#b4c8be}#spendDialog #expenseOverview .clarity-caption{font-size:12px;color:#a6b7ae}#spendDialog #expenseOverview .clarity-warning{font-size:14px;line-height:1.7;color:#e0c6a2}#spendDialog #expenseOverview>details .spend-effects{font-size:14px;gap:8px 16px}#spendDialog #expenseOverview>details dd:last-child,#spendDialog #expenseOverview>details dt:nth-last-child(2){border:0;margin:0;padding:0;font-weight:400}
+.casino-entry-wallet{display:flex;gap:12px;align-items:center;font-size:14px;color:#aebfb4}.casino-entry-wallet strong{font-size:22px;color:#e1ebe3}.casino-entry-section{margin:24px 0}.casino-entry-section h3,.casino-entry-condition h3{font-size:16px;color:#c5d8cd;margin:0 0 12px}.casino-game-choice{display:flex;gap:8px}.casino-game-choice [aria-pressed=true],.casino-budget-grid [aria-pressed=true]{background:#d3e9dd;color:#14261c;border-color:#d3e9dd}.casino-budget-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.casino-budget-grid button{padding:16px 12px;text-align:left;min-width:0}.casino-budget-grid strong{display:block;font-size:21px;overflow-wrap:anywhere}.casino-budget-grid span{display:block;font-size:12px;font-weight:400;margin-top:7px;opacity:.8}.casino-entry-condition{padding:18px;background:#14231b;border:1px solid #40584a;border-radius:8px;margin:12px 0}.casino-entry-condition .spend-effects{grid-template-columns:minmax(0,1fr) auto;font-size:15px;gap:10px 20px}.casino-entry-condition dd{text-align:right;font-variant-numeric:tabular-nums}.casino-entry-condition p,.casino-entry-hint,.casino-entry-unavailable{font-size:13px;line-height:1.7;color:#adbbb0}.casino-entry-start{font-size:16px;padding:14px 22px;width:100%}#clarityCasinoBorrow{border-top:1px solid #3b4d41;padding-top:16px;font-size:14px}#clarityCasinoBorrow>summary{cursor:pointer;color:#c4d7c8}#clarityCasinoBorrow .event-evidence{border:0;padding-top:0}#clarityCasinoBorrow h4{display:none}#clarityCasinoBorrow p{font-size:13px;line-height:1.8}#clarityCasinoBorrow .rate-buttons button{font-size:15px}#clarityCasinoBorrow [aria-pressed=true]{border-color:var(--mint);color:var(--mint)}
+@media(max-width:520px){.casino-budget-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.casino-budget-grid strong{font-size:19px}#spendDialog #expenseOverview>.spend-effects{font-size:14px;gap:10px 12px}.money-record .money-record-title{font-size:15px}.money-record .money-record-effect{font-size:13px}}
+
+/* Inherit the ordinary journal type scale at every viewport size. */
+.feedrow.money-record{padding:12px 0}
+.money-record .money-record-title{font-size:inherit;font-weight:inherit;line-height:inherit;color:inherit}
+.money-record .money-record-effect{font-size:inherit;line-height:inherit;font-weight:inherit;color:inherit;margin:6px 0}
+.money-record .money-record-detail{font-size:inherit;line-height:inherit;margin-top:8px}
+.money-record-detail p{font-size:inherit;line-height:1.7}
+.journal-result-toggle{display:flex;align-items:center;gap:8px;list-style:none;cursor:pointer;width:fit-content;max-width:100%}
+.journal-result-toggle::-webkit-details-marker{display:none}
+.journal-result-badge{display:inline-block;padding:8px 12px;border:1px solid;border-radius:8px;font-size:inherit;line-height:1.6;font-weight:700}
+.journal-result-win{background:#204c38;border-color:#538768;color:#c6f0d5}
+.journal-result-loss{background:#542b2c;border-color:#9b5758;color:#ffd2cd}
+.journal-result-draw{background:#3d3928;border-color:#807247;color:#e9dfbb}
+.journal-result-hint{font-size:inherit;color:var(--muted);white-space:nowrap}
+.journal-result-toggle:focus-visible{outline:2px solid var(--mint);outline-offset:4px;border-radius:8px}
+.journal-result-toggle:hover .journal-result-badge{filter:brightness(1.12)}
+
+.roulette-heading{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:#b7cabd;font-size:13px;margin:14px 0}
+.roulette-arena{--wheel-size:330px;position:relative;width:min(var(--wheel-size),100%);aspect-ratio:1;margin:22px auto;border:10px solid #715b3b;border-radius:50%;background:#13261f;box-shadow:0 12px 35px #0007,inset 0 0 0 4px #b59a65;isolation:isolate;overflow:hidden}
+.roulette-wheel{position:absolute;inset:5px;border-radius:50%;box-shadow:inset 0 0 0 2px #d2bd7f}
+.roulette-pocket{position:absolute;left:calc(50% - 10px);top:calc(50% - 9px);width:20px;text-align:center;font-size:12px;font-weight:700;color:#f2e8ce;transform:rotate(var(--pocket-angle)) translateY(-128px);transform-origin:50% 50%}
+.roulette-hub{position:absolute;inset:29%;border:3px solid #ac925c;border-radius:50%;background:radial-gradient(circle,#345043,#162c24);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#e4d2a6;z-index:2;box-shadow:0 4px 20px #0007}
+.roulette-hub span{font-size:9px;letter-spacing:.12em}.roulette-hub strong{font-size:32px;margin:7px 0}.roulette-hub small{font-size:10px}
+.roulette-ball-orbit{position:absolute;inset:0;border-radius:50%;z-index:3;pointer-events:none}.roulette-ball{position:absolute;left:calc(50% - 5px);top:11px;width:10px;height:10px;border-radius:50%;background:#fff8e8;box-shadow:0 0 6px #fff8,2px 3px 3px #0009}
+.roulette-spinning .roulette-wheel{animation:roulette-wheel-spin 4.8s cubic-bezier(.15,.6,.15,1) both}.roulette-spinning .roulette-ball-orbit{animation:roulette-ball-spin 4.8s cubic-bezier(.12,.62,.11,1) both}
+@keyframes roulette-wheel-spin{to{transform:rotate(1440deg)}}@keyframes roulette-ball-spin{from{transform:rotate(0)}to{transform:rotate(var(--ball-end))}}
+.roulette-status{text-align:center;color:#e1cf9b;font-size:16px;line-height:1.6;min-height:28px;margin:15px 0}
+.roulette-caption{font-size:13px;line-height:1.7;color:#acbfb0}.roulette-outside{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.roulette-outside button{padding:12px 8px;text-align:center;font-size:15px}.roulette-outside small{display:block;font-size:11px;font-weight:400;margin-top:5px}
+.roulette-numbers{margin-top:15px;font-size:14px}.roulette-numbers summary{cursor:pointer;color:#c7dacb}.roulette-number-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin:12px 0}.roulette-number{padding:10px;border:1px solid #708174;border-radius:4px;color:#f5f0e5;font:inherit;font-size:15px;cursor:pointer}.roulette-number:first-child{grid-column:1/-1}
+.roulette-red{background:#843c40!important;color:#fff0eb!important}.roulette-black{background:#152322!important;color:#eef2e9!important}.roulette-green{background:#266347;color:#e4f7e7}
+.roulette-outside [aria-pressed=true],.roulette-number[aria-pressed=true]{outline:3px solid #e8cd83;outline-offset:1px;box-shadow:0 0 15px #e8cd8333}
+.roulette-result{text-align:center;padding:18px;border:1px solid;border-radius:8px;margin:18px 0}.roulette-result strong{display:block;font-size:28px;letter-spacing:.14em}.roulette-result p{font-size:14px;margin:9px 0}.roulette-result small{font-size:12px}.roulette-win{background:#204b3333;border-color:#659774;color:#bce9cd}.roulette-loss{background:#51292d44;border-color:#995a60;color:#f0c2bd}
+.roulette-history{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:16px 0;font-size:12px;color:#afc0b3}.roulette-history b{min-width:28px;text-align:center;padding:6px;border-radius:4px;color:#f3efe3}
+@media(max-width:430px){.roulette-arena{--wheel-size:270px;border-width:8px}.roulette-pocket{font-size:10px;transform:rotate(var(--pocket-angle)) translateY(-103px)}.roulette-outside{grid-template-columns:repeat(2,minmax(0,1fr))}.roulette-hub strong{font-size:26px}.roulette-heading{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.roulette-spinning .roulette-wheel,.roulette-spinning .roulette-ball-orbit{animation:none}}
+
+#diceDialog{width:min(850px,calc(100vw - 24px));padding:22px;scrollbar-gutter:stable}#diceDialog .eyebrow{font-size:10px}#diceDialog #diceTitle{font-size:22px;margin:12px 0 20px}#diceTerms{font-size:14px;color:var(--ink);padding:0}#diceTerms p{line-height:1.7}#diceTerms .casino-entry-section h3,#diceTerms .casino-entry-condition h3{font-size:16px}#diceTerms .casino-entry-condition .spend-effects{grid-template-columns:minmax(0,1fr) auto}#diceTerms .casino-budget-grid button{font-size:14px}#diceTerms .casino-budget-grid strong{font-size:21px}#diceTerms .casino-preferences button{font-size:11px}.small-table-wallet{display:flex;align-items:center;gap:12px;font-size:14px;color:#adbfaf}.small-table-wallet strong{font-size:22px;color:#e0e9e2}.small-table-pot{position:relative;display:flex;justify-content:center;align-items:center;height:35px}.small-credit{margin:18px 0;border-top:1px solid #3f5345;padding-top:14px}.small-credit summary{cursor:pointer}.small-dice-row{display:flex;justify-content:center;gap:12px;min-height:60px;align-items:center}.small-die{display:inline-flex;align-items:center;justify-content:center;font-family:'Segoe UI Symbol',sans-serif;font-size:52px;line-height:1.1;color:#f2ead5;min-width:44px}.small-die-rolling{animation:small-die-roll .18s ease-in-out infinite alternate}.small-die-rolling:nth-child(2){animation-delay:-.07s}.small-die-rolling:nth-child(3){animation-delay:-.12s}@keyframes small-die-roll{from{transform:translateY(-6px) rotate(-18deg)}to{transform:translateY(5px) rotate(17deg)}}#diceTerms .card-pick{min-width:0;flex-shrink:0}#diceTerms .card-pick:disabled{opacity:1}#diceTerms .card-pick>small{font-size:10px}#diceTerms .casino-actions{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0 12px}#diceTerms .casino-actions button{font-size:14px}#diceTerms .casino-table-status{min-height:32px}#diceTerms .card-pick:focus-visible{outline:2px solid var(--mint);outline-offset:4px}
+@media(max-width:520px){#diceDialog{padding:14px}#diceTerms .casino-budget-grid strong{font-size:19px}.small-die{font-size:42px;min-width:34px}.small-dice-row{gap:8px}#diceTerms .casino-actions button{font-size:13px}}
+.small-table-tension{box-shadow:inset 0 0 80px #0009,0 0 0 1px #b4946355}.small-table-tension .casino-table-status{color:#f0d59b;letter-spacing:.08em}.casino-lost .dice-bowl{opacity:.7}
+@media(prefers-reduced-motion:reduce){.small-die-rolling{animation:none}}
+
 </style>
 </head>
 <body><div class="shell">
@@ -68,7 +198,7 @@
 </aside>
 </div>
 <div class="footer">街・組織・人物は創作です。現実の組織の運営方法を再現するものではありません。大型案件の成功率・金額・刑期、昇進確率、罰金はすべて創作のゲーム調整値です。進行状況はこのブラウザー内に保存されます。<span id="saveWarning" class="hidden"> このfile://ページでは保存が制限されています。ゲーム進行は続きますが、タブを閉じると記録が消える場合があります。</span>確率は試作上の仮値です。</div>
-</div><dialog id="originDialog" aria-labelledby="originPlace"><div class="origin-frame"><div class="origin-top"><span>ODDS / CITY</span><button type="button" id="skipOrigin">演出をスキップ ↗</button></div><div class="origin-orbit" aria-hidden="true"></div><div class="origin-content"><div class="eyebrow" id="originPhase">あなたの始まり</div><h2 id="originPlace" aria-live="off"></h2><p id="originFacts"></p><div class="origin-group-wrap"><span class="origin-group-label">あなたが身を置く組織</span><p id="originGroup" aria-live="polite"></p></div><button type="button" id="originContinue" class="primary">この場所から、生きていく →</button><details class="origin-about"><summary>抽選について</summary><p>出生地は2020年の人口比で抽選。加入先の資金力は出身地と独立した創作設定です。都市規模による生活費・手当・遅延率もゲーム調整値です。</p></details></div><div class="origin-bottom">ONE LIFE / NO SECOND START</div></div></dialog><dialog id="careerDialog" aria-labelledby="careerTitle"><div class="decision-top"><h2 id="careerTitle">仕事と暮らし</h2><button type="button" id="closeCareer" class="secondary">閉じる</button></div><div id="careerInfo"></div><button type="button" id="requestCareer" class="secondary">今の組織で、別の仕事を希望する</button></dialog><dialog id="riskOptionsDialog" aria-labelledby="riskOptionsTitle"><div class="decision-top"><h2 id="riskOptionsTitle">危険への対策</h2><button type="button" class="secondary" id="closeRiskOptions">閉じる</button></div><div id="riskContent"></div></dialog><dialog id="casinoDialog" aria-labelledby="casinoTitle"><div class="decision-top"><h2 id="casinoTitle">カジノ · ホールデム</h2><button type="button" class="secondary" id="closeCasino">席を立つ</button></div><div id="casinoContent"></div></dialog><dialog id="spendDialog" aria-labelledby="spendTitle"><div class="decision-top"><h2 id="spendTitle">お金の管理</h2><button type="button" id="closeSpending" class="secondary">閉じる</button></div><p id="spendSummary"></p><section id="expenseOverview" aria-label="月ごとの収支目安"></section><section id="essentialBudgetOptions"></section><h3 class="expense-group-title">月ごとの支出</h3><section id="workRiskActions"></section><button type="button" id="openRiskOptions" hidden>仕事と対立の相談</button><section id="protectionOptions"></section><section><h3>家族への自動送金</h3><p id="remittanceStatus"></p><div id="remittanceRates" class="rate-buttons"></div><p class="risknote">変更は翌月分から。実際に受け取った手当だけが対象。未払いの月は0。借入や家族の援助は対象外で、送金から直接愛情点は増えません。</p></section><h3 class="expense-group-title">一括で使う</h3><section><h3>カジノで遊ぶ</h3><p>ホールデム・ちんちろ。賭け額と費用を確認してから遊ぶ。</p><button type="button" class="secondary" id="openCasino">カジノの条件を見る</button></section><section id="personalPurchases"></section><section id="hobbyOptions"></section><section id="entrustedFunds"></section><section id="leaveOptions"></section><h3 class="expense-group-title">借金の管理</h3><section><h3>借金を返す</h3><label for="repayDollars">返す金額（USドル）</label><input id="repayDollars" type="number" min="1" step="1" value="20"><button type="button" id="repayDebtButton" class="primary">資産から返済する</button><p class="risknote">資産と借金残高を上限に返済します。通常月は生活費支払後の余剰の20%も自動返済します。</p></section><p id="spendMessage" role="status" aria-live="polite"></p></dialog><dialog id="decisionDialog" aria-labelledby="decisionTitle"><div class="decision-top"><span id="decisionDate"></span><button type="button" id="deferDecision" class="secondary">記録を見る</button></div><div class="playback-controls modal-playback" role="group" aria-label="選択画面の時間操作"><button type="button" data-playback-pause aria-pressed="false">Ⅱ 一時停止</button><button type="button" data-speed="1" aria-pressed="true">1×</button><button type="button" data-speed="2" aria-pressed="false">2×</button><button type="button" data-speed="4" aria-pressed="false">4×</button><small data-playback-note></small></div><h2 id="decisionTitle"></h2><p id="decisionText"></p><div id="decisionOptions" class="twins"></div></dialog><dialog id="diceDialog" aria-labelledby="diceTitle"><div class="eyebrow">FICTIONAL TABLE · ゲーム内資産のみ</div><h2 id="diceTitle">サイコロ勝負</h2><p id="diceCash"></p><div id="diceArena"><div><span>あなた</span><b id="dicePlayer">⚄</b></div><small>VS</small><div><span>相手</span><b id="diceOpponent">⚁</b></div></div><h3 id="diceResult"></h3><div id="diceStakes"></div><div id="diceTerms"></div><div class="dice-actions"><button type="button" id="diceRoll" class="primary">サイコロを振る</button><button type="button" id="diceLeave" class="secondary">賭けずに戻る</button><button type="button" id="diceContinue" class="primary" hidden>結果を読んで続ける</button></div><p class="risknote">対戦中は人生の自動進行が止まります。実際のお金・賞品への交換はありません。</p></dialog><div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+</div><dialog id="originDialog" aria-labelledby="originPlace"><div class="origin-frame"><div class="origin-top"><span>ODDS / CITY</span><button type="button" id="skipOrigin">演出をスキップ ↗</button></div><div class="origin-orbit" aria-hidden="true"></div><div class="origin-content"><div class="eyebrow" id="originPhase">あなたの始まり</div><h2 id="originPlace" aria-live="off"></h2><p id="originFacts"></p><div class="origin-group-wrap"><span class="origin-group-label">あなたが身を置く組織</span><p id="originGroup" aria-live="polite"></p></div><button type="button" id="originContinue" class="primary">この場所から、生きていく →</button><details class="origin-about"><summary>抽選について</summary><p>出生地は2020年の人口比で抽選。加入先の資金力は出身地と独立した創作設定です。都市規模による生活費・手当・遅延率もゲーム調整値です。</p></details></div><div class="origin-bottom">ONE LIFE / NO SECOND START</div></div></dialog><dialog id="careerDialog" aria-labelledby="careerTitle"><div class="decision-top"><h2 id="careerTitle">仕事と暮らし</h2><button type="button" id="closeCareer" class="secondary">閉じる</button></div><div id="careerInfo"></div><button type="button" id="requestCareer" class="secondary">今の組織で、別の仕事を希望する</button></dialog><dialog id="riskOptionsDialog" aria-labelledby="riskOptionsTitle"><div class="decision-top"><h2 id="riskOptionsTitle">危険への対策</h2><button type="button" class="secondary" id="closeRiskOptions">閉じる</button></div><div id="riskContent"></div></dialog><dialog id="casinoDialog" aria-labelledby="casinoTitle"><div class="decision-top"><h2 id="casinoTitle">カジノ · ホールデム</h2><button type="button" class="secondary" id="closeCasino">席を立つ</button></div><div id="casinoContent"></div></dialog><dialog id="spendDialog" aria-labelledby="spendTitle"><div class="decision-top"><h2 id="spendTitle">お金の管理</h2><button type="button" id="closeSpending" class="secondary">閉じる</button></div><p id="spendSummary"></p><section id="expenseOverview" aria-label="月ごとの収支目安"></section><section id="essentialBudgetOptions"></section><h3 class="expense-group-title">月ごとの支出</h3><section id="workRiskActions"></section><button type="button" id="openRiskOptions" hidden>仕事と対立の相談</button><section id="protectionOptions"></section><section><h3>家族への自動送金</h3><p id="remittanceStatus"></p><div id="remittanceRates" class="rate-buttons"></div><p class="risknote">変更は翌月分から。実際に受け取った手当だけが対象。未払いの月は0。借入や家族の援助は対象外で、送金から直接愛情点は増えません。</p></section><h3 class="expense-group-title">一括で使う</h3><section><h3>カジノで遊ぶ</h3><p>ホールデム・ちんちろ・ルーレット。賭け額と費用を確認してから遊ぶ。</p><button type="button" class="secondary" id="openCasino">カジノの条件を見る</button></section><section id="personalPurchases"></section><section id="hobbyOptions"></section><section id="entrustedFunds"></section><section id="leaveOptions"></section><h3 class="expense-group-title">借金の管理</h3><section><h3>借金を返す</h3><label for="repayDollars">返す金額（USドル）</label><input id="repayDollars" type="number" min="1" step="1" value="20"><button type="button" id="repayDebtButton" class="primary">資産から返済する</button><p class="risknote">資産と借金残高を上限に返済します。通常月は生活費支払後の余剰の20%も自動返済します。</p></section><p id="spendMessage" role="status" aria-live="polite"></p></dialog><dialog id="decisionDialog" aria-labelledby="decisionTitle"><div class="decision-top"><span id="decisionDate"></span><button type="button" id="deferDecision" class="secondary">記録を見る</button></div><div class="playback-controls modal-playback" role="group" aria-label="選択画面の時間操作"><button type="button" data-playback-pause aria-pressed="false">Ⅱ 一時停止</button><button type="button" data-speed="1" aria-pressed="true">1×</button><button type="button" data-speed="2" aria-pressed="false">2×</button><button type="button" data-speed="4" aria-pressed="false">4×</button><small data-playback-note></small></div><h2 id="decisionTitle"></h2><p id="decisionText"></p><div id="decisionOptions" class="twins"></div></dialog><dialog id="diceDialog" aria-labelledby="diceTitle"><div class="eyebrow">FICTIONAL TABLE · ゲーム内資産のみ</div><h2 id="diceTitle">サイコロ勝負</h2><p id="diceCash"></p><div id="diceArena"><div><span>あなた</span><b id="dicePlayer">⚄</b></div><small>VS</small><div><span>相手</span><b id="diceOpponent">⚁</b></div></div><h3 id="diceResult"></h3><div id="diceStakes"></div><div id="diceTerms"></div><div class="dice-actions"><button type="button" id="diceRoll" class="primary">サイコロを振る</button><button type="button" id="diceLeave" class="secondary">賭けずに戻る</button><button type="button" id="diceContinue" class="primary" hidden>結果を読んで続ける</button></div><p class="risknote">対戦中は人生の自動進行が止まります。実際のお金・賞品への交換はありません。</p></dialog><div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
 <script src="mexico-population.js"></script><script>
 const KEY="oddsCitySaveV8";
 const REGIONS=[
@@ -306,7 +436,7 @@ const lifeEvents={
 function prepareMonth(){
 if(state.phase==='custody'){prepareCustody();save();render();return}
 if(state.sentenceMonths>0){preparePrison()}
-else{state.phase="game";let a=randExcept(ambient,"id",state.lastAmbient);state.lastAmbient=a.id;apply(state.month===1?{...a.effect,money:0}:a.effect);if(state.month>1&&state.rank>0&&Math.random()<.006){state.rank=Math.max(0,state.rank-12);addFeed("組織内の混乱で立場を一段落とされた。","risk","降格 · 組織内の信用・地位 -8/100")}if(state.month>1&&Math.random()<.04){let fine=20+Math.floor(Math.random()*131);apply({money:-fine});addFeed("組織内の規律違反として罰金が差し引かれた。","risk","軽重は案件ごとに変動 · 今月の罰金 "+moneyText(fine))}if(state.month<(state.nextDecisionMonth||1)){state.currentEvent=null;addFeed(a.title+'。'+a.text,'normal');save();render();return}let roll=Math.random(),e,lifeEvent=birthplaceEvent();if(lifeEvent&&state.month%24===2)e=lifeEvent;else if(state.month===1)e=events.find(x=>x.id==="newcomer");else if(roll<.01)e=events.find(x=>x.id==="large_case");else if(roll<.08)e=events.find(x=>x.id==="discipline");else if(roll<.16)e=events.find(x=>x.id==="promotion_offer");else{let regular=events.filter(x=>!["large_case","discipline","promotion_offer","newcomer","boss_vacancy","dice_invitation"].includes(x.id)&&eventEligible(x)&&!state.recentDecisions.includes(x.id)&&(!x.theme||!state.recentThemes.includes(x.theme)));let pool=regular.flatMap(x=>Array(eventWeight(x)).fill(x));e=randExcept(pool,"id",state.lastDecision)}if(state.rank>=140&&state.month>=120&&state.skill>=20&&state.leadershipSupport>=3&&!state.boss&&ensureCareer()?.stage>=3&&Math.random()<.02)e=events.find(x=>x.id==="boss_vacancy");if(!['boss_vacancy','large_case','discipline','promotion_offer'].includes(e.id)&&state.month>=3&&state.month>=state.gambleCooldown&&state.money>=dollarsToUnits(21)&&Math.random()<.06)e=events.find(x=>x.id==='dice_invitation');if(state.orgDiscontent>=60&&Math.random()<.5)e=events.find(x=>x.id==='org_unrest');if(state.month>=3&&!state.roleChosen)e=events.find(x=>x.id==='role_path');else if(state.month>=4&&!state.smokeOffered){e=events.find(x=>x.id===(state.smoking?'smoke_habit':'smoke_offer'));state.smokeOffered=true}else if(state.month>=6&&!state.occupationChosen)e=events.find(x=>x.id==='occupation_offer');if(e.storyOnAppear){Object.assign(state,e.storyOnAppear);apply(e.appearFx||{});e={...e,storyOnAppear:null}}e=personalizeEvent(e);state.lastDecision=e.id;state.recentDecisions=[...state.recentDecisions,e.id].slice(-12);if(e.theme)state.recentThemes=[...state.recentThemes,e.theme].slice(-3);state.currentEvent=e;addFeed(e.title+"。"+e.text,"event","",{eventId:e.id})}
+else{state.phase="game";let a=randExcept(ambient,"id",state.lastAmbient);state.lastAmbient=a.id;apply(state.month===1?{...a.effect,money:0}:a.effect);if(state.month>1&&state.rank>0&&Math.random()<.006){state.rank=Math.max(0,state.rank-12);addFeed("組織内の混乱で立場を一段落とされた。","risk","降格 · 組織内の信用・地位 -8/100")}if(state.month>1&&Math.random()<.04){let fine=20+Math.floor(Math.random()*131);apply({money:-fine});addFeed("組織内の規律違反として罰金が差し引かれた。","risk","軽重は案件ごとに変動 · 今月の罰金 "+moneyText(fine))}if(state.month<(state.nextDecisionMonth||1)){state.currentEvent=null;addFeed(a.title+'。'+a.text,'normal');save();render();return}let roll=Math.random(),e,lifeEvent=birthplaceEvent();if(lifeEvent&&state.month%24===2)e=lifeEvent;else if(state.month===1)e=events.find(x=>x.id==="newcomer");else if(roll<.01)e=events.find(x=>x.id==="large_case");else if(roll<.08)e=events.find(x=>x.id==="discipline");else if(roll<.16)e=events.find(x=>x.id==="promotion_offer");else{let regular=events.filter(x=>!["large_case","discipline","promotion_offer","newcomer","boss_vacancy","dice_invitation"].includes(x.id)&&eventEligible(x)&&!state.recentDecisions.includes(x.id)&&(!x.theme||!state.recentThemes.includes(x.theme)));let pool=regular.flatMap(x=>Array(eventWeight(x)).fill(x));e=randExcept(pool,"id",state.lastDecision)}if(state.rank>=140&&state.month>=120&&state.skill>=20&&state.leadershipSupport>=3&&!state.boss&&ensureCareer()?.stage>=3&&Math.random()<.02)e=events.find(x=>x.id==="boss_vacancy");if(!['boss_vacancy','large_case','discipline','promotion_offer'].includes(e.id)&&state.month>=3&&state.month>=state.gambleCooldown&&state.money>=dollarsToUnits(21)&&Math.random()<.06)e=events.find(x=>x.id==='dice_invitation');if(state.orgDiscontent>=60&&Math.random()<.5)e=events.find(x=>x.id==='org_unrest');if(state.month>=3&&!state.roleChosen)e=events.find(x=>x.id==='role_path');else if(state.month>=4&&!state.smokeOffered){e=events.find(x=>x.id===(state.smoking?'smoke_habit':'smoke_offer'));state.smokeOffered=true}else if(state.month>=6&&!state.occupationChosen)e=events.find(x=>x.id==='occupation_offer');if(e.storyOnAppear){Object.assign(state,e.storyOnAppear);apply(e.appearFx||{});e={...e,storyOnAppear:null}}e=personalizeEvent(e);state.lastDecision=e.id;state.recentDecisions=[...state.recentDecisions,e.id].slice(-12);if(e.theme)state.recentThemes=[...state.recentThemes,e.theme].slice(-3);if(e.id==='friend_support'&&e.calmMomentVersion===1){resolveFriendlyMoment(e)}else{state.currentEvent=e;addFeed(e.title+"。"+e.text,"event","",{eventId:e.id})}}
 save();render()
 }
 
@@ -420,19 +550,21 @@ renderPlaybackControls();if(!dialog.open)dialog.showModal();
 }
 function deferDecision(){deferredDecisionMonth=state.month;document.getElementById('decisionDialog').close();renderPlaybackControls()}
 function journalHTML(animate=true){
-const months=new Map();
-state.feed.forEach(f=>{if(!months.has(f.month))months.set(f.month,[]);months.get(f.month).push(f)});
-return [...months.entries()].map(([month,rows])=>{
-const event=rows.filter(f=>f.type==='event').at(-1),outcomes=rows.filter(f=>['choice','risk','end'].includes(f.type)||(f.type==='normal'&&/喫煙|禁煙|体調|悲しみ|役割|援助/.test(f.text)));
-const fallback=rows.find(f=>f.type==='normal')||rows.find(f=>f.type!=='world')||rows[0];
-const text=(event?event.text:fallback.text).replace(/（\d+歳・[^）]*）$/,'');
-const current=month===state.month&&['game','custody','prison'].includes(state.phase)&&!!state.currentEvent;
-const revealed=animate&&rows.some(f=>f.reveal),ledger=state.monthlyLedger?.[month];
-const result=outcomes.filter(f=>event||f!==fallback).map(f=>'<small class="month-result '+((f.important||f.type==='risk'||/推薦.*通|後継争/.test(f.text))?((f.type==='risk'||/通らな|失敗|敗れ/.test(f.text))?'result-loss':'result-important'):'')+'">'+escapeHTML(f.text)+(f.detail?' · '+escapeHTML(f.detail):'')+'</small>').join('');
-const accounting=ledger?'<details class="month-ledger"><summary>収支の内訳</summary><p>受取 '+moneyText(ledger.income)+' · 家族への送金 '+moneyText(ledger.remittance||0)+' · 借金返済 '+moneyText(ledger.debtPayment||0)+' · 生活費支払 '+moneyText(ledger.paidLiving)+' · 手当の未受取 '+moneyText(ledger.payArrears)+' · 未払い生活費 '+moneyText(ledger.livingDebt)+'</p></details>':'';
-return '<div class="feedrow '+(revealed?'reveal':'')+'" style="--delay:0s"><div class="feedage">'+ageText(month)+'</div><div class="feedtext">'+escapeHTML(text)+(!event&&fallback.detail?'<small class="month-result">'+escapeHTML(fallback.detail)+'</small>':'')+result+accounting+(current?'<button type="button" class="secondary reopen-decision">選択する</button>':'')+'</div></div>';
-}).join('');
+ const months=new Map();state.feed.forEach(f=>{if(!months.has(f.month))months.set(f.month,[]);months.get(f.month).push(f)});
+ return [...months.entries()].map(([month,rows])=>{
+  const actions=rows.filter(journalMoneyAction),routine=rows.filter(journalRoutineHobby),ordinaryRows=rows.filter(f=>!actions.includes(f)&&!routine.includes(f));
+  const event=ordinaryRows.filter(f=>f.type==='event').at(-1),fallback=ordinaryRows.find(f=>f.type==='normal')||ordinaryRows.find(f=>f.type!=='world')||ordinaryRows[0];
+  const current=month===state.month&&['game','custody','prison'].includes(state.phase)&&!!state.currentEvent,revealed=animate&&rows.some(f=>f.reveal),ledger=state.monthlyLedger?.[month];
+  const outcomes=ordinaryRows.filter(f=>['choice','risk','end'].includes(f.type)||(f.type==='normal'&&/喫煙|禁煙|体調|悲しみ|役割|援助/.test(f.text)));
+  const result=outcomes.filter(f=>event||f!==fallback).map(f=>'<small class="month-result '+((f.important||f.type==='risk'||/推薦.*通|後継争/.test(f.text))?((f.type==='risk'||/通らな|失敗|敗れ/.test(f.text))?'result-loss':'result-important'):'')+'">'+escapeHTML(f.text)+(f.detail?' · '+escapeHTML(f.detail):'')+'</small>').join('');
+  const accounting=ledger?'<details class="month-ledger"><summary>収支の内訳</summary><p>受取 '+moneyText(ledger.income)+' · 家族への送金 '+moneyText(ledger.remittance||0)+' · 借金返済 '+moneyText(ledger.debtPayment||0)+' · 生活費支払 '+moneyText(ledger.paidLiving)+' · 手当の未受取 '+moneyText(ledger.payArrears)+' · 未払い生活費 '+moneyText(ledger.livingDebt)+'</p></details>':'';
+  const hobbies=routine.length?'<details class="month-hobby-records"><summary>今月の趣味（'+routine.length+'件）</summary>'+routine.map(f=>'<p>'+escapeHTML(f.text)+(f.detail?' · '+escapeHTML(f.detail):'')+'</p>').join('')+'</details>':'';
+  const text=(event?.text||fallback?.text||'').replace(/（\d+歳・[^）]*）$/,'');
+  const main=(text||current||ledger||routine.length)?'<div class="feedrow '+(revealed?'reveal':'')+'" style="--delay:0s"><div class="feedage">'+ageText(month)+'</div><div class="feedtext">'+escapeHTML(text)+(!event&&fallback?.detail?'<small class="month-result">'+escapeHTML(fallback.detail)+'</small>':'')+result+accounting+hobbies+(current?'<button type="button" class="secondary reopen-decision">選択する</button>':'')+'</div></div>':'';
+  return main+actions.map(f=>journalActionHTML(f,month)).join('');
+ }).join('');
 }
+
 function settleMonth(){
 if(!state.lightDuty&&!covered('delegation')){state.serviceMonths++;if(state.serviceMonths%6===0&&state.probationMonths<=0){const previous=state.rank,beforeSkill=state.skill;apply({rank:4.5,skill:1});addFeed('職務を続けた実績が評価された。','choice','信用 '+rankChange(state.rank-previous)+' · 経験 '+signed(state.skill-beforeSkill))}}
 const org=state.organization||{pay:1,delay:.12};const base=payBase(state.rank,org,state.boss);
@@ -2280,6 +2412,489 @@ if(state.phase==='custody'&&!state.currentEvent?.options.some(o=>o.legalAction==
 if(state.phase==='prison'&&state.currentEvent?.prisonMenuVersion!==3){preparePrison();save()}
 if(state.phase==='game'&&state.currentEvent?.id==='occupation_offer'&&!state.temperament&&!state.occupationChosen)state.currentEvent=temperamentEvent();
 if(state.phase==='game'&&state.currentEvent?.id==='temperament'){state.currentEvent=temperamentEvent();save()}
+// UI only. Reuse live DOM nodes so existing purchase handlers remain attached.
+function setupReadableSpending(){
+ const dialog=document.getElementById('spendDialog');
+ if(dialog.querySelector('.spend-body'))return;
+ const get=id=>document.getElementById(id),header=document.createElement('div'),body=document.createElement('div');
+ header.className='spend-header';body.className='spend-body';
+ const remittance=get('remittanceRates').closest('section'),casino=get('openCasino').closest('section'),repayment=get('repayDollars').closest('section');
+ header.append(dialog.querySelector('.decision-top'),get('spendSummary'),get('spendMessage'));
+ const title=document.createElement('h3');title.textContent='暮らしと楽しみに使う';body.append(title,get('personalPurchases'),get('hobbyOptions'),casino);
+ casino.classList.add('spend-card');
+ function fold(id,label,nodes){const detail=document.createElement('details'),summary=document.createElement('summary');detail.id=id;detail.className='spend-fold';summary.textContent=label;detail.append(summary,...nodes);body.append(detail)}
+ fold('spendMonthlyGroup','毎月の生活費・家族への送金',[get('essentialBudgetOptions'),remittance]);
+ fold('spendRiskGroup','仕事の負担・危険への対策',[get('workRiskActions'),get('openRiskOptions'),get('protectionOptions'),get('leaveOptions')]);
+ fold('spendDebtGroup','借金を返す',[repayment]);
+ fold('spendForecastGroup','翌月の収支を確認する',[get('expenseOverview')]);
+ dialog.querySelectorAll(':scope>.expense-group-title').forEach(el=>el.remove());
+ // This legacy element is kept for older renderers, which still address its ID.
+ body.append(get('entrustedFunds'));
+ dialog.append(header,body);remittance.classList.add('spend-card');repayment.classList.add('spend-card');
+}
+function readableSpendingDetailKey(el){const scope=el.closest('[id]');return el.id||((scope?.id||'spending')+':'+(el.querySelector(':scope>summary')?.textContent||''))}
+const readablePreviousSpending=renderSpending;
+renderSpending=function(...args){
+ const dialog=document.getElementById('spendDialog'),scroll=dialog.scrollTop,focused=document.activeElement;
+ const focusId=dialog.contains(focused)?focused.id:'',focusData=dialog.contains(focused)?Object.entries(focused.dataset).filter(([k])=>k!=='readableCard'):[];
+ const opened=new Map([...dialog.querySelectorAll('details')].map(el=>[readableSpendingDetailKey(el),el.open]));
+ readablePreviousSpending(...args);
+ setupReadableSpending();
+ const personal=document.getElementById('personalPurchases');
+ // The outer lifestyle heading is now represented by the section heading above.
+ const outer=personal.querySelector(':scope>details');if(outer)outer.open=true;
+ for(const section of [...personal.querySelectorAll('section')]){
+  const heading=section.querySelector(':scope>h4');if(!heading)continue;
+  const separate=document.createElement('section');let node=heading;
+  while(node){const next=node.nextSibling;separate.append(node);node=next}
+  section.after(separate);
+ }
+ const cards=[...personal.querySelectorAll('section')].filter(el=>!el.querySelector('article'));
+ cards.push(...dialog.querySelectorAll('#personalPurchases article,#hobbyOptions article,#workRiskActions article,#protectionOptions article'),document.getElementById('essentialBudgetOptions'),document.getElementById('leaveOptions'));
+ for(const card of cards){
+  card.classList.add('spend-card');
+  // Put the existing cost text at the right; never recalculate or omit a fee.
+  const list=card.querySelector(':scope>.spend-effects'),term=list&&[...list.children].find(el=>el.tagName==='DT'&&el.textContent==='資金');
+  if(term&&term.nextElementSibling?.tagName==='DD'){
+   const value=term.nextElementSibling,price=document.createElement('div');price.className='spend-price';price.setAttribute('aria-label','費用');
+   for(const part of value.textContent.split('／')){const line=document.createElement('span');line.textContent=part;price.append(line)}
+   card.prepend(price);term.remove();value.remove();
+  }
+ }
+ for(const card of dialog.querySelectorAll('#hobbyOptions article')){
+  const facts=card.querySelector(':scope>p');if(!facts)continue;
+  const parts=facts.textContent.split(' · ');if(parts.length<4)continue;
+  const price=document.createElement('div');price.className='spend-price';price.setAttribute('aria-label','費用');
+  for(const part of parts.splice(0,2)){const line=document.createElement('span');line.textContent=part;price.append(line)}
+  card.prepend(price);facts.textContent=parts.join(' · ');
+ }
+ for(const detail of dialog.querySelectorAll('details')){if(detail===outer)continue;const key=readableSpendingDetailKey(detail);if(opened.has(key))detail.open=opened.get(key)}
+ // Restore keyboard position when an action redraws its card.
+ if(!focused?.isConnected&&focusId){document.getElementById(focusId)?.focus({preventScroll:true})}else if(!focused?.isConnected&&focusData.length){
+  const replacement=[...dialog.querySelectorAll('button')].find(b=>focusData.every(([k,v])=>b.dataset[k]===v));replacement?.focus({preventScroll:true});
+ }
+ dialog.scrollTop=scroll;
+};
+
+// New hands use no-limit rules; saved hands without noLimit retain limit rules.
+// Cosmetic snapshots never replace game state. Every action settles/saves before its reveal.
+let casinoVisual=null,casinoStarting=false,casinoAction=null;
+const casinoCopy=value=>JSON.parse(JSON.stringify(value));
+function casinoMotion(){return state.casinoMotion!==false&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches}
+function casinoTone(kind){
+ if(!state.tableSound)return;
+ try{const Audio=window.AudioContext||window.webkitAudioContext;if(!Audio)return;const ctx=casinoTone.context||(casinoTone.context=new Audio());ctx.resume();
+ const notes=kind==='win'?[440,554,660]:kind==='lose'?[220,165]:kind==='chips'?[480,330]:kind==='flip'?[600]:[250];
+ notes.forEach((hz,i)=>{const oscillator=ctx.createOscillator(),gain=ctx.createGain(),now=ctx.currentTime+i*.075;oscillator.type='sine';oscillator.frequency.value=hz;gain.gain.setValueAtTime(.025,now);gain.gain.exponentialRampToValueAtTime(.001,now+.09);oscillator.connect(gain);gain.connect(ctx.destination);oscillator.start(now);oscillator.stop(now+.1)})}catch{}
+}
+function casinoMinPayment(h,actor){return Math.max(0,h.target-h.street[actor])+(h.minRaise||h.big)}
+function casinoRaisePayment(h,actor){const min=casinoMinPayment(h,actor),selected=actor===0?Number(state.casinoSession.raisePayment):min;return Math.min(h.stacks[actor],Math.max(min,Number.isFinite(selected)?Math.round(selected):min))}
+const experienceLimitLegal=holdLegal;
+holdLegal=function(h,actor){
+ if(!state.casinoSession?.noLimit)return experienceLimitLegal(h,actor);
+ if(state.casinoSession.settled||h.stacks[actor]<=0)return [];
+ const due=Math.max(0,h.target-h.street[actor]),actions=[due?'call':'check'],canRaise=h.mayRaise?.[actor]!==false&&h.stacks[1-actor]>0;
+ if(canRaise&&h.stacks[actor]>=casinoMinPayment(h,actor))actions.push(h.target?'raise':'bet');
+ if(h.stacks[actor]<=due||canRaise)actions.push('allin');
+ if(due)actions.push('fold');return actions;
+};
+function casinoRefundUncalled(h){const diff=h.total[0]-h.total[1];if(!diff)return 0;const actor=diff>0?0:1,amount=Math.abs(diff);h.total[actor]-=amount;h.stacks[actor]+=amount;h.street[actor]=Math.max(0,h.street[actor]-amount);h.target=Math.max(...h.street);h.log.push('未成立分 '+holdMoney(amount)+'を'+(actor?'相手':'あなた')+'へ返却');return amount}
+const experienceLimitApply=holdApply;
+holdApply=function(actor,action){
+ const s=state.casinoSession,h=s?.h;if(!h||s.stage!=='playing'||h.turn!==actor||!holdLegal(h,actor).includes(action))return false;
+ const due=Math.max(0,h.target-h.street[actor]);
+ if(!s.noLimit){const amount=action==='call'?Math.min(due,h.stacks[actor]):['bet','raise'].includes(action)?Math.min(h.stacks[actor],due+holdUnit(h)):0;const ok=experienceLimitApply(actor,action);if(ok)casinoAction={actor,action,amount};return ok}
+ if(!h.mayRaise)h.mayRaise=[true,true];
+ if(action==='fold'){casinoAction={actor,action,amount:0};h.log.push((actor?'相手':'あなた')+'：フォールド');casinoRefundUncalled(h);holdSettle(1-actor,actor===0?'player_fold':'opponent_fold');return true}
+ const oldTarget=h.target;let paid=0;
+ if(action==='call')paid=holdPay(h,actor,due);
+ else if(action==='allin')paid=holdPay(h,actor,h.stacks[actor]);
+ else if(action==='raise'||action==='bet')paid=holdPay(h,actor,casinoRaisePayment(h,actor));
+ const increase=h.street[actor]-oldTarget;
+ if(increase>0){h.target=h.street[actor];h.acted[1-actor]=false;if(increase>=(h.minRaise||h.big)){h.minRaise=increase;h.mayRaise[1-actor]=true}}
+ h.acted[actor]=true;h.mayRaise[actor]=false;s.raisePayment=null;
+ casinoAction={actor,action,amount:paid};h.log.push((actor?'相手':'あなた')+'：'+({check:'チェック',call:'コール',bet:'ベット',raise:'レイズ',allin:'オールイン'})[action]+(paid?' '+holdMoney(paid):''));
+ const equal=h.street[0]===h.street[1],shortCall=h.stacks[actor]===0&&h.street[actor]<=h.street[1-actor];
+ if((equal&&h.stacks.some(n=>n===0))||shortCall){casinoRefundUncalled(h);holdShowdown();return true}
+ if(equal&&h.acted.every(Boolean)){
+  if(h.round===3){holdShowdown();return true}
+  h.round++;holdDeal(h);h.street=[0,0];h.target=0;h.raises=0;h.minRaise=h.big;h.acted=[false,false];h.mayRaise=[true,true];h.turn=1-h.dealer;
+ }else h.turn=1-actor;
+ save();return true;
+};
+const experienceOpponent=holdOpponentAction;
+holdOpponentAction=function(h){
+ if(!state.casinoSession?.noLimit)return experienceOpponent(h);
+ // Only opponent hole cards and revealed board inform its choice.
+ const legal=holdLegal(h,1),hole=h.opponent.map(c=>c%13+2),rank=h.board.length>=3?holdemBest([...h.opponent,...h.board]):null;
+ const strength=rank?rank[0]+rank[1]/25:hole[0]===hole[1]?2:Math.max(...hole)>=12?1:.3,roll=Math.random(),due=Math.max(0,h.target-h.street[1]),pot=h.total[0]+h.total[1];
+ if(legal.includes('allin')&&h.stacks[1]>due&&strength>=3&&roll<.09)return 'allin';
+ if((strength>=2&&roll<.3)||roll<.045){if(legal.includes('raise'))return 'raise';if(legal.includes('bet'))return 'bet'}
+ if(!due)return 'check';if(strength>=2||due<=h.big||(strength>=1&&due/Math.max(1,pot+due)<.35)||roll<.15)return 'call';return 'fold';
+};
+function casinoMakeVisual(s){return {session:s,h:casinoCopy(s.h),board:s.h.board.length,player:2,opponent:s.stage==='result'&&s.reason==='showdown'?2:0,result:s.stage==='result',busy:false,message:'',flip:'',cue:null,confirm:false,skip:false,wake:null}}
+function casinoView(){const s=state.casinoSession;if(!s?.h)return null;if(casinoVisual?.session!==s)casinoVisual=casinoMakeVisual(s);return casinoVisual}
+function casinoWait(ms,v){if(!casinoMotion()||v.skip)return Promise.resolve();return new Promise(resolve=>{const timer=setTimeout(()=>{v.wake=null;resolve()},ms);v.wake=()=>{clearTimeout(timer);v.wake=null;resolve()}})}
+function casinoCurrent(v){return state.casinoSession===v.session&&casinoVisual===v}
+function casinoSkip(){const v=casinoView();if(!v)return;v.skip=true;v.wake?.()}
+function casinoActionText(a){return (a.actor?'相手':'あなた')+'：'+({check:'チェック',call:'コール',bet:'ベット',raise:'レイズ',allin:'オールイン',fold:'フォールド'})[a.action]+(a.amount?' '+holdMoney(a.amount):'')}
+async function casinoRevealAction(v,before,a){
+ const s=v.session,next=casinoCopy(s.h),showdown=s.stage==='result'&&s.reason==='showdown';
+ v.cue=a;v.message=casinoActionText(a);casinoTone(a.action==='check'||a.action==='fold'?'tap':'chips');renderCasino();await casinoWait(a.action==='allin'?650:400,v);if(!casinoCurrent(v))return;
+ v.cue=null;v.h=next;v.board=before.board.length;
+ if(showdown){v.message='ショーダウン';renderCasino();await casinoWait(400,v);
+  for(let i=0;i<2;i++){if(!casinoCurrent(v))return;v.opponent=i+1;v.flip='opponent:'+i;casinoTone('flip');renderCasino();await casinoWait(430,v);v.flip=''}
+ }
+ for(let i=before.board.length;i<next.board.length;i++){
+  if(!casinoCurrent(v))return;
+  v.message=i===4?'リバーを開く…':i===3?'ターンを開く…':'フロップを開く…';renderCasino();await casinoWait(i===4?750:i===3?350:110,v);
+  if(!casinoCurrent(v))return;v.board=i+1;v.h.round=i<3?1:i===3?2:3;v.flip='board:'+i;casinoTone('flip');renderCasino();await casinoWait(i<3?250:450,v);v.flip='';
+ }
+ if(!casinoCurrent(v))return;
+ if(s.stage==='result'){
+  v.message=showdown?'役を確認…':a.actor?'相手がフォールド':'フォールドで終了';renderCasino();await casinoWait(showdown?650:150,v);if(!casinoCurrent(v))return;
+  v.result=true;v.message=s.winner===0?'WIN':s.winner===1?'LOSE':'DRAW';v.cue={action:'award',actor:s.winner};casinoTone(s.winner===0?'win':s.winner===1?'lose':'tap');renderCasino();await casinoWait(700,v);v.cue=null;
+ }
+}
+async function casinoRun(actor,action){
+ const s=state.casinoSession,v=casinoView();if(!s||!v||v.busy||s.stage!=='playing'||s.h.turn!==actor)return;
+ v.busy=true;v.skip=false;v.confirm=false;
+ try{
+  let nextActor=actor,nextAction=action;
+  while(casinoCurrent(v)&&s.stage==='playing'){
+   if(nextActor===1){v.message='相手が考えている…';v.cue=null;renderCasino();await casinoWait(700,v);if(!casinoCurrent(v))return;nextAction=holdOpponentAction(s.h)}
+   const before=casinoCopy(s.h);if(!holdApply(nextActor,nextAction))break;
+   // Persist the authoritative state before waiting for any cosmetic animation.
+   save();await casinoRevealAction(v,before,casinoAction);if(!casinoCurrent(v))return;
+   if(s.stage!=='playing'||s.h.turn!==1)break;nextActor=1;
+  }
+ }finally{if(casinoCurrent(v)){v.busy=false;v.skip=false;v.flip='';v.cue=null;v.h=casinoCopy(s.h);v.board=s.h.board.length;v.player=2;v.result=s.stage==='result';v.opponent=v.result&&s.reason==='showdown'?2:0;v.message=v.result?(s.winner===0?'WIN':s.winner===1?'LOSE':'DRAW'):'あなたの番';renderStats();renderCasino()}}
+}
+holdPump=function(){if(casinoStarting)return;if(state.casinoSession?.stage==='playing'&&state.casinoSession.h.turn===1)void casinoRun(1,null)};
+holdPlayer=function(action){const s=state.casinoSession,v=casinoView();if(!s||!v||v.busy||s.stage!=='playing'||s.h.turn!==0||!holdLegal(s.h,0).includes(action))return;if(action==='allin'){v.confirm=true;renderCasino();document.getElementById('casinoConfirmAllin')?.focus({preventScroll:true});return}void casinoRun(0,action)};
+const experienceStart=holdStart;
+holdStart=function(){
+ const s=state.casinoSession;if(!s||s.stage!=='betting'||!s.budget)return;s.noLimit=true;casinoStarting=true;
+ try{experienceStart()}finally{casinoStarting=false}
+ if(s.stage==='betting')return;
+ s.h.minRaise=s.h.big;s.h.mayRaise=[true,true];save();casinoVisual=casinoMakeVisual(s);const v=casinoVisual;v.busy=true;v.board=0;v.player=0;v.result=false;v.message='札を配る…';renderCasino();
+ void(async()=>{try{for(let i=0;i<2;i++){await casinoWait(180,v);if(!casinoCurrent(v))return;v.player=i+1;v.flip='player:'+i;casinoTone('flip');renderCasino();await casinoWait(380,v);v.flip=''}}finally{if(casinoCurrent(v)){v.busy=false;v.flip='';v.player=2;v.message='あなたの番';renderCasino();holdPump()}}})();
+};
+function casinoBestFive(cards){let best=null,chosen=[];for(let a=0;a<cards.length-4;a++)for(let b=a+1;b<cards.length-3;b++)for(let c=b+1;c<cards.length-2;c++)for(let d=c+1;d<cards.length-1;d++)for(let e=d+1;e<cards.length;e++){const five=[cards[a],cards[b],cards[c],cards[d],cards[e]],rank=pokerRank(five);if(!best||compareRanks(rank,best)>0){best=rank;chosen=five}}return chosen}
+function casinoCard(card,key,visible,v,best){
+ const back='<span class="playing-card card-back" aria-label="裏向きの札">◆</span>';if(!visible)return back;
+ let face=tableCard(card);if(best.includes(card))face=face.replace('playing-card ','playing-card casino-best ');
+ if(v.flip!==key||!casinoMotion()||v.skip)return face;
+ return '<span class="casino-flip" aria-label="札をめくる"><span class="casino-flip-inner"><span class="casino-card-back">'+back+'</span><span class="casino-card-face">'+face+'</span></span></span>';
+}
+function casinoButtonLabel(action,h,s){const due=Math.max(0,h.target-h.street[0]),amount=s.noLimit?casinoRaisePayment(h,0):Math.min(h.stacks[0],due+holdUnit(h));return {check:'チェック',call:'コール '+holdMoney(Math.min(due,h.stacks[0])),bet:'ベット '+holdMoney(amount),raise:'レイズ（投入 '+holdMoney(amount)+'）',allin:'オールイン '+holdMoney(h.stacks[0]),fold:'フォールド'}[action]}
+const experienceBaseRender=renderCasino;
+renderCasino=function(){
+ const s=state.casinoSession;if(!s)return;
+ const box=document.getElementById('casinoContent');
+ if(s.stage==='betting'){
+  experienceBaseRender();const rules=box.querySelector('.event-evidence p');if(rules)rules.textContent='1対1のノーリミット・ホールデム。手札2枚と共通札5枚から最強の5枚を使う。投入額は卓の持込みの範囲内。最低ベットはビッグブラインド、最低レイズ幅は直前の増額幅。残り全額なら最低幅未満も可能。相手が応じられない分は返る。';
+  if(s.creditOffer)for(const p of box.querySelectorAll(':scope>p'))if(p.textContent.includes('最大損失'))p.textContent='卓の持込み '+holdMoney(s.budget)+' ＋手数料 '+holdMoney(Math.round(s.budget*.05))+'。借入の利息込みの最大損失は下の条件を確認。';
+  casinoAppend(box,'<p class="casino-note">新しい対局はオールインあり。追加購入なし。'+(s.creditOffer?'借入は下の利息込みの条件で精算。':'持込みと手数料の合計が最大損失。')+'</p>');return;
+ }
+ const v=casinoView(),h=v.h,result=v.result,showdown=result&&s.reason==='showdown',pot=h.total[0]+h.total[1];
+ const best=showdown?casinoBestFive([...(s.winner===1?h.opponent:h.player),...h.board]):[],opponentBest=showdown&&s.winner===-1?casinoBestFive([...h.opponent,...h.board]):[];
+ const cue=v.cue,actor=cue?.actor,fold=cue?.action==='fold',award=cue?.action==='award',chips=cue&&cue.amount>0;
+ const rows=(cards,group,count,winning)=>cards.map((card,i)=>casinoCard(card,group+':'+i,i<count&&!(fold&&group===(actor?'opponent':'player')),v,winning)).join('');
+ const board=Array.from({length:5},(_,i)=>casinoCard(h.board[i],'board:'+i,i<v.board,v,[...best,...opponentBest])).join('');
+ const status=v.message||(result?(s.winner===0?'WIN':s.winner===1?'LOSE':'DRAW'):h.turn===1?'相手の番':'あなたの番');
+ const controls='<div class="casino-preferences"><button type="button" class="secondary" id="casinoSound" aria-pressed="'+!!state.tableSound+'">音 '+(state.tableSound?'ON':'OFF')+'</button><button type="button" class="secondary" id="casinoMotion" aria-pressed="'+(state.casinoMotion!==false)+'">演出 '+(state.casinoMotion!==false?'ON':'OFF')+'</button>'+(v.busy?'<button type="button" class="secondary" id="casinoSkip">演出をスキップ</button>':'')+'</div>';
+ let html='<div class="casino-round"><span>'+(v.board===0?'プリフロップ':v.board<=3?'フロップ':v.board===4?'ターン':'リバー')+' · '+(s.noLimit?'ノーリミット':'リミット')+'</span><b>ポット '+holdMoney(pot)+'</b></div>';
+ html+='<div class="table-felt casino-stage '+(result?(s.winner===0?'casino-won':s.winner===1?'casino-lost':'casino-drawn'):'')+'"><div class="table-seat '+(cue?.action==='check'&&actor===1?'casino-tap':'')+'">相手 · 残り '+holdMoney(h.stacks[1])+'</div><div class="card-row '+(fold&&actor===1?'casino-fold':'')+'">'+rows(h.opponent,'opponent',v.opponent,s.winner===1?best:opponentBest)+'</div><div class="casino-pot-area"><span class="casino-pot">'+holdMoney(pot)+'</span>'+(chips?'<span class="casino-moving-chips casino-from-'+actor+'" aria-hidden="true">◉ ◉ ◉</span>':'')+(award?'<span class="casino-award-chips casino-to-'+actor+'" aria-hidden="true">◉ ◉ ◉</span>':'')+'</div><div class="card-row casino-board">'+board+'</div><div class="casino-table-status" role="status" aria-live="polite">'+escapeHTML(status)+'</div><div class="card-row '+(fold&&actor===0?'casino-fold':'')+'">'+rows(h.player,'player',v.player,s.winner===0||s.winner===-1?best:[])+'</div><div class="table-seat '+(cue?.action==='check'&&actor===0?'casino-tap':'')+'">あなた · 残り '+holdMoney(h.stacks[0])+'</div></div>';
+ if(result){
+  const outcome=s.winner===0?'WIN':s.winner===1?'LOSE':'DRAW',gross=s.winner===0?pot:s.winner===-1?s.payout-h.stacks[0]:0;
+  html+='<div class="casino-result casino-outcome '+(cue?.action==='award'&&casinoMotion()&&!v.skip?'casino-result-enter ':'')+(s.winner===0?'casino-result-win':s.winner===1?'casino-result-lose':'casino-result-draw')+'"><strong>'+outcome+'</strong>'+(showdown?'<p>あなた：'+POKER_NAMES[holdemBest([...h.player,...h.board])[0]]+' ／ 相手：'+POKER_NAMES[holdemBest([...h.opponent,...h.board])[0]]+'</p>':'<p>'+ (s.reason==='opponent_fold'?'相手がフォールドした。':'あなたがフォールドした。')+'</p>')+'<p>獲得ポット '+holdMoney(gross)+' · 今回の差引 '+diceSigned(s.net)+'</p><small>差引は手数料'+(s.creditLoan?'・今回の借入利息':'')+'込み。未使用チップは返却済み。</small></div>';
+  if(!v.busy)html+='<button type="button" class="primary" id="casinoAgain">もう一局の条件を見る</button>';
+ }else if(!v.busy){
+  const actual=s.h,due=Math.max(0,actual.target-actual.street[0]);
+  html+='<p class="casino-bet-summary">あなたの投入済み '+holdMoney(actual.total[0])+(due?' · コール '+holdMoney(Math.min(due,actual.stacks[0])):'')+'</p>';
+  if(s.noLimit&&holdLegal(actual,0).some(a=>a==='raise'||a==='bet')){const min=casinoMinPayment(actual,0),selected=casinoRaisePayment(actual,0);html+='<label class="casino-sizing">今回投入する額 <output id="casinoSizeValue">'+holdMoney(selected)+'</output><input id="casinoSize" type="range" min="'+min+'" max="'+actual.stacks[0]+'" step="1" value="'+selected+'"><small>コール分込み。最低 '+holdMoney(min)+' ／ 残り '+holdMoney(actual.stacks[0])+'</small></label>'}
+  html+='<div class="rate-buttons casino-actions">'+holdLegal(actual,0).map(a=>'<button type="button" class="'+(a==='fold'?'secondary':a==='allin'?'casino-allin':'primary')+'" data-hold-action="'+a+'">'+casinoButtonLabel(a,actual,s)+'</button>').join('')+'</div>';
+  if(v.confirm)html+='<div class="casino-allin-confirm" role="group" aria-label="オールインの確認"><p>残り '+holdMoney(actual.stacks[0])+'をすべて投入します。</p><button type="button" class="casino-allin" id="casinoConfirmAllin">全額を投入する</button> <button type="button" class="secondary" id="casinoCancelAllin">戻る</button></div>';
+ }
+ html+=controls+'<details class="event-evidence"><summary>ルールと費用</summary><p>'+ (s.noLimit?'最低レイズ幅は直前の増額幅。全額投入だけは最低幅未満も可能。最低幅未満の増額で、すでに行動した相手のレイズ権は復活しない。相手が応じられない超過分は返却。':'この対局は開始時のリミットルールを維持。ターン以降の賭け幅は2倍、各ラウンド最大3回のレイズ。')+'</p><p>手数料 '+holdMoney(s.fee||0)+'。追加購入なし。卓の間は人生の時間が止まる。</p></details>';
+ if(s.creditLoan&&(!s.settled||result))html+=casinoCreditPanel(s);
+ const previousScroll=document.getElementById('casinoDialog').scrollTop;box.innerHTML=html;document.getElementById('casinoDialog').scrollTop=previousScroll;
+ const splitChips=box.querySelector('.casino-to--1');if(splitChips){splitChips.className='casino-award-chips casino-to-0';const other=splitChips.cloneNode(true);other.className='casino-award-chips casino-to-1';splitChips.after(other)}
+ box.querySelectorAll('[data-hold-action]').forEach(b=>b.onclick=()=>holdPlayer(b.dataset.holdAction));
+ const byId=id=>document.getElementById(id),again=byId('casinoAgain');if(again)again.onclick=casinoNewHand;
+ const size=byId('casinoSize');if(size)size.oninput=()=>{s.raisePayment=+size.value;v.confirm=false;box.querySelector('.casino-allin-confirm')?.remove();byId('casinoSizeValue').textContent=holdMoney(s.raisePayment);box.querySelectorAll('[data-hold-action]').forEach(b=>b.textContent=casinoButtonLabel(b.dataset.holdAction,s.h,s));save()};
+ const confirm=byId('casinoConfirmAllin');if(confirm)confirm.onclick=()=>{if(!v.busy&&v.confirm)void casinoRun(0,'allin')};
+ const cancel=byId('casinoCancelAllin');if(cancel)cancel.onclick=()=>{v.confirm=false;renderCasino()};
+ byId('casinoSound').onclick=()=>{state.tableSound=!state.tableSound;save();casinoTone('tap');renderCasino()};
+ byId('casinoMotion').onclick=()=>{state.casinoMotion=state.casinoMotion===false;save();if(!state.casinoMotion)casinoSkip();renderCasino()};
+ const skip=byId('casinoSkip');if(skip)skip.onclick=casinoSkip;
+ byId('closeCasino').disabled=s.stage==='playing'||v.busy;
+};
+const experienceLeave=casinoLeave;
+casinoLeave=function(){if(casinoVisual?.session===state.casinoSession&&casinoVisual.busy)return;casinoVisual=null;experienceLeave()};
+// The original handler captured the old function before this extension loaded.
+document.getElementById('closeCasino').onclick=casinoLeave;
+
+// Presentation only: existing records and settlement logic remain authoritative.
+function journalRoutineHobby(f){return /を楽しんだ。$|^カジノで過ごした後の気分が変わった。$/.test(f.text)}
+function journalMoneyAction(f){
+ if(journalRoutineHobby(f))return false;
+ if(f.moneyAction)return true;
+ if(!['choice','risk'].includes(f.type))return false;
+ if(/カジノの|ホールデム|ちんちろ|ポーカー|闇金から卓用|趣味として|を休止した|を再開すること|車を|新居|部屋を|ごちそう|日用品店|店の持分|預け金|借金を返済|護衛|警護|代役.*支払|に加入した/.test(f.text))return true;
+ return HOBBIES.some(h=>f.text.startsWith(h.name)&&!journalRoutineHobby(f));
+}
+function journalActionHTML(f,month){
+ const detail=f.detail||'',casino=/ホールデム|ちんちろ|ポーカー|カジノ/.test(f.text),net=detail.match(/純損益\s*([^·]+)/),debt=detail.match(/卓の残債\s*([^·]+)/);
+ const summary=casino&&net?'今回の差引 '+net[1].trim()+(debt?' · 卓の残債 '+debt[1].trim():''):detail;
+ const outcome=casino&&(/勝った|勝利|大きく勝/.test(f.text)?'win':/負けた|敗れ/.test(f.text)?'loss':/引き分け/.test(f.text)?'draw':/降りた|フォールド/.test(f.text)?'fold':net?(/^[−－-]/.test(net[1].trim())?'cost':/^[＋+]/.test(net[1].trim())?'gain':'draw'):'');
+ const label={win:'勝ち',loss:'負け',draw:'引き分け',fold:'フォールド',gain:'収支プラス',cost:'収支マイナス'}[outcome],color={fold:'loss',cost:'loss',gain:'win'}[outcome]||outcome;
+ const result=outcome?'<details class="money-record-detail"><summary class="journal-result-toggle"><span class="journal-result-badge journal-result-'+color+'">'+label+(summary?' · '+escapeHTML(summary):'')+'</span><span class="journal-result-hint">内訳</span></summary><p>'+escapeHTML(detail||f.text)+'</p></details>':summary?'<p class="money-record-effect">'+escapeHTML(summary)+'</p>':'';
+ return '<article class="feedrow money-record"><div class="feedage">'+ageText(month)+'</div><div class="feedtext"><div class="money-record-title">'+escapeHTML(f.text)+'</div>'+result+'</div></article>';
+}
+
+const clarityAddFeed=addFeed;
+addFeed=function(text,type='normal',detail='',extra={}){const manual=document.getElementById('spendDialog').open&&type==='choice'&&!journalRoutineHobby({text});clarityAddFeed(text,type,detail,{...extra,...(manual?{moneyAction:true}:{})})};
+
+renderExpenseOverview=function(){
+ const active=state.phase==='game',next=state.month+1,e=essentialBudget(),settings=e.pending&&next>=e.pending.effective?e.pending:e,p=monthlyLivingParts(settings,next),b=personalBudget(),r=currentRich(),vehicle=vehicleInfo();
+ const working=active&&!(next>=state.leaveStartMonth&&next<state.leaveEndMonth),forecast=salaryForecast(state.organization,state.rank,state.boss),scheduled=working?forecast.scheduledMonthly:0,average=working?forecast.monthly:0,delay=working?forecast.delay:0;
+ const housing=r.home?pesos(1500):b.rent?pesos(4000):0,living=active?livingTotal(p):housing+p.family;
+ const contracts=active?Object.entries(PROTECTION).reduce((n,[k,plan])=>n+(state.protectionPlans?.[k]?dollarsToUnits(plan.fee):0),0):0;
+ const transport=vehicle?pesos(active&&b.car.using?vehicle.monthly:vehicle.parked):0,rate=state.pendingRemittanceRate!==null&&next>=state.remittanceEffectiveMonth?state.pendingRemittanceRate:state.remittanceRate;
+ const hobbies=hobbyCostPreview(next),optional=contracts+transport+hobbies,remit=scheduled*rate,remaining=scheduled-living-optional-remit,shortage=Math.max(0,living-state.money);
+ const rows=[['手当の支払予定',moneyText(scheduled)+(working?'（未払い '+Math.round(delay*100)+'%）':'（'+(active?'休業中':'収監・審理中')+'）')],['必要生活費',moneyText(living)],...(optional+remit>0?[['契約・趣味・送金',moneyText(optional+remit)]]:[]),['手当が届けば残る額',signedMoney(remaining)]];
+ const breakdown=active?livingBreakdownRows(p):[['住居費',moneyText(housing)],...(p.family?[['家族の扶養分',moneyText(p.family)]]:[])];
+ const extras=[['護衛・医療等',contracts],['乗り物の維持',transport],['趣味の活動費',hobbies],['任意の送金（届いた場合）',remit]].filter(([,amount])=>amount>0).map(([label,amount])=>[label,moneyText(amount)]);
+ document.getElementById('expenseOverview').innerHTML='<h3>翌月の収支</h3>'+spendEffects(rows)+'<p class="clarity-caption">過去の借金返済・臨時収支は含まない。</p>'+(working?'<p class="clarity-warning">'+(shortage?'手当が届かない月は、必要生活費が '+moneyText(shortage)+'不足する。':'手当が届かなくても、今の手持ちで翌月の必要生活費を払える。')+'</p>':shortage?'<p class="clarity-warning">翌月の必要生活費が '+moneyText(shortage)+'不足する。</p>':'')+(state.livingDebt?'<p class="clarity-warning">過去の生活費未払 '+moneyText(state.livingDebt)+'は別に返す。</p>':'')+'<details id="clarityLivingBreakdown"><summary>生活費・継続支出の内訳</summary>'+spendEffects([...breakdown,...extras])+'</details><details id="clarityForecastDetail"><summary>予測の詳しい説明</summary>'+spendEffects([['未払い込みの平均受取',moneyText(average)],['平均の差引',signedMoney(average*(1-rate)-living-optional)]])+'<p>平均受取＝支払予定×（1−未払い率）。届かない月の手当は0。送金は実際に受け取った手当の'+Math.round(rate*100)+'%。未受取の回収・追加仕事・臨時手当・店の配当・臨時支出は別。</p></details>';
+};
+const claritySpending=renderSpending;
+renderSpending=function(...args){const opened=['clarityLivingBreakdown','clarityForecastDetail'].filter(id=>document.getElementById(id)?.open);claritySpending(...args);renderExpenseOverview();opened.forEach(id=>{const el=document.getElementById(id);if(el)el.open=true})};
+
+const clarityCasinoRender=renderCasino;
+renderCasino=function(){
+ const s=state.casinoSession;if(!s||s.stage!=='betting'){clarityCasinoRender();return}
+ const wasOpen=document.getElementById('clarityCasinoBorrow')?.open;
+ // Reuse the existing game-switch action, including its dialog/time handling.
+ clarityCasinoRender();const switchGame=document.getElementById('casinoChin').onclick,box=document.getElementById('casinoContent'),cash=holdCents(state.money),credit=casinoCredit(),allowed=casinoCreditAllowed();
+ const seen=new Set(),offers=[{n:2000,label:'定額'},{n:10000,label:'定額'},...[.1,.25,.5].map(p=>({n:Math.floor(cash*p),label:'手持ちの'+Math.round(p*100)+'%'}))].filter(o=>{if(o.n<=0||o.n+Math.round(o.n*.05)>cash||seen.has(o.n))return false;seen.add(o.n);return true});
+ const selected=s.budget>0,borrowed=!!s.creditOffer,fee=selected?Math.round(s.budget*.05):0;
+ const condition=selected?'<div class="casino-entry-condition"><h3>今回の条件</h3>'+spendEffects([...(borrowed?[['卓用の借入',holdMoney(s.creditOffer)]]:[]),['持込み',holdMoney(s.budget)],['手数料（5%）',holdMoney(fee)],...(borrowed?[['最大の借金',holdMoney(Math.round(s.creditOffer*(1+casinoLoanRate(s.creditOffer))))],['手持ちからの支払い','US$0']]:[['支払う合計・最大損失',holdMoney(s.budget+fee)]])])+'<p>使わなかったチップは精算で返ります。追加購入なし。</p></div>':'<p class="casino-entry-hint">持込み額を選ぶと、手数料と最大損失を表示します。</p>';
+ let borrowing;
+ if(allowed)borrowing='<details id="clarityCasinoBorrow" '+(wasOpen||borrowed?'open':'')+'><summary>借りて遊ぶ</summary>'+casinoCreditPanel(s)+'</details>';
+ else borrowing='<p class="casino-entry-unavailable">卓用の借入：'+(credit.outstanding>holdUnits(1)/2?'残債 '+moneyText(credit.outstanding)+'の完済が必要。':'')+(state.month<credit.nextMonth?'再借入まであと'+(credit.nextMonth-state.month)+'か月。':'')+'</p>';
+ box.innerHTML='<p class="casino-entry-wallet">手持ち資金 <strong>'+holdMoney(cash)+'</strong></p><section class="casino-entry-section"><h3>1 · 遊ぶゲーム</h3><div class="casino-game-choice"><button type="button" class="secondary" aria-pressed="true">ホールデム</button><button type="button" class="secondary" id="casinoChin">ちんちろ</button></div></section><section class="casino-entry-section"><h3>2 · 卓に持ち込む額</h3><div class="casino-budget-grid">'+offers.map(o=>'<button type="button" class="secondary" data-casino-budget="'+o.n+'" aria-pressed="'+(!borrowed&&s.budget===o.n)+'"><strong>'+holdMoney(o.n)+'</strong><span>'+o.label+'</span></button>').join('')+'</div>'+(!offers.length?'<p>手持ちで参加できる額がありません。</p>':'')+'</section>'+borrowing+'<section class="casino-entry-section"><h3>3 · 条件を確認して開始</h3>'+condition+'<button type="button" class="primary casino-entry-start" id="casinoDeal" '+(!selected?'disabled':'')+'>この条件で席につく</button></section><details class="event-evidence"><summary>ホールデムのルール</summary><p>1対1。手札2枚と共通札5枚から最強の5枚を使います。新しい対局はノーリミットで、卓に持ち込んだ残り全額のオールインが可能。相手が応じられない超過分は返ります。</p><p>最低ベットはビッグブラインド、最低レイズ幅は直前の増額幅。ブラインドは持込みの約5%／10%。卓にいる間、人生の時間は進みません。</p></details>';
+ document.getElementById('casinoChin').onclick=switchGame;document.getElementById('casinoDeal').onclick=holdStart;document.getElementById('closeCasino').disabled=false;
+ box.querySelectorAll('[data-casino-budget]').forEach(button=>button.onclick=()=>{const amount=+button.dataset.casinoBudget;if(!offers.some(o=>o.n===amount))return;delete s.creditOffer;s.budget=amount;save();renderCasino();document.querySelector('#casinoContent [data-casino-budget="'+amount+'"]')?.focus({preventScroll:true})});
+ box.querySelectorAll('[data-credit]').forEach(button=>{button.textContent=holdMoney(+button.dataset.credit);button.onclick=()=>casinoChooseLoan(+button.dataset.credit)});
+};
+
+// Only these five events are revised. Keep monetary values and existing modifiers.
+const FIRST_FIVE_CHOICE_VERSION=1;
+function replaceFirstFiveEvent(id,change){const index=events.findIndex(e=>e.id===id);if(index<0)throw Error('Missing choice event: '+id);events[index]=change(events[index]);events[index].choiceQualityVersion=FIRST_FIVE_CHOICE_VERSION}
+replaceFirstFiveEvent('new_face',old=>({...old,title:'新人が担当の仕事をつかめずにいる',text:'新人が仕事の割り振りを理解できず、困っている。あなたも今日中に担当の報告をまとめる必要がある。',options:[
+ {title:'新人に説明する',desc:'説明を通して経験を積む。自分の作業が後に残り、気疲れする。',fx:{skill:2,stress:2}},
+ {title:'自分の報告を先に終える',desc:'自分の担当を果たし、信用を積む。今回の相談は引き受けない。',fx:{rank:1}},
+ ...old.options.filter(o=>o.role==='mentor').map(o=>({...o,title:'育成役として相談に乗る',desc:'教えてきた経験を使い、新人を支える。気疲れも伴う。'}))
+]}));
+replaceFirstFiveEvent('learning_offer',old=>({...old,text:'仲間に学び直しへ誘われた。講座なら短期間で学べるが、費用と勉強の負担がかかる。無料の教材なら少しずつ進められる。',options:old.options.filter(o=>o.title!=='今月は見送る').map(o=>o.title==='一緒に学ぶ'?{...o,title:'講座に参加する',desc:'受講費用を払い、より多くの経験を得る。勉強の疲れも残る。'}:{...o,desc:'出費なし。自分のペースで少しずつ経験を積む。'})}));
+replaceFirstFiveEvent('poor_sleep',old=>({...old,text:'眠りが浅く、疲れが残っている。費用を使ってまとまった休みを取るか、今の予定のまま生活のリズムを整えるか。',options:old.options.filter(o=>o.title!=='今月はそのまま続ける').map(o=>o.title==='休みを取る'?{...o,title:'まとまった休みを取る',desc:'費用を使って体を休め、健康とストレスを回復する。'}:{...o,desc:'出費なし。大きく予定を変えず、ストレスを少し軽減する。'})}));
+replaceFirstFiveEvent('family_pressure',old=>({...old,text:'家族から、無事な声を聞きたいと連絡が来た。会いに行けばゆっくり話せるが、交通費がかかる。',options:old.options.filter(o=>o.title!=='返事をしない').map(o=>({...o,desc:o.title==='会いに行く'?'交通費を払い、家族との関係とストレスを大きく改善する。':'出費なし。家族との関係とストレスを少し改善する。'}))}));
+replaceFirstFiveEvent('friend_support',old=>({...old,calmMomentVersion:1}));
+const firstFiveEligible=eventEligible;
+eventEligible=function(e){
+ if(e.id==='learning_offer'&&state.skill>=100)return false;
+ if(e.id==='poor_sleep'&&state.health>=95&&state.stress<40)return false;
+ if(e.id==='family_pressure'&&state.familyBond>=90&&state.stress<20&&state.familyNeedsIndex<35)return false;
+ if(e.id==='friend_support'&&state.friendship>=100&&state.stress<=0&&state.suspicion<=0)return false;
+ return firstFiveEligible(e);
+};
+function resolveFriendlyMoment(e){
+ const token=state.month+':friend_support';state.currentEvent=null;
+ if(state.lastFriendlyMoment===token)return;
+ // Store the once-only marker with the applied outcome, before normal rendering.
+ const before={friendship:state.friendship,stress:state.stress};
+ apply(e.options[0].fx);state.lastFriendlyMoment=token;
+ const detail=[['親友との関係',state.friendship-before.friendship],['ストレス',state.stress-before.stress]].filter(([,delta])=>delta!==0).map(([label,delta])=>label+' '+signed(delta)).join(' · ');
+ addFeed('親友と近況を話した。役目の話から少し離れ、気持ちが軽くなった。','normal',detail,{calmMoment:true,eventId:e.id});
+ // Use the same decision interval as the former chosen action. No extra event/month.
+ state.nextDecisionMonth=state.month+2+Math.floor(Math.random()*3);
+}
+// Refresh only still-unanswered choices from their raw template, never transformed FX.
+// A pending old friend-support choice remains manual; do not award it on page load.
+if(state.phase==='game'&&['new_face','learning_offer','poor_sleep','family_pressure'].includes(state.currentEvent?.id)&&state.currentEvent.choiceQualityVersion!==FIRST_FIVE_CHOICE_VERSION){
+ const template=events.find(e=>e.id===state.currentEvent.id),updated=personalizeEvent(template);
+ if(updated.id===template.id){state.currentEvent=updated;const row=[...state.feed].reverse().find(f=>f.month===state.month&&f.type==='event'&&f.eventId===template.id);if(row)row.text=updated.title+'。'+updated.text;save()}
+}
+
+// Single-zero roulette. Table amounts are cents, wallet amounts remain game units.
+const ROULETTE_WHEEL=[0,32,15,19,4,21,2,25,17,34,6,27,13,36,11,30,8,23,10,5,24,16,33,1,20,14,31,9,22,18,29,7,28,12,35,3,26];
+const ROULETTE_RED=new Set([1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36]);
+const ROULETTE_OUTSIDE=[['red','赤',2,18],['black','黒',2,18],['odd','奇数',2,18],['even','偶数',2,18],['low','1〜18',2,18],['high','19〜36',2,18],['dozen1','1〜12',3,12],['dozen2','13〜24',3,12],['dozen3','25〜36',3,12],['column1','1の列',3,12],['column2','2の列',3,12],['column3','3の列',3,12]];
+let rouletteVisual=null;
+function rouletteColor(n){return n===0?'green':ROULETTE_RED.has(n)?'red':'black'}
+function rouletteBet(key){const outside=ROULETTE_OUTSIDE.find(b=>b[0]===key);if(outside)return {key,name:outside[1],multiple:outside[2],count:outside[3]};const match=/^number:(\d+)$/.exec(key||'');if(!match||+match[1]>36)return null;return {key,name:match[1]+'の1点賭け',multiple:36,count:1,number:+match[1]}}
+function rouletteWins(bet,n){if(bet.number!==undefined)return n===bet.number;if(n===0)return false;switch(bet.key){case 'red':return ROULETTE_RED.has(n);case 'black':return !ROULETTE_RED.has(n);case 'odd':return n%2===1;case 'even':return n%2===0;case 'low':return n<=18;case 'high':return n>=19;case 'dozen1':return n<=12;case 'dozen2':return n>=13&&n<=24;case 'dozen3':return n>=25;case 'column1':return (n-1)%3===0;case 'column2':return (n-1)%3===1;case 'column3':return (n-1)%3===2;default:return false}}
+function rouletteSpinning(){return !!(rouletteVisual?.spinning&&rouletteVisual.session===state.casinoSession)}
+function rouletteFinishReveal(){const v=rouletteVisual;if(!v||!v.spinning)return;clearTimeout(v.timer);v.spinning=false;if(state.casinoSession!==v.session)return;casinoTone(v.session.won?'win':'lose');renderStats();renderCasino()}
+function rouletteSpin(){
+ const s=state.casinoSession,bet=rouletteBet(s?.betKey);if(s?.game!=='roulette'||s.stage!=='betting'||rouletteSpinning()||!bet||!Number.isInteger(s.budget)||s.budget<1)return;
+ const fee=Math.round(s.budget*.05),cost=s.budget+fee;if(holdUnits(cost)>state.money)return;
+ // Sample only once, then persist the complete settlement before starting the animation.
+ const number=Math.floor(Math.random()*37),won=rouletteWins(bet,number),payout=won?s.budget*bet.multiple:0,before=state.money;
+ state.money=Math.min(1000000,state.money-holdUnits(cost)+holdUnits(payout));s.game='roulette';s.cashBefore=before;s.number=number;s.won=won;s.fee=fee;s.payout=payout;s.received=holdCents(state.money-before)+cost;s.net=state.money-before;s.stage='result';s.settled=true;
+ state.gamblingNet=(state.gamblingNet||0)+s.net;if(s.net>0)state.earned=(state.earned||0)+s.net;
+ state.rouletteHistory=[...(state.rouletteHistory||[]),number].slice(-8);
+ addFeed('カジノのルーレット：'+(won?'勝った。':'負けた。'),'choice','出目 '+number+'（'+({green:'緑',red:'赤',black:'黒'})[rouletteColor(number)]+'） · '+bet.name+' · 賭け金 '+holdMoney(s.budget)+' · 手数料 '+holdMoney(fee)+' · 払戻し '+holdMoney(s.received)+' · 純損益 '+diceSigned(s.net));
+ save();rouletteVisual={session:s,spinning:casinoMotion(),timer:null};casinoTone('chips');renderCasino();
+ if(rouletteVisual.spinning)rouletteVisual.timer=setTimeout(rouletteFinishReveal,4800);else{casinoTone(won?'win':'lose');renderStats()}
+}
+function rouletteSwitch(game){
+ const s=state.casinoSession;if(!s||s.stage!=='betting'||rouletteSpinning())return;
+ s.game=game==='roulette'?'roulette':'holdem';s.budget=0;delete s.creditOffer;delete s.betKey;save();
+ if(game==='chinchiro'){rouletteBaseRender();document.getElementById('casinoChin').onclick();return}renderCasino();
+}
+function rouletteWheelHTML(s,spinning){
+ const step=360/37,result=s.stage==='result'&&!spinning,index=s.number===undefined?0:ROULETTE_WHEEL.indexOf(s.number),angle=index*step+step/2;
+ const segments=ROULETTE_WHEEL.map((n,i)=>({green:'#277357',red:'#963e42',black:'#152322'})[rouletteColor(n)]+' '+i*step+'deg '+(i+1)*step+'deg').join(',');
+ return '<div class="roulette-arena '+(spinning?'roulette-spinning':'')+'" style="--ball-end:'+(-2160+angle)+'deg"><div class="roulette-wheel" style="background:conic-gradient('+segments+')">'+ROULETTE_WHEEL.map((n,i)=>'<span class="roulette-pocket" style="--pocket-angle:'+(i*step+step/2)+'deg">'+n+'</span>').join('')+'</div><div class="roulette-hub"><span>ODDS CITY</span><strong>'+(result?s.number:spinning?'…':'0—36')+'</strong><small>'+(result?({red:'赤',black:'黒',green:'緑'})[rouletteColor(s.number)]:spinning?'回転中':'SINGLE ZERO')+'</small></div>'+(s.stage==='result'?'<div class="roulette-ball-orbit" style="transform:rotate('+angle+'deg)"><span class="roulette-ball"></span></div>':'')+'</div>';
+}
+function renderRoulette(){
+ const s=state.casinoSession,box=document.getElementById('casinoContent'),spinning=rouletteSpinning(),result=s.stage==='result',bet=rouletteBet(s.betKey),fee=Math.round((s.budget||0)*.05),cost=(s.budget||0)+fee,cash=holdCents(spinning?s.cashBefore-holdUnits(cost):state.money);
+ document.getElementById('casinoTitle').textContent='カジノ · ルーレット';document.getElementById('closeCasino').disabled=spinning;
+ const history=(state.rouletteHistory||[]).slice(0,spinning?-1:undefined);
+ let html='<div class="roulette-heading"><span>0が一つ · 37数字</span><span>手持ち '+holdMoney(cash)+'</span></div>'+rouletteWheelHTML(s,spinning)+'<div class="roulette-status" role="status" aria-live="polite">'+(spinning?'賭けを締め切った。球が止まるまで…':result?'出目 '+s.number+' · '+(s.won?'WIN':'LOSE'):'賭け先と金額を選んでください')+'</div>';
+ if(result&&!spinning){html+='<div class="roulette-result '+(s.won?'roulette-win':'roulette-loss')+'"><strong>'+(s.won?'WIN':'LOSE')+'</strong><p>'+escapeHTML(bet.name)+' · 払戻し '+holdMoney(s.received)+'</p><p>今回の差引 '+diceSigned(s.net)+'（手数料込み）</p>'+(s.received<s.payout?'<small>保有資金の上限を超えた分は受け取れません。</small>':'')+'</div><button type="button" class="primary" id="rouletteAgain">次の条件を見る</button>'}
+ if(!result){
+  const seen=new Set(),offers=[{n:2000,label:'定額'},{n:10000,label:'定額'},...[.1,.25,.5].map(p=>({n:Math.floor(cash*p),label:'手持ちの'+Math.round(p*100)+'%'}))].filter(o=>{if(o.n<1||holdUnits(o.n+Math.round(o.n*.05))>state.money||seen.has(o.n))return false;seen.add(o.n);return true});
+  html+='<section class="casino-entry-section"><h3>1 · 遊ぶゲーム</h3><div class="casino-game-choice"><button type="button" class="secondary" data-roulette-game="holdem">ホールデム</button><button type="button" class="secondary" data-roulette-game="chinchiro">ちんちろ</button><button type="button" class="secondary" aria-pressed="true">ルーレット</button></div></section><section class="casino-entry-section"><h3>2 · 賭け先を選ぶ</h3><p class="roulette-caption">1回につき1種類。倍率は賭け金を含む払戻しです。</p><div class="roulette-outside">'+ROULETTE_OUTSIDE.map(b=>'<button type="button" class="secondary '+(b[0]==='red'?'roulette-red':b[0]==='black'?'roulette-black':'')+'" data-roulette-bet="'+b[0]+'" aria-pressed="'+(s.betKey===b[0])+'"><b>'+b[1]+'</b><small>払戻し '+b[2]+'倍</small></button>').join('')+'</div><details class="roulette-numbers" '+(bet?.number!==undefined?'open':'')+'><summary>数字を1つ選ぶ · 払戻し36倍</summary><div class="roulette-number-grid">'+Array.from({length:37},(_,n)=>'<button type="button" class="roulette-number roulette-'+rouletteColor(n)+'" data-roulette-bet="number:'+n+'" aria-pressed="'+(s.betKey==='number:'+n)+'">'+n+'</button>').join('')+'</div></details></section><section class="casino-entry-section"><h3>3 · 賭け金</h3><div class="casino-budget-grid">'+offers.map(o=>'<button type="button" class="secondary" data-roulette-budget="'+o.n+'" aria-pressed="'+(s.budget===o.n)+'"><strong>'+holdMoney(o.n)+'</strong><span>'+o.label+'</span></button>').join('')+'</div>'+(!offers.length?'<p class="roulette-caption">手持ちで参加できる額がありません。</p>':'')+'</section>';
+  if(bet&&s.budget){const winNet=Math.min(1000000,state.money-holdUnits(cost)+holdUnits(s.budget*bet.multiple))-state.money;html+='<div class="casino-entry-condition"><h3>今回の条件 · '+escapeHTML(bet.name)+'</h3>'+spendEffects([['的中率',Math.round(bet.count/37*100)+'%（'+bet.count+'/37）'],['賭け金',holdMoney(s.budget)],['手数料（5%）',holdMoney(fee)],['支払う合計・最大損失',holdMoney(cost)],['的中時の払戻し（賭け金込み）',holdMoney(s.budget*bet.multiple)],['的中時の差引',diceSigned(winNet)]])+'<p>0は緑。赤黒・偶奇・範囲・列の賭けは、0が出ると外れです。</p></div>'}
+  html+='<button type="button" class="primary casino-entry-start" id="rouletteSpin" '+(!bet||!s.budget||holdUnits(cost)>state.money?'disabled':'')+'>この条件で回す</button><p class="roulette-caption">ゲーム内の手持ち資金だけで参加。追加購入・卓用借入なし。</p>';
+ }
+ html+='<div class="casino-preferences"><button type="button" class="secondary" id="rouletteSound" aria-pressed="'+!!state.tableSound+'">音 '+(state.tableSound?'ON':'OFF')+'</button><button type="button" class="secondary" id="rouletteMotion" aria-pressed="'+(state.casinoMotion!==false)+'">演出 '+(state.casinoMotion!==false?'ON':'OFF')+'</button>'+(spinning?'<button type="button" class="secondary" id="rouletteSkip">演出をスキップ</button>':'')+'</div>'+(history.length?'<div class="roulette-history"><span>直近の出目</span>'+history.map(n=>'<b class="roulette-'+rouletteColor(n)+'">'+n+'</b>').join('')+'</div>':'')+'<details class="event-evidence"><summary>ルールと配当</summary><p>0〜36は各1/37で抽選。赤黒・偶奇・1〜18／19〜36は払戻し2倍、12数字と縦列は3倍、数字1点は36倍。すべて賭け金を含みます。1の列は1・4・7…34、2の列は2・5・8…35、3の列は3・6・9…36です。</p><p>既存のカジノと同じ手数料5%を別に払い、セント単位に丸めます。最低手数料の追加なし。回転中は人生の時間が止まり、結果を見てから次の賭け先と金額を選び直します。</p></details>';
+ const dialog=document.getElementById('casinoDialog'),scroll=dialog.scrollTop;box.innerHTML=html;dialog.scrollTop=scroll;
+ const el=id=>document.getElementById(id);
+ box.querySelectorAll('[data-roulette-game]').forEach(b=>b.onclick=()=>rouletteSwitch(b.dataset.rouletteGame));
+ box.querySelectorAll('[data-roulette-bet]').forEach(b=>b.onclick=()=>{if(s.stage!=='betting')return;s.betKey=b.dataset.rouletteBet;save();renderCasino();document.querySelector('[data-roulette-bet="'+s.betKey+'"]')?.focus({preventScroll:true})});
+ box.querySelectorAll('[data-roulette-budget]').forEach(b=>b.onclick=()=>{if(s.stage!=='betting')return;s.budget=+b.dataset.rouletteBudget;save();renderCasino();document.querySelector('[data-roulette-budget="'+s.budget+'"]')?.focus({preventScroll:true})});
+ if(el('rouletteSpin'))el('rouletteSpin').onclick=rouletteSpin;if(el('rouletteAgain'))el('rouletteAgain').onclick=casinoNewHand;if(el('rouletteSkip'))el('rouletteSkip').onclick=rouletteFinishReveal;
+ el('rouletteSound').onclick=()=>{state.tableSound=!state.tableSound;save();casinoTone('tap');el('rouletteSound').textContent='音 '+(state.tableSound?'ON':'OFF');el('rouletteSound').setAttribute('aria-pressed',!!state.tableSound)};
+ el('rouletteMotion').onclick=()=>{state.casinoMotion=state.casinoMotion===false;save();if(spinning&&!state.casinoMotion){rouletteFinishReveal();return}el('rouletteMotion').textContent='演出 '+(state.casinoMotion!==false?'ON':'OFF');el('rouletteMotion').setAttribute('aria-pressed',state.casinoMotion!==false)};
+}
+const rouletteBaseRender=renderCasino;
+renderCasino=function(){const s=state.casinoSession;if(s?.game==='roulette'){renderRoulette();return}document.getElementById('casinoTitle').textContent='カジノ · ホールデム';rouletteBaseRender();if(s?.stage==='betting'){const games=document.querySelector('#casinoContent .casino-game-choice');if(games){const button=document.createElement('button');button.type='button';button.className='secondary';button.textContent='ルーレット';button.onclick=()=>rouletteSwitch('roulette');games.append(button)}}};
+const rouletteBaseNewHand=casinoNewHand;
+casinoNewHand=function(){if(state.casinoSession?.game!=='roulette'){rouletteBaseNewHand();return}if(rouletteSpinning()||state.casinoSession.stage!=='result')return;rouletteVisual=null;state.casinoSession={game:'roulette',stage:'betting',budget:0,settled:false};save();renderCasino()};
+const rouletteBaseLeave=casinoLeave;
+casinoLeave=function(){if(rouletteSpinning())return;rouletteVisual=null;rouletteBaseLeave()};
+document.getElementById('closeCasino').onclick=casinoLeave;
+const rouletteBaseResume=resumeCasino;
+resumeCasino=function(){if(state.casinoSession?.game!=='roulette'){rouletteBaseResume();return}renderCasino();if(!document.getElementById('casinoDialog').open)document.getElementById('casinoDialog').showModal()};
+
+// Shared casino presentation for invited draw poker and all current chinchiro tables.
+// The invitation keeps cash-only rules; casino chinchiro keeps its existing credit rules.
+let smallTableVisual=null;
+function smallTableView(){const s=state.diceSession;if(!s?.game)return null;if(smallTableVisual?.session!==s)smallTableVisual={session:s,busy:false,result:s.stage==='result',message:'',hand:[...(s.playerHand||[])],opponent:[...(s.opponentHand||[])],playerCount:5,opponentCount:s.stage==='result'&&!s.fold?5:0,playerDice:[...(s.playerRolls?.at(-1)||[])],opponentDice:s.stage==='result'?[...(s.opponentRolls?.at(-1)||[])]:[],flip:'',cue:null,skip:false,wake:null};return smallTableVisual}
+function smallTableCurrent(v){return state.diceSession===v.session&&smallTableVisual===v}
+function smallTableBusy(){return !!(smallTableVisual?.session===state.diceSession&&smallTableVisual.busy)}
+function smallTableSkip(){const v=smallTableView();if(!v)return;v.skip=true;v.wake?.()}
+function smallTableHandName(d){if(!d||d.length!==3)return '';const rank=chinRank(d);return rank===100?'ピンゾロ':rank>=80?'ゾロ目':rank===70?'シゴロ':rank===0?'ヒフミ':rank===5?'役なし':(rank-10)+'の目'}
+async function smallTableBeat(v,text,ms){if(!smallTableCurrent(v))return false;v.message=text;if(/最後/.test(text)&&!v.skip)casinoTone('tap');renderDice();await casinoWait(ms,v);return smallTableCurrent(v)}
+async function smallTableResult(v){const s=v.session;await smallTableBeat(v,'勝負を見届ける…',650);if(!smallTableCurrent(v))return;v.result=true;v.cue={action:'award',actor:s.outcome>0?0:s.outcome<0?1:-1};v.message=s.fold?'フォールド':s.outcome>0?'WIN':s.outcome<0?'LOSE':'DRAW';casinoTone(s.outcome>0?'win':s.outcome<0?'lose':'tap');renderDice();await casinoWait(700,v);v.cue=null}
+function smallTableUnlock(v){if(!smallTableCurrent(v))return;v.busy=false;v.skip=false;v.flip='';v.cue=null;v.result=v.session.stage==='result';renderStats();renderDice()}
+tableCommit=function(){
+ const s=state.diceSession;if(!s?.game||s.stage!=='betting'||!s.stake||smallTableBusy())return;
+ const fee=diceFee(s.stake),cost=s.stake+fee;if(s.creditOffer?!casinoIssueLoan(s):state.money<cost)return;
+ clearTimeout(diceTimer);s.cashBefore=state.money;s.fee=fee;s.stage=s.game==='poker'?'draw':'rolling';if(!s.creditLoan)state.money-=cost;
+ if(s.game==='poker'){
+  s.deck=Array.from({length:52},(_,i)=>i);for(let i=51;i>0;i--){const j=Math.floor(Math.random()*(i+1));[s.deck[i],s.deck[j]]=[s.deck[j],s.deck[i]]}
+  s.playerHand=Array.from({length:5},()=>s.deck.pop());s.opponentHand=Array.from({length:5},()=>s.deck.pop());s.exchange=[];save();smallTableVisual=null;const v=smallTableView();v.busy=true;v.playerCount=0;v.cue={action:'chips',actor:0};
+  void(async()=>{try{casinoTone('chips');if(!await smallTableBeat(v,'賭け金を中央へ…',450))return;v.cue=null;for(let i=0;i<5;i++){if(!smallTableCurrent(v))return;v.playerCount=i+1;v.flip='small-player:'+i;casinoTone('flip');if(!await smallTableBeat(v,'札を配る…',300))return;v.flip=''}v.message='交換する札を選ぶ'}finally{smallTableUnlock(v)}})();
+ }else{ s.opponentRolls=chinOpponent();s.playerRolls=[];save();smallTableVisual=null;tableChinRoll() }
+};
+const smallTableBaseSettle=tableSettle;
+tableShowdown=function(fold=false){
+ const s=state.diceSession,v=smallTableView();if(s?.game!=='poker'||s.stage!=='draw'||!v||v.busy)return;
+ v.busy=true;v.skip=false;s.fold=fold;const exchanged=[...s.exchange],oldOpponent=[...s.opponentHand];
+ if(!fold){s.playerHand=s.playerHand.map((c,i)=>s.exchange.includes(i)?s.deck.pop():c);pokerOpponentDraw(s);s.outcome=compareHands(s.playerHand,s.opponentHand)}else s.outcome=-1;
+ s.stage='rolling';save();smallTableBaseSettle();
+ void(async()=>{try{
+  if(fold){v.playerCount=0;v.cue={action:'fold',actor:0};casinoTone('tap');if(!await smallTableBeat(v,'札を伏せて降りる',450))return;v.cue=null}
+  else{
+   if(!await smallTableBeat(v,exchanged.length?exchanged.length+'枚を交換する…':'この5枚で勝負する',400))return;
+   for(const i of exchanged){if(!smallTableCurrent(v))return;v.hand[i]=s.playerHand[i];v.flip='small-player:'+i;casinoTone('flip');if(!await smallTableBeat(v,'交換札を開く…',430))return;v.flip=''}
+   const opponentExchanged=oldOpponent.filter(c=>!s.opponentHand.includes(c)).length;
+   if(!await smallTableBeat(v,'相手は'+opponentExchanged+'枚交換した。',700))return;
+   v.opponent=[...s.opponentHand];for(let i=0;i<5;i++){if(!await smallTableBeat(v,i===4?'相手の最後の1枚…':'相手の札を開く…',i===4?650:120))return;v.opponentCount=i+1;v.flip='small-opponent:'+i;casinoTone('flip');renderDice();await casinoWait(400,v);v.flip=''}
+  }
+  await smallTableResult(v);
+ }finally{smallTableUnlock(v)}})();
+};
+tableChinRoll=function(){
+ const s=state.diceSession,v=smallTableView();if(s?.game!=='chinchiro'||!v||v.busy||s.settled||s.outcome!==undefined||s.playerRolls.length>=3)return;
+ clearTimeout(diceTimer);v.busy=true;v.skip=false;v.playerDice=[];v.opponentDice=[];v.result=false;v.cue=s.playerRolls.length===0?{action:'chips',actor:0}:null;
+ s.playerRolls.push(tableRoll3());const dice=s.playerRolls.at(-1),ready=chinRank(dice)!==5||s.playerRolls.length===3;
+ if(ready){s.outcome=Math.sign(chinRank(dice)-chinRank(s.opponentRolls.at(-1)));s.stage='rolling'}save();if(ready)smallTableBaseSettle();
+ void(async()=>{try{
+  casinoTone(s.playerRolls.length===1?'chips':'tap');if(!await smallTableBeat(v,s.playerRolls.length===1?'賭け金を置き、サイコロを振る…':'サイコロを振り直す…',850))return;v.cue=null;
+  for(let i=0;i<3;i++){if(!smallTableCurrent(v))return;v.playerDice.push(dice[i]);casinoTone('tap');if(!await smallTableBeat(v,i===2?'最後の目が止まった':'目が止まる…',i===2?500:250))return}
+  if(!await smallTableBeat(v,'あなた：'+smallTableHandName(dice),450))return;
+  if(ready){const other=s.opponentRolls.at(-1);if(!await smallTableBeat(v,'相手の目を確かめる…',600))return;for(let i=0;i<3;i++){if(i===2&&!await smallTableBeat(v,'相手の最後の1個…',650))return;if(!smallTableCurrent(v))return;v.opponentDice.push(other[i]);casinoTone('tap');if(!await smallTableBeat(v,'相手の目を開く…',350))return}await smallTableResult(v)}
+  else v.message='役なし。あと'+(3-s.playerRolls.length)+'回振り直せる。';
+ }finally{smallTableUnlock(v)}})();
+};
+function smallTablePreferences(v){return '<div class="casino-preferences"><button type="button" class="secondary" id="smallTableSound" aria-pressed="'+!!state.tableSound+'">音 '+(state.tableSound?'ON':'OFF')+'</button><button type="button" class="secondary" id="smallTableMotion" aria-pressed="'+(state.casinoMotion!==false)+'">演出 '+(state.casinoMotion!==false?'ON':'OFF')+'</button>'+(v?.busy?'<button type="button" class="secondary" id="smallTableSkip">演出をスキップ</button>':'')+'</div>'}
+const smallTableLegacyRender=renderDice;
+renderDice=function(){
+ const s=state.diceSession;if(!s?.game){smallTableLegacyRender();return}
+ const v=smallTableView(),poker=s.game==='poker',betting=s.stage==='betting',result=v.result,busy=v.busy,casino=s.origin==='casino',root=document.getElementById('diceDialog');
+ document.getElementById('diceTitle').textContent=(casino?'カジノ':'仲間の卓')+' · '+(poker?'5枚ドローポーカー':'ちんちろ');
+ for(const id of ['diceCash','diceArena','diceStakes','diceRoll','diceLeave','diceContinue','diceResult'])document.getElementById(id).hidden=true;
+ document.getElementById('tableBoard')?.remove();
+ const cash=busy?(s.creditLoan?s.cashBefore:s.cashBefore-s.stake-s.fee):state.money;
+ let html='<p class="small-table-wallet">手持ち資金 <strong>'+diceMoney(cash)+'</strong></p>';
+ if(betting){
+  const amounts=[20,100,...[.1,.25,.5].map(p=>Math.floor(state.money*MXN_PER_UNIT/MXN_PER_USD*p*100)/100)],seen=new Set(),offers=amounts.map((amount,i)=>({amount:dollarsToUnits(amount),label:i<2?'定額':'手持ちの'+[10,25,50][i-2]+'%'})).filter(o=>{const cents=holdCents(o.amount);if(cents<1||o.amount+diceFee(o.amount)>state.money||seen.has(cents))return false;seen.add(cents);return true});
+  html+='<section class="casino-entry-section"><h3>1 · 遊ぶゲーム</h3><div class="casino-game-choice">'+(casino?['chinchiro']:['chinchiro','poker']).map(game=>'<button type="button" class="secondary" data-small-game="'+game+'" aria-pressed="'+(s.game===game)+'">'+(game==='poker'?'5枚ドロー':'ちんちろ')+'</button>').join('')+'</div></section><section class="casino-entry-section"><h3>2 · 賭け金</h3><div class="casino-budget-grid">'+offers.map(o=>'<button type="button" class="secondary" data-small-stake="'+o.amount+'" aria-pressed="'+(!s.creditOffer&&Math.abs(s.stake-o.amount)<1e-8)+'"><strong>'+diceMoney(o.amount)+'</strong><span>'+o.label+'</span></button>').join('')+'</div>'+(!offers.length?'<p class="roulette-caption">手持ちで参加できる額がありません。</p>':'')+'</section>';
+  if(s.stake){const n=diceOutcomeNumbers(s.stake);html+='<div class="casino-entry-condition"><h3>今回の条件</h3>'+spendEffects([['賭け金',diceMoney(s.stake)],['手数料（5%）',diceMoney(n.fee)],...(s.creditOffer?[['借入の元本',holdMoney(s.creditOffer)],['負けた場合の最大の借金',holdMoney(Math.round(s.creditOffer*(1+casinoLoanRate(s.creditOffer))))],['手持ちからの支払い','US$0']]:[['支払う合計・最大損失',diceMoney(s.stake+n.fee)],['勝った場合の差引',diceSigned(n.win)],['引き分けの差引',diceSigned(n.tie)],...(poker?[['途中で降りた場合',diceSigned(-s.stake+tableFoldRefund(s)-n.fee)]]:[])])])+'</div>'}
+  html+='<div class="casino-actions"><button type="button" class="primary" id="smallTableStart" '+(!s.stake?'disabled':'')+'>この条件で'+(poker?'札を配る':'勝負を始める')+'</button><button type="button" class="secondary" id="smallTableLeave">賭けずに戻る</button></div><p class="roulette-caption">'+(casino?'追加ベットなし。':'手持ちだけで参加。借入・追加ベットなし。')+'</p>';
+  if(casino){const credit=casinoCredit();html+=casinoCreditAllowed()?'<details class="small-credit" '+(s.creditOffer?'open':'')+'><summary>借りて遊ぶ</summary>'+casinoCreditPanel(s,true)+'</details>':'<p class="roulette-caption">卓用の借入：'+(credit.outstanding>0?'残債 '+moneyText(credit.outstanding)+'の完済が必要。':'')+(state.month<credit.nextMonth?'再借入まであと'+(credit.nextMonth-state.month)+'か月。':'')+'</p>'}
+ }else{
+  const cue=v.cue,outcome=s.fold?'FOLD':s.outcome>0?'WIN':s.outcome<0?'LOSE':'DRAW',pot=s.stake*2;
+  html+='<div class="casino-round"><span>'+(poker?'1回交換 · 追加ベットなし':'3個のサイコロ · 最大3投')+'</span><b>双方の賭け金 '+diceMoney(pot)+'</b></div><div class="table-felt casino-stage '+(result?(s.outcome>0?'casino-won':s.outcome<0?'casino-lost':'casino-drawn'):'')+'">';
+  if(poker){
+   const card=(c,i,other)=>casinoCard(c,(other?'small-opponent:':'small-player:')+i,i<(other?v.opponentCount:v.playerCount),v,result&&s.outcome===(other?-1:1)?(other?v.opponent:v.hand):[]);
+   html+='<div class="table-seat">相手'+(result&&!s.fold?' · '+POKER_NAMES[pokerRank(s.opponentHand)[0]]:'')+'</div><div class="card-row">'+v.opponent.map((c,i)=>card(c,i,true)).join('')+'</div><div class="small-table-pot">'+(cue?.action==='chips'?'<span class="casino-moving-chips casino-from-0" aria-hidden="true">◉ ◉ ◉</span>':'')+(cue?.action==='award'?'<span class="casino-award-chips casino-to-'+cue.actor+'" aria-hidden="true">◉ ◉ ◉</span>':'')+'</div><div class="casino-table-status" role="status" aria-live="polite">'+escapeHTML(v.message||(result?outcome:'交換する札を選ぶ（0〜5枚）'))+'</div><div class="card-row '+(cue?.action==='fold'?'casino-fold':'')+'">'+v.hand.map((c,i)=>'<button type="button" class="card-pick" data-small-card="'+i+'" aria-pressed="'+s.exchange.includes(i)+'" '+(busy||result?'disabled':'')+'>'+card(c,i,false)+(s.exchange.includes(i)&&!result?'<small>交換</small>':'')+'</button>').join('')+'</div><div class="table-seat">あなた'+(!busy&&!s.fold?' · '+POKER_NAMES[pokerRank(s.playerHand)[0]]:'')+'</div>';
+  }else{
+   const faces=['⚀','⚁','⚂','⚃','⚄','⚅'],diceRow=(dice,other)=>'<div class="small-dice-row">'+Array.from({length:3},(_,i)=>'<span class="small-die '+(busy&&i>=dice.length&&!other?'small-die-rolling':'')+'">'+(i<dice.length?faces[dice[i]-1]:other?'？':'⚄')+'</span>').join('')+'</div>';
+   html+='<div class="table-seat">相手'+(v.opponentDice.length===3?' · '+smallTableHandName(v.opponentDice):' · 目は伏せられている')+'</div>'+diceRow(v.opponentDice,true)+'<div class="small-table-pot">'+(cue?.action==='chips'?'<span class="casino-moving-chips casino-from-0" aria-hidden="true">◉ ◉ ◉</span>':'')+(cue?.action==='award'?'<span class="casino-award-chips casino-to-'+cue.actor+'" aria-hidden="true">◉ ◉ ◉</span>':'')+'</div><div class="casino-table-status" role="status" aria-live="polite">'+escapeHTML(v.message||(result?outcome:'役なし。振り直せる。'))+'</div><div class="dice-bowl">'+diceRow(v.playerDice,false)+'</div><div class="table-seat">あなた · '+s.playerRolls.length+'/3投'+(v.playerDice.length===3?' · '+smallTableHandName(v.playerDice):'')+'</div>';
+  }
+  html+='</div>';
+  if(result){html+='<div class="casino-result casino-outcome '+(cue?.action==='award'&&casinoMotion()&&!v.skip?'casino-result-enter ':'')+(s.outcome>0?'casino-result-win':s.outcome<0?'casino-result-lose':'casino-result-draw')+'"><strong>'+outcome+'</strong><p>今回の差引 '+diceSigned(s.net)+'（手数料込み）</p>'+(s.fold?'<small>賭け金の半分を返却。残り半分と手数料を失った。</small>':'')+'</div>';if(!busy)html+='<button type="button" class="primary" id="smallTableContinue">結果を読んで戻る</button>';if(s.creditLoan)html+=casinoCreditPanel(s,true)}
+  else if(!busy){html+=poker?'<div class="casino-actions"><button type="button" class="primary" id="smallTableShowdown">'+(s.exchange.length?s.exchange.length+'枚を交換して勝負':'交換せずに勝負')+'</button><button type="button" class="secondary" id="smallTableFold">降りる（半額＋手数料を失う）</button></div>':'<button type="button" class="primary" id="smallTableReroll">もう一度振る · 残り'+(3-s.playerRolls.length)+'回</button>'}
+ }
+ html+=smallTablePreferences(v)+'<details class="event-evidence"><summary>ルールと費用</summary><p>'+escapeHTML(TABLE_RULES[s.game])+'</p><p>手数料は賭け金の5%。'+(casino?'借入は卓専用の条件で精算。':'借金して参加することはできない。')+'卓の間、人生の時間は止まる。月末の収支は対戦後に別途発生。</p>'+(poker?'':'<p>'+chinOdds()+'</p>')+'</details>';
+ const scroll=root.scrollTop;document.getElementById('diceTerms').innerHTML=html;root.scrollTop=scroll;
+ root.querySelector('.casino-stage')?.classList.toggle('small-table-tension',busy&&/最後|見届ける/.test(v.message));
+ if(result)root.querySelectorAll('[data-small-card]').forEach(b=>b.setAttribute('aria-pressed','false'));
+ const split=root.querySelector('.casino-to--1');if(split){split.className='casino-award-chips casino-to-0';const other=split.cloneNode(true);other.className='casino-award-chips casino-to-1';split.after(other)}
+ const el=id=>document.getElementById(id);
+ root.querySelectorAll('[data-small-game]').forEach(b=>b.onclick=()=>{if(s.stage!=='betting')return;s.game=b.dataset.smallGame;s.stake=0;save();renderDice()});
+ root.querySelectorAll('[data-small-stake]').forEach(b=>b.onclick=()=>{if(s.stage!=='betting')return;delete s.creditOffer;s.stake=+b.dataset.smallStake;save();renderDice()});
+ root.querySelectorAll('[data-small-card]').forEach(b=>b.onclick=()=>{if(v.busy||s.stage!=='draw')return;const i=+b.dataset.smallCard;s.exchange=s.exchange.includes(i)?s.exchange.filter(x=>x!==i):[...s.exchange,i];save();renderDice();root.querySelector('[data-small-card="'+i+'"]')?.focus({preventScroll:true})});
+ root.querySelectorAll('[data-credit]').forEach(b=>b.onclick=()=>casinoChooseLoan(+b.dataset.credit,true));
+ if(el('smallTableStart'))el('smallTableStart').onclick=tableCommit;if(el('smallTableLeave'))el('smallTableLeave').onclick=finishDice;if(el('smallTableContinue'))el('smallTableContinue').onclick=finishDice;
+ if(el('smallTableShowdown'))el('smallTableShowdown').onclick=()=>tableShowdown();if(el('smallTableFold'))el('smallTableFold').onclick=()=>tableShowdown(true);if(el('smallTableReroll'))el('smallTableReroll').onclick=tableChinRoll;if(el('smallTableSkip'))el('smallTableSkip').onclick=smallTableSkip;
+ el('smallTableSound').onclick=()=>{state.tableSound=!state.tableSound;save();casinoTone('tap');el('smallTableSound').textContent='音 '+(state.tableSound?'ON':'OFF');el('smallTableSound').setAttribute('aria-pressed',!!state.tableSound)};
+ el('smallTableMotion').onclick=()=>{state.casinoMotion=state.casinoMotion===false;save();if(!state.casinoMotion)smallTableSkip();el('smallTableMotion').textContent='演出 '+(state.casinoMotion!==false?'ON':'OFF');el('smallTableMotion').setAttribute('aria-pressed',state.casinoMotion!==false)};
+};
+const smallTableBaseFinish=finishDice;
+finishDice=function(){if(smallTableBusy())return;smallTableVisual=null;smallTableBaseFinish()};
+document.getElementById('diceLeave').onclick=finishDice;document.getElementById('diceContinue').onclick=finishDice;
+const invitation=events.find(e=>e.id==='dice_invitation');invitation.text='仲間がちんちろと5枚ドローポーカーの卓を囲んでいる。参加するなら、手持ちから賭け金を決める。借入はできない。';
+if(state.currentEvent?.id==='dice_invitation'){state.currentEvent.text=invitation.text}
+
 renderRegionOdds();render();if(state.diceSession)resumeDice();if(state.casinoSession)resumeCasino();
 </script></body></html>
 

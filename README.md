@@ -17,7 +17,7 @@ python -m http.server 8766 --bind 127.0.0.1 --directory outputs
 ## 含まれるもの
 
 - [ゲーム本体](outputs/odds-city.html) と出生地抽選用の人口データ
-- 職務と昇進、刑務所と出所後の復帰、危険対策、カジノのホールデム
+- 職務と昇進、刑務所と出所後の復帰、危険対策、カジノ（ホールデム・ちんちろ・ルーレット）
 - 暮らしの支出、住宅・乗り物、合法の小商いと情勢による収支
 - [共通ルール](outputs/GAME_DESIGN_RULES.md)、[調査資料](outputs/RESEARCH_NOTES.md)、[引継ぎ](outputs/ODDS_CITY_HANDOFF.md)
 

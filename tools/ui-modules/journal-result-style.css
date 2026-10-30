@@ -1,0 +1,15 @@
+/* Inherit the ordinary journal type scale at every viewport size. */
+.feedrow.money-record{padding:12px 0}
+.money-record .money-record-title{font-size:inherit;font-weight:inherit;line-height:inherit;color:inherit}
+.money-record .money-record-effect{font-size:inherit;line-height:inherit;font-weight:inherit;color:inherit;margin:6px 0}
+.money-record .money-record-detail{font-size:inherit;line-height:inherit;margin-top:8px}
+.money-record-detail p{font-size:inherit;line-height:1.7}
+.journal-result-toggle{display:flex;align-items:center;gap:8px;list-style:none;cursor:pointer;width:fit-content;max-width:100%}
+.journal-result-toggle::-webkit-details-marker{display:none}
+.journal-result-badge{display:inline-block;padding:8px 12px;border:1px solid;border-radius:8px;font-size:inherit;line-height:1.6;font-weight:700}
+.journal-result-win{background:#204c38;border-color:#538768;color:#c6f0d5}
+.journal-result-loss{background:#542b2c;border-color:#9b5758;color:#ffd2cd}
+.journal-result-draw{background:#3d3928;border-color:#807247;color:#e9dfbb}
+.journal-result-hint{font-size:inherit;color:var(--muted);white-space:nowrap}
+.journal-result-toggle:focus-visible{outline:2px solid var(--mint);outline-offset:4px;border-radius:8px}
+.journal-result-toggle:hover .journal-result-badge{filter:brightness(1.12)}

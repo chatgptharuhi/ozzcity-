@@ -1,0 +1,36 @@
+.money-record{padding:16px 0}.money-record .money-record-title{font-size:16px;line-height:1.65;font-weight:700;color:#e5ece7}.money-record .money-record-effect{font-size:14px;line-height:1.7;margin:6px 0;color:#bbd5c7}.money-record .money-record-detail{font-size:12px;color:#aabbb1;margin-top:8px}.money-record-detail summary,.month-hobby-records summary{cursor:pointer}.money-record-detail p{font-size:12px;line-height:1.8}.month-hobby-records{font-size:12px;line-height:1.7;color:#aabbb1;margin:10px 0}.month-hobby-records p{font-size:12px;margin:8px 0}
+#spendDialog #expenseOverview>.spend-effects{grid-template-columns:minmax(0,1fr) minmax(100px,auto);gap:12px 20px;font-size:16px}#spendDialog #expenseOverview>details{margin-top:18px;border-top:1px solid #344145;padding-top:14px}#spendDialog #expenseOverview>details>summary{font-size:14px;cursor:pointer;color:#b4c8be}#spendDialog #expenseOverview .clarity-caption{font-size:12px;color:#a6b7ae}#spendDialog #expenseOverview .clarity-warning{font-size:14px;line-height:1.7;color:#e0c6a2}#spendDialog #expenseOverview>details .spend-effects{font-size:14px;gap:8px 16px}#spendDialog #expenseOverview>details dd:last-child,#spendDialog #expenseOverview>details dt:nth-last-child(2){border:0;margin:0;padding:0;font-weight:400}
+.casino-entry-wallet{display:flex;gap:12px;align-items:center;font-size:14px;color:#aebfb4}.casino-entry-wallet strong{font-size:22px;color:#e1ebe3}.casino-entry-section{margin:24px 0}.casino-entry-section h3,.casino-entry-condition h3{font-size:16px;color:#c5d8cd;margin:0 0 12px}.casino-game-choice{display:flex;gap:8px}.casino-game-choice [aria-pressed=true],.casino-budget-grid [aria-pressed=true]{background:#d3e9dd;color:#14261c;border-color:#d3e9dd}.casino-budget-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.casino-budget-grid button{padding:16px 12px;text-align:left;min-width:0}.casino-budget-grid strong{display:block;font-size:21px;overflow-wrap:anywhere}.casino-budget-grid span{display:block;font-size:12px;font-weight:400;margin-top:7px;opacity:.8}.casino-entry-condition{padding:18px;background:#14231b;border:1px solid #40584a;border-radius:8px;margin:12px 0}.casino-entry-condition .spend-effects{grid-template-columns:minmax(0,1fr) auto;font-size:15px;gap:10px 20px}.casino-entry-condition dd{text-align:right;font-variant-numeric:tabular-nums}.casino-entry-condition p,.casino-entry-hint,.casino-entry-unavailable{font-size:13px;line-height:1.7;color:#adbbb0}.casino-entry-start{font-size:16px;padding:14px 22px;width:100%}#clarityCasinoBorrow{border-top:1px solid #3b4d41;padding-top:16px;font-size:14px}#clarityCasinoBorrow>summary{cursor:pointer;color:#c4d7c8}#clarityCasinoBorrow .event-evidence{border:0;padding-top:0}#clarityCasinoBorrow h4{display:none}#clarityCasinoBorrow p{font-size:13px;line-height:1.8}#clarityCasinoBorrow .rate-buttons button{font-size:15px}#clarityCasinoBorrow [aria-pressed=true]{border-color:var(--mint);color:var(--mint)}
+@media(max-width:520px){.casino-budget-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.casino-budget-grid strong{font-size:19px}#spendDialog #expenseOverview>.spend-effects{font-size:14px;gap:10px 12px}.money-record .money-record-title{font-size:15px}.money-record .money-record-effect{font-size:13px}}
+
+/* Inherit the ordinary journal type scale at every viewport size. */
+.feedrow.money-record{padding:12px 0}
+.money-record .money-record-title{font-size:inherit;font-weight:inherit;line-height:inherit;color:inherit}
+.money-record .money-record-effect{font-size:inherit;line-height:inherit;font-weight:inherit;color:inherit;margin:6px 0}
+.money-record .money-record-detail{font-size:inherit;line-height:inherit;margin-top:8px}
+.money-record-detail p{font-size:inherit;line-height:1.7}
+.journal-result-toggle{display:flex;align-items:center;gap:8px;list-style:none;cursor:pointer;width:fit-content;max-width:100%}
+.journal-result-toggle::-webkit-details-marker{display:none}
+.journal-result-badge{display:inline-block;padding:8px 12px;border:1px solid;border-radius:8px;font-size:inherit;line-height:1.6;font-weight:700}
+.journal-result-win{background:#204c38;border-color:#538768;color:#c6f0d5}
+.journal-result-loss{background:#542b2c;border-color:#9b5758;color:#ffd2cd}
+.journal-result-draw{background:#3d3928;border-color:#807247;color:#e9dfbb}
+.journal-result-hint{font-size:inherit;color:var(--muted);white-space:nowrap}
+.journal-result-toggle:focus-visible{outline:2px solid var(--mint);outline-offset:4px;border-radius:8px}
+.journal-result-toggle:hover .journal-result-badge{filter:brightness(1.12)}
+
+/* Inherit the ordinary journal type scale at every viewport size. */
+.feedrow.money-record{padding:12px 0}
+.money-record .money-record-title{font-size:inherit;font-weight:inherit;line-height:inherit;color:inherit}
+.money-record .money-record-effect{font-size:inherit;line-height:inherit;font-weight:inherit;color:inherit;margin:6px 0}
+.money-record .money-record-detail{font-size:inherit;line-height:inherit;margin-top:8px}
+.money-record-detail p{font-size:inherit;line-height:1.7}
+.journal-result-toggle{display:flex;align-items:center;gap:8px;list-style:none;cursor:pointer;width:fit-content;max-width:100%}
+.journal-result-toggle::-webkit-details-marker{display:none}
+.journal-result-badge{display:inline-block;padding:8px 12px;border:1px solid;border-radius:8px;font-size:inherit;line-height:1.6;font-weight:700}
+.journal-result-win{background:#204c38;border-color:#538768;color:#c6f0d5}
+.journal-result-loss{background:#542b2c;border-color:#9b5758;color:#ffd2cd}
+.journal-result-draw{background:#3d3928;border-color:#807247;color:#e9dfbb}
+.journal-result-hint{font-size:inherit;color:var(--muted);white-space:nowrap}
+.journal-result-toggle:focus-visible{outline:2px solid var(--mint);outline-offset:4px;border-radius:8px}
+.journal-result-toggle:hover .journal-result-badge{filter:brightness(1.12)}
