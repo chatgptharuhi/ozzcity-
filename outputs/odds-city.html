@@ -168,6 +168,9 @@ body:has(dialog[open]) #feed *{animation-play-state:paused!important}body:has(di
 
 /* Separate source notes from the life journal, including when collapsed. */
 .main>details.game-reference{margin-bottom:20px}.main>details.game-reference>summary{min-height:24px;padding:2px 0}.main>details.game-reference+.journal-main{margin-top:0}
+
+/* Keep the journal dominant on wide displays instead of reserving 40% for a short profile. */
+.shell{max-width:1240px}#game.layout{grid-template-columns:minmax(0,1fr) 280px;align-items:start}@media(max-width:1050px){#game.layout{grid-template-columns:minmax(0,1fr)}#game>.side{display:block}}
 </style>
 </head>
 <body><div class="shell">
