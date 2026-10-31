@@ -2355,7 +2355,9 @@ settleMonth=function(){bonusMonthlySettlement();settleOrganizationBonus()};
 // Family loyalty and organization credit are separate gains, shown before choosing.
 const firstFamilyChoice=events.find(e=>e.id==='newcomer');
 if(firstFamilyChoice){firstFamilyChoice.options=firstFamilyChoice.options.map(o=>o.title==='家族との約束を優先する'?{...o,fx:{...o.fx,familyBond:4}}:o);firstFamilyChoice.familyChoiceVersion=1}
-if(state.currentEvent?.id==='newcomer'&&!state.currentEvent.familyChoiceVersion){state.currentEvent={...state.currentEvent,familyChoiceVersion:1,options:state.currentEvent.options.map(o=>o.title==='家族との約束を優先する'?{...o,fx:{...o.fx,familyBond:4}}:o)};save()}
+function removeOpeningRisk(e){e.options=e.options.map(o=>{const fx={...o.fx};delete fx.safety;delete fx.heat;return {...o,fx,desc:o.title==='組織の集まりに顔を出す'?'仲間に覚えてもらう機会。':o.desc}});e.familyChoiceVersion=2;return e}
+if(firstFamilyChoice)removeOpeningRisk(firstFamilyChoice);
+if(state.currentEvent?.id==='newcomer'&&state.currentEvent.familyChoiceVersion!==2){state.currentEvent=removeOpeningRisk({...state.currentEvent,options:state.currentEvent.options.map(o=>o.title==='家族との約束を優先する'?{...o,fx:{...o.fx,familyBond:4}}:o)});save()}
 
 // Optional hobbies use fictional dollar budgets and disclosed per-participation-month odds.
 // id, name, category, setup, monthly, health, stress, lucky kind, risk kind
