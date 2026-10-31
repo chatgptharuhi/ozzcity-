@@ -1,13 +1,14 @@
 /* Spending layout: preserve all amounts, effects and existing action handlers. */
-#spendDialog{width:min(840px,calc(100vw - 24px));max-height:calc(100dvh - 24px);padding:0;background:#161e21;border-color:#344145;border-radius:8px;scroll-padding-top:130px}
-#spendDialog .spend-header{position:sticky;top:0;z-index:3;background:#161e21;border-bottom:1px solid #344145;padding:18px 22px 14px}
+#spendDialog{width:min(840px,calc(100vw - 24px));max-height:calc(100dvh - 24px);padding:0;background:#161e21;border-color:#344145;border-radius:8px;overflow:hidden}
+#spendDialog[open]{display:flex;flex-direction:column}
+#spendDialog .spend-header{position:relative;flex:none;z-index:3;background:#161e21;border-bottom:1px solid #344145;padding:16px 20px 12px}
 #spendDialog .spend-header .decision-top{gap:20px}
 #spendDialog #spendTitle{font-size:18px;font-weight:600;color:#d88797}
 #spendDialog #closeSpending{border:0;padding:4px;background:transparent;font-size:16px;color:#bbc7c8}
 #spendDialog #spendSummary{font-size:14px;line-height:1.6;margin:10px 0 0;color:#d9e1df;font-variant-numeric:tabular-nums}
 #spendDialog #spendMessage:empty{display:none}
 #spendDialog #spendMessage{margin:10px 0 0;font-size:14px}
-#spendDialog .spend-body{padding:20px 22px 28px}
+#spendDialog .spend-body{padding:16px 20px 24px;overflow-y:auto;min-height:0;overscroll-behavior:contain}
 #spendDialog .spend-body>h3{font-size:15px;color:#9eaeae;margin:0 0 14px}
 #spendDialog section{border:0;margin:0;padding:0}
 #spendDialog #personalPurchases>details>summary{display:none}
@@ -15,15 +16,15 @@
 #spendDialog h3,#spendDialog h4{font-size:18px;line-height:1.5;margin:0 0 6px;color:#e0e7e4}
 #spendDialog p,#spendDialog label{font-size:15px;line-height:1.7;color:#b7c4c1;margin:6px 0 12px}
 #spendDialog small,#spendDialog .risknote{font-size:13px;line-height:1.7;color:#a3b3b0}
-#spendDialog .spend-card{position:relative;display:flow-root;padding:17px 18px;margin:0 0 10px;border:1px solid #344145;border-radius:4px;background:#0f171a}
+#spendDialog .spend-card{position:relative;display:flow-root;padding:14px 16px;margin:0 0 10px;border:1px solid #344145;border-radius:4px;background:#0f171a}
 #spendDialog .spend-card article:last-child{margin-bottom:0}
-#spendDialog .spend-price{float:right;max-width:44%;margin:0 0 8px 20px;text-align:right;color:#dde6e1;font-size:15px;line-height:1.65;font-variant-numeric:tabular-nums}
+#spendDialog .spend-price{float:none;max-width:none;margin:6px 0 12px;text-align:left;color:#dde6e1;font-size:15px;line-height:1.65;font-variant-numeric:tabular-nums}
 #spendDialog .spend-price span{display:block}
 #spendDialog .spend-effects{display:grid;grid-template-columns:64px minmax(0,1fr);gap:4px 10px;font-size:14px;line-height:1.7;margin:8px 0 12px}
 #spendDialog .spend-effects dt{color:#9baead}
 #spendDialog .spend-effects dd{margin:0;color:#c0ceca}
 #spendDialog .spend-card .spend-effects{clear:both}
-#spendDialog button.secondary,#spendDialog .rate-buttons button{border:1px solid #3d4d50;border-radius:24px;background:transparent;padding:10px 16px;font-size:15px;line-height:1.5;margin:4px 5px 2px 0;color:#dce5e0;max-width:100%;white-space:normal;text-align:left}
+#spendDialog button.secondary,#spendDialog .rate-buttons button{border:1px solid #3d4d50;border-radius:6px;background:transparent;padding:9px 13px;font-size:14px;line-height:1.5;margin:4px 5px 2px 0;color:#dce5e0;max-width:100%;white-space:normal;text-align:left}
 #spendDialog button:disabled{opacity:.48;cursor:not-allowed}
 #spendDialog button:focus-visible,#spendDialog summary:focus-visible{outline:2px solid var(--mint);outline-offset:4px}
 #spendDialog .rate-buttons [aria-pressed=true]{background:#e0e9e3;color:#15231c;border-color:#e0e9e3}

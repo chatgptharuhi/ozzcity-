@@ -20,3 +20,5 @@
 - 変更時はoutputs/PROJECT_STATUS.mdを最新化し、古い経済調整の残件をそのまま引き継がない。
 
 - 選択肢の追加・修正時はoutputs/CHOICE_QUALITY_RULES.mdを読み、実効果と後続処理、双方を選ぶ理由を確認する。
+
+- 全作業でoutputs/TOKEN_EFFICIENCY_RULES.mdを読み、重複読込・巨大出力・確認や説明の不要な反復を避ける。必要な品質確認は省略しない。

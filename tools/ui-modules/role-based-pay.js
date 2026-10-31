@@ -1,0 +1,13 @@
+// Monthly scheduled averages in MXN. The bands are gameplay estimates, not national cartel salary statistics.
+const ROLE_MONTHLY_PAY=[12000,13800,17400,23400],BOSS_MONTHLY_DRAW=42000;
+function payRoleStage(occupation=state.occupation){return state.occupationChosen&&occupation===state.occupation?Math.max(0,Math.min(3,ensureCareer()?.stage||0)):0}
+function rolePayBase(organization,stage,boss=false,occupation=state.occupation){return (boss?BOSS_MONTHLY_DRAW:ROLE_MONTHLY_PAY[stage])*(organization?.pay||1)*(boss?1:OCCUPATIONS[occupation]?.pay||1)/(MXN_PER_UNIT*.725)*(state.lightDuty?.8:1)}
+careerBasePay=function(rank,organization,boss=false){return (boss?BOSS_MONTHLY_DRAW:ROLE_MONTHLY_PAY[payRoleStage()])*(organization?.pay||1)/(MXN_PER_UNIT*.725)};
+payBase=function(rank,organization,boss=false,occupation=state.occupation){return rolePayBase(organization,payRoleStage(occupation),boss,occupation)};
+function roleSalaryForecast(organization,stage,boss=false,occupation=state.occupation){const base=rolePayBase(organization,stage,boss,occupation),delay=organization?.delay??.12;return {low:Math.round(base*.45),high:Math.round(base),monthly:base*.725*(1-delay),scheduledMonthly:base*.725,delay}}
+salaryForecast=function(organization,rank,boss=false,occupation=state.occupation){return roleSalaryForecast(organization,payRoleStage(occupation),boss,occupation)};
+const wagePromotionHTML=promotionOutcomeHTML;
+promotionOutcomeHTML=function(){const c=ensureCareer(),html=wagePromotionHTML();if(!c||c.stage>=3)return html;const before=roleSalaryForecast(state.organization,c.stage,false,c.job),after=roleSalaryForecast(state.organization,c.stage+1,false,c.job);return html+'<p>通常の受取見込み：月 '+moneyText(before.monthly)+' → '+moneyText(after.monthly)+'。未受取の回収・臨時収入は別。</p>'};
+transferIncomeHTML=function(option){const org=state.currentEvent?.targetOrganization;if(!org)return '';const stage=Math.min(1,payRoleStage()),next=roleSalaryForecast(org,stage,false),now=salaryForecast(state.organization,state.rank,state.boss),living=workLiving();return '<div class="contract-breakdown"><b>'+escapeHTML(org.name)+'での収入見込み</b><p>移籍後は'+escapeHTML(workTitle(state.occupation,stage))+'として計算。</p><p>当月の受取見込み：'+moneyText(now.monthly)+' → '+moneyText(next.monthly)+'／月。生活費・送金後 '+signedMoney(next.monthly*(1-state.remittanceRate)-living)+'（借金返済前）。</p><p>未払い率 '+Math.round(next.delay*100)+'%。未受取回収・臨時報酬は含まず、支払いは保証されない。</p></div>'};
+const wageSpending=renderSpending;
+renderSpending=function(message=''){wageSpending(message);const forecast=salaryForecast(state.organization,state.rank,state.boss);document.getElementById('expenseOverview').innerHTML+='<p class="risknote">手当は職務と役目で決まる。信用だけでは自動昇給しない。今の支払予定の平均 '+moneyText(forecast.scheduledMonthly)+'／月。組織の未払いや受取幅は別。</p>'};

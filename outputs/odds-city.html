@@ -23,15 +23,16 @@
 #hobbyOptions{margin:20px 0;border-top:1px solid #46564d;padding-top:15px}#hobbyOptions>details>summary{font-size:19px;font-weight:750;cursor:pointer}#hobbyOptions article{border:1px solid #41564b;border-radius:10px;padding:14px;margin:12px 0}#hobbyOptions article h4{margin:0 0 8px}#hobbyOptions article p{font-size:13px}#hobbyOptions article details{font-size:12px;margin:10px 0}
 
 /* Spending layout: preserve all amounts, effects and existing action handlers. */
-#spendDialog{width:min(840px,calc(100vw - 24px));max-height:calc(100dvh - 24px);padding:0;background:#161e21;border-color:#344145;border-radius:8px;scroll-padding-top:130px}
-#spendDialog .spend-header{position:sticky;top:0;z-index:3;background:#161e21;border-bottom:1px solid #344145;padding:18px 22px 14px}
+#spendDialog{width:min(840px,calc(100vw - 24px));max-height:calc(100dvh - 24px);padding:0;background:#161e21;border-color:#344145;border-radius:8px;overflow:hidden}
+#spendDialog[open]{display:flex;flex-direction:column}
+#spendDialog .spend-header{position:relative;flex:none;z-index:3;background:#161e21;border-bottom:1px solid #344145;padding:16px 20px 12px}
 #spendDialog .spend-header .decision-top{gap:20px}
 #spendDialog #spendTitle{font-size:18px;font-weight:600;color:#d88797}
 #spendDialog #closeSpending{border:0;padding:4px;background:transparent;font-size:16px;color:#bbc7c8}
 #spendDialog #spendSummary{font-size:14px;line-height:1.6;margin:10px 0 0;color:#d9e1df;font-variant-numeric:tabular-nums}
 #spendDialog #spendMessage:empty{display:none}
 #spendDialog #spendMessage{margin:10px 0 0;font-size:14px}
-#spendDialog .spend-body{padding:20px 22px 28px}
+#spendDialog .spend-body{padding:16px 20px 24px;overflow-y:auto;min-height:0;overscroll-behavior:contain}
 #spendDialog .spend-body>h3{font-size:15px;color:#9eaeae;margin:0 0 14px}
 #spendDialog section{border:0;margin:0;padding:0}
 #spendDialog #personalPurchases>details>summary{display:none}
@@ -39,15 +40,15 @@
 #spendDialog h3,#spendDialog h4{font-size:18px;line-height:1.5;margin:0 0 6px;color:#e0e7e4}
 #spendDialog p,#spendDialog label{font-size:15px;line-height:1.7;color:#b7c4c1;margin:6px 0 12px}
 #spendDialog small,#spendDialog .risknote{font-size:13px;line-height:1.7;color:#a3b3b0}
-#spendDialog .spend-card{position:relative;display:flow-root;padding:17px 18px;margin:0 0 10px;border:1px solid #344145;border-radius:4px;background:#0f171a}
+#spendDialog .spend-card{position:relative;display:flow-root;padding:14px 16px;margin:0 0 10px;border:1px solid #344145;border-radius:4px;background:#0f171a}
 #spendDialog .spend-card article:last-child{margin-bottom:0}
-#spendDialog .spend-price{float:right;max-width:44%;margin:0 0 8px 20px;text-align:right;color:#dde6e1;font-size:15px;line-height:1.65;font-variant-numeric:tabular-nums}
+#spendDialog .spend-price{float:none;max-width:none;margin:6px 0 12px;text-align:left;color:#dde6e1;font-size:15px;line-height:1.65;font-variant-numeric:tabular-nums}
 #spendDialog .spend-price span{display:block}
 #spendDialog .spend-effects{display:grid;grid-template-columns:64px minmax(0,1fr);gap:4px 10px;font-size:14px;line-height:1.7;margin:8px 0 12px}
 #spendDialog .spend-effects dt{color:#9baead}
 #spendDialog .spend-effects dd{margin:0;color:#c0ceca}
 #spendDialog .spend-card .spend-effects{clear:both}
-#spendDialog button.secondary,#spendDialog .rate-buttons button{border:1px solid #3d4d50;border-radius:24px;background:transparent;padding:10px 16px;font-size:15px;line-height:1.5;margin:4px 5px 2px 0;color:#dce5e0;max-width:100%;white-space:normal;text-align:left}
+#spendDialog button.secondary,#spendDialog .rate-buttons button{border:1px solid #3d4d50;border-radius:6px;background:transparent;padding:9px 13px;font-size:14px;line-height:1.5;margin:4px 5px 2px 0;color:#dce5e0;max-width:100%;white-space:normal;text-align:left}
 #spendDialog button:disabled{opacity:.48;cursor:not-allowed}
 #spendDialog button:focus-visible,#spendDialog summary:focus-visible{outline:2px solid var(--mint);outline-offset:4px}
 #spendDialog .rate-buttons [aria-pressed=true]{background:#e0e9e3;color:#15231c;border-color:#e0e9e3}
@@ -151,6 +152,16 @@
 .small-table-tension{box-shadow:inset 0 0 80px #0009,0 0 0 1px #b4946355}.small-table-tension .casino-table-status{color:#f0d59b;letter-spacing:.08em}.casino-lost .dice-bowl{opacity:.7}
 @media(prefers-reduced-motion:reduce){.small-die-rolling{animation:none}}
 
+
+.roulette-number-entry{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:16px}.roulette-number-entry label,.roulette-number-entry small{flex-basis:100%}.roulette-number-entry input{width:90px;box-sizing:border-box;padding:10px;border:1px solid #708174;border-radius:4px;background:#152322;color:#eef2e9;font:inherit}.roulette-number-entry small{color:#acbfb0}.roulette-number-entry [aria-pressed=true]{outline:3px solid #e8cd83}
+body:has(dialog[open]) #feed *{animation-play-state:paused!important}body:has(dialog[open]) #feed{scroll-behavior:auto!important}
+.stat .stat-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:8px}.stat .stat-pair-item{min-width:0}.stat .stat-pair strong{overflow-wrap:anywhere}.stat .stat-pair strong.debt-outstanding{color:#f19a9a}
+
+/* Compact risk summary and action cards. */
+.risk-card-heading{display:flex;justify-content:space-between;align-items:baseline;gap:8px}.risk-shortcut{display:inline;width:auto;min-height:0;margin:0;padding:0;border:0;background:none;color:var(--accent,#8bd1bd);font:inherit;font-size:12px;line-height:inherit;text-decoration:underline;cursor:pointer}.risk-shortcut:disabled{opacity:.4;cursor:default}.risk-shortcut:focus-visible{outline:2px solid currentColor;outline-offset:3px}.risk-monthly{float:right;font-size:11px;font-weight:400;white-space:nowrap}.risk-summary .stat-pair-item .label{display:flow-root}.risk-summary .stat-pair{margin-top:8px}.risk-action-card{padding:16px!important;border:1px solid var(--line,#39443e);border-radius:12px;margin:12px 0}.risk-action-card h4{margin:0 0 6px;font-size:1.05rem}.risk-action-price{font-weight:700;margin:6px 0}.risk-action-effect{margin:8px 0;line-height:1.6}.risk-action-card details{margin:10px 0}.risk-action-card summary{cursor:pointer;color:var(--muted,#a5b9af)}.risk-action-card button{display:block;width:100%;margin-top:12px}.risk-action-card small{display:block}.risk-action-card .spend-effects{margin:8px 0}
+
+/* One compact management screen; each tab owns its own scrollable content. */
+#spendDialog .spend-header{padding:14px 18px 0}#spendDialog #spendTitle{color:var(--ink);font-size:19px}#spendDialog #spendSummary{font-size:13px;margin:8px 0 10px}#spendDialog #closeSpending{min-width:36px;min-height:36px;color:var(--ink)}#spendDialog .spend-tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;margin-top:10px}#spendDialog .spend-tabs button{border:0;border-bottom:3px solid transparent;border-radius:6px 6px 0 0;background:transparent;padding:10px 4px;min-height:40px;color:var(--muted);font:inherit;font-size:14px;cursor:pointer}#spendDialog .spend-tabs button[aria-pressed="true"]{color:var(--mint);border-bottom-color:var(--mint);background:#ffffff08}#spendDialog .spend-body{padding:16px 18px 22px}#spendDialog .spending-pane[hidden]{display:none!important}#spendDialog .spending-pane>h3{font-size:14px;color:var(--muted);margin:0 0 12px}#spendDialog .spend-card,#spendDialog .risk-action-card{background:transparent;border:1px solid var(--line);border-radius:10px;padding:14px;margin:0 0 12px}#spendDialog h3,#spendDialog h4{font-size:16px}#spendDialog p,#spendDialog label{font-size:14px}#spendDialog .risk-action-card .risk-action-effect{font-size:14px}#spendDialog .risk-action-card button{width:auto;max-width:100%;min-height:38px;padding:8px 14px}#spendDialog .risk-action-card details{font-size:13px}#spendDialog .spend-price{font-size:14px}#spendDialog .spend-effects{font-size:14px}#spendDialog #expenseOverview>h3{display:none}@media(max-width:520px){#spendDialog .spend-header{padding:12px 12px 0}#spendDialog .spend-body{padding:12px}#spendDialog .spend-tabs button{font-size:13px}}
 </style>
 </head>
 <body><div class="shell">
@@ -335,9 +346,9 @@ ordinary('senior_table','幹部同士の会合に呼ばれた','自分の発言�
 function eventEligible(e){return ageLabel()>=(e.minAge||20)&&state.rank>=(e.minRank||0)&&(!e.when||e.when(state))}
 function basePersonalizeEvent(e){
 const scale=['large_case','promotion_offer','discipline'].includes(e.id)?1:1+Math.floor(state.rank/30)*.22;
-const options=e.options.filter(o=>ageLabel()>=(o.minAge||20)&&state.rank>=(o.minRank||0)&&state.skill>=(o.minSkill||0)&&(!o.role||o.role===state.role)).map(o=>{
+const options=e.options.filter(o=>ageLabel()>=(o.minAge||20)&&state.rank>=(o.minRank||0)&&state.skill>=(o.minSkill||0)&&(!o.role||o.role===state.role)&&(o.maxSkill===undefined||state.skill<=o.maxSkill)).map(o=>{
 const fx={...o.fx};
-for(const k of ['money','rank','threat','heat'])if(fx[k])fx[k]=Math.sign(fx[k])*Math.max(1,Math.round(Math.abs(fx[k])*scale));
+for(const k of ['money','rank','threat','heat'])if(fx[k]&&!(k==='money'&&o.moneyIsFixed))fx[k]=Math.sign(fx[k])*Math.max(1,Math.round(Math.abs(fx[k])*scale));
 if(fx.rank>0&&state.role==='support')fx.rank++;
 if(fx.threat<0&&state.role==='mediator')fx.threat--;
 if(fx.skill>0){fx.skill+=ageLabel()<30?1:0;if(state.role==='mentor')fx.skill++}
@@ -436,7 +447,7 @@ const lifeEvents={
 function prepareMonth(){
 if(state.phase==='custody'){prepareCustody();save();render();return}
 if(state.sentenceMonths>0){preparePrison()}
-else{state.phase="game";let a=randExcept(ambient,"id",state.lastAmbient);state.lastAmbient=a.id;apply(state.month===1?{...a.effect,money:0}:a.effect);if(state.month>1&&state.rank>0&&Math.random()<.006){state.rank=Math.max(0,state.rank-12);addFeed("組織内の混乱で立場を一段落とされた。","risk","降格 · 組織内の信用・地位 -8/100")}if(state.month>1&&Math.random()<.04){let fine=20+Math.floor(Math.random()*131);apply({money:-fine});addFeed("組織内の規律違反として罰金が差し引かれた。","risk","軽重は案件ごとに変動 · 今月の罰金 "+moneyText(fine))}if(state.month<(state.nextDecisionMonth||1)){state.currentEvent=null;addFeed(a.title+'。'+a.text,'normal');save();render();return}let roll=Math.random(),e,lifeEvent=birthplaceEvent();if(lifeEvent&&state.month%24===2)e=lifeEvent;else if(state.month===1)e=events.find(x=>x.id==="newcomer");else if(roll<.01)e=events.find(x=>x.id==="large_case");else if(roll<.08)e=events.find(x=>x.id==="discipline");else if(roll<.16)e=events.find(x=>x.id==="promotion_offer");else{let regular=events.filter(x=>!["large_case","discipline","promotion_offer","newcomer","boss_vacancy","dice_invitation"].includes(x.id)&&eventEligible(x)&&!state.recentDecisions.includes(x.id)&&(!x.theme||!state.recentThemes.includes(x.theme)));let pool=regular.flatMap(x=>Array(eventWeight(x)).fill(x));e=randExcept(pool,"id",state.lastDecision)}if(state.rank>=140&&state.month>=120&&state.skill>=20&&state.leadershipSupport>=3&&!state.boss&&ensureCareer()?.stage>=3&&Math.random()<.02)e=events.find(x=>x.id==="boss_vacancy");if(!['boss_vacancy','large_case','discipline','promotion_offer'].includes(e.id)&&state.month>=3&&state.month>=state.gambleCooldown&&state.money>=dollarsToUnits(21)&&Math.random()<.06)e=events.find(x=>x.id==='dice_invitation');if(state.orgDiscontent>=60&&Math.random()<.5)e=events.find(x=>x.id==='org_unrest');if(state.month>=3&&!state.roleChosen)e=events.find(x=>x.id==='role_path');else if(state.month>=4&&!state.smokeOffered){e=events.find(x=>x.id===(state.smoking?'smoke_habit':'smoke_offer'));state.smokeOffered=true}else if(state.month>=6&&!state.occupationChosen)e=events.find(x=>x.id==='occupation_offer');if(e.storyOnAppear){Object.assign(state,e.storyOnAppear);apply(e.appearFx||{});e={...e,storyOnAppear:null}}e=personalizeEvent(e);state.lastDecision=e.id;state.recentDecisions=[...state.recentDecisions,e.id].slice(-12);if(e.theme)state.recentThemes=[...state.recentThemes,e.theme].slice(-3);if(e.id==='friend_support'&&e.calmMomentVersion===1){resolveFriendlyMoment(e)}else{state.currentEvent=e;addFeed(e.title+"。"+e.text,"event","",{eventId:e.id})}}
+else{state.phase="game";let a=randExcept(ambient,"id",state.lastAmbient);state.lastAmbient=a.id;apply(state.month===1?{...a.effect,money:0}:a.effect);if(state.month>1&&state.rank>0&&Math.random()<.006){state.rank=Math.max(0,state.rank-12);addFeed("組織内の混乱で立場を一段落とされた。","risk","降格 · 組織内の信用・地位 -8/100")}if(state.month>1&&Math.random()<.04){let fine=20+Math.floor(Math.random()*131);apply({money:-fine});addFeed("組織内の規律違反として罰金が差し引かれた。","risk","軽重は案件ごとに変動 · 今月の罰金 "+moneyText(fine))}if(state.month<(state.nextDecisionMonth||1)){state.currentEvent=null;addFeed(a.title+'。'+a.text,'normal');save();render();return}let roll=Math.random(),e,lifeEvent=birthplaceEvent();if(lifeEvent&&state.month%24===2)e=lifeEvent;else if(state.month===1)e=events.find(x=>x.id==="newcomer");else if(roll<.01){const large=events.find(x=>x.id==="large_case");e=eventEligible(large)?large:events.find(x=>x.id==="quiet_month")}else if(roll<.08)e=events.find(x=>x.id==="discipline");else if(roll<.16)e=events.find(x=>x.id==="promotion_offer");else{let regular=events.filter(x=>!["large_case","discipline","promotion_offer","newcomer","boss_vacancy","dice_invitation"].includes(x.id)&&eventEligible(x)&&!state.recentDecisions.includes(x.id)&&(!x.theme||!state.recentThemes.includes(x.theme)));let pool=regular.flatMap(x=>Array(eventWeight(x)).fill(x));e=randExcept(pool,"id",state.lastDecision)}if(state.rank>=140&&state.month>=120&&state.skill>=20&&state.leadershipSupport>=3&&!state.boss&&ensureCareer()?.stage>=3&&Math.random()<.02)e=events.find(x=>x.id==="boss_vacancy");if(!['boss_vacancy','large_case','discipline','promotion_offer'].includes(e.id)&&state.month>=3&&state.month>=state.gambleCooldown&&state.money>=dollarsToUnits(21)&&Math.random()<.06)e=events.find(x=>x.id==='dice_invitation');if(state.orgDiscontent>=60&&Math.random()<.5)e=events.find(x=>x.id==='org_unrest');if(state.month>=3&&!state.roleChosen)e=events.find(x=>x.id==='role_path');else if(state.month>=4&&!state.smokeOffered){e=events.find(x=>x.id===(state.smoking?'smoke_habit':'smoke_offer'));state.smokeOffered=true}else if(state.month>=6&&!state.occupationChosen)e=events.find(x=>x.id==='occupation_offer');if(e.storyOnAppear){Object.assign(state,e.storyOnAppear);apply(e.appearFx||{});e={...e,storyOnAppear:null}}e=personalizeEvent(e);state.lastDecision=e.id;state.recentDecisions=[...state.recentDecisions,e.id].slice(-12);if(e.theme)state.recentThemes=[...state.recentThemes,e.theme].slice(-3);if(e.id==='friend_support'&&e.calmMomentVersion===1){resolveFriendlyMoment(e)}else{state.currentEvent=e;addFeed(e.title+"。"+e.text,"event","",{eventId:e.id})}}
 save();render()
 }
 
@@ -472,7 +483,7 @@ document.getElementById('originGroup').textContent='加入先を明かしてい�
 }step();
 }
 function continueOrigin(){clearTimeout(originTimer);document.getElementById('originDialog').close();state.phase='game';initializeFamilySupport();addFeed(state.birthplace.name+'出身の'+state.name+'は、架空組織'+state.organization.name+'に入った。','normal',localLife().label+'から始まる人生。');prepareMonth()}
-function advanceQuietMonth(){if(journalBusy||state.currentEvent||state.phase!=='game')return;finishMonth()}
+function advanceQuietMonth(){if(lifeDialogOpen()||journalBusy||state.currentEvent||state.phase!=='game')return;finishMonth()}
 events.push(ordinary('org_unrest','組織内で手当への不満が噴き出した','支払いの遅れが重なり、仲間同士の責任の押し付け合いが始まった。',[
 ['仲間の訴えを上役に伝える','不満を言葉にして伝える。',{orgDiscontent:-12,stress:3}],['自分の資金で食事を用意する','目先の負担を和らげる。',{money:-8,orgDiscontent:-8,rank:1}],['今回は距離を置く','自分の生活を守るが、不満は残る。',{orgDiscontent:5,stress:2}]
 ],{when:s=>s.orgDiscontent>=50}));
@@ -510,28 +521,49 @@ if(state.health<=0){state.phase='end';state.endReason='health';addFeed('負傷�
 function scoreTone(value,reverse=false){const band=value<30?0:value<50?1:value<80?2:3;return (reverse?['good','caution','warning','danger']:['danger','warning','caution','good'])[band]}
 function renderStats(){
 const r=riskRates(),senior=state.rank>=90;if(state.health>=100)state.healthAlert=false;
-const items=[['手持ち資金',moneyText(state.money),null],['借金',moneyText(debtTotal()),null],['信用',rankDisplay(state.rank)+'/100',state.rank/150*100],['危険度（摘発）',state.phase==='custody'?'審理中':state.phase==='prison'?'収監中':r.arrestScore+'/100',['custody','prison'].includes(state.phase)?null:r.arrestScore]];
-items.push(['人間関係',relationshipScore()+'/100',relationshipScore()],['経験',state.skill+'/100',state.skill],['ストレス',state.stress+'/100',state.stress]);
+const items=[['お金',moneyText(state.money),null],['仕事','',null],['危険','',null]];
+items.push(['人間関係',relationshipScore()+'/100',relationshipScore()],['ストレス',state.stress+'/100',state.stress]);
 if(senior||state.healthAlert||state.health<95)items.push(['健康',state.health+'/100',state.health]);
-if(senior)items.push(['危険度（襲撃）',r.assassinationScore+'/100',r.assassinationScore]);
-document.getElementById('stats').innerHTML=items.map(([label,value,p])=>{const tone=label==='借金'?(debtTotal()>0?'danger':'neutral'):p===null?'neutral':scoreTone(p,label.includes('危険')||label==='ストレス');return '<div class="stat tone-'+tone+'"><div class="label">'+label+'</div>'+(label.includes('危険')&&p!==null?'<small class="risk-causes">'+escapeHTML(causeText(label.includes('摘発')?'arrest':'attack'))+'</small>':'')+'<strong>'+value+'</strong>'+(p===null?'':'<div class="bar"><i style="width:'+p+'%"></i></div>')+'</div>'}).join('');
+
+document.getElementById('stats').innerHTML=items.map(([label,value,p])=>{
+if(label==='危険'){
+ const inactive=['custody','prison'].includes(state.phase),metrics=[['摘発',r.arrestScore,r.arrest],['襲撃',r.assassinationScore,r.assassination]];
+ return '<div class="stat tone-neutral risk-summary"><div class="risk-card-heading"><div class="label">危険</div><button type="button" class="risk-shortcut" id="riskSummaryAction" '+(state.phase!=='game'?'disabled':'')+'>対策する</button></div><div class="stat-pair">'+metrics.map(([name,score,chance])=>'<div class="stat-pair-item tone-'+(inactive?'neutral':scoreTone(score,true))+'"><div class="label">'+name+(!inactive?'<span class="risk-monthly">月 '+monthlyRiskPercent(chance)+'</span>':'')+'</div><strong>'+(inactive?(state.phase==='custody'?'審理中':'収監中'):score+'/100')+'</strong>'+(!inactive?'<div class="bar" title="危険指数 '+score+'/100。月間確率とは別の目安"><i style="width:'+score+'%"></i></div>':'')+'</div>').join('')+'</div></div>';
+}
+if(label==='お金'||label==='仕事'){
+ const metrics=label==='お金'?[['手持ち',moneyText(state.money),null,false],['借金',moneyText(debtTotal()),null,debtTotal()>0]]:[['信用',rankDisplay(state.rank)+'/100',state.rank/150*100,false],['経験',state.skill+'/100',state.skill,false]];
+ return '<div class="stat tone-neutral"><div class="label">'+label+'</div><div class="stat-pair">'+metrics.map(([name,number,progress,warning])=>'<div class="stat-pair-item"><div class="label">'+name+'</div><strong'+(warning?' class="debt-outstanding"':'')+'>'+number+'</strong>'+(progress===null?'':'<div class="bar"><i style="width:'+progress+'%"></i></div>')+'</div>').join('')+'</div></div>';
+}
+const tone=p===null||['信用','経験','人間関係'].includes(label)?'neutral':scoreTone(p,label.includes('危険')||label==='ストレス');return '<div class="stat tone-'+tone+'"><div class="label">'+label+'</div>'+(label.includes('危険')&&p!==null?'<small class="risk-causes">'+escapeHTML(causeText(label.includes('摘発')?'arrest':'attack'))+'</small>':'')+'<strong>'+value+'</strong>'+(p===null?'':'<div class="bar"><i style="width:'+p+'%"></i></div>')+'</div>'}).join('');
 const bond=n=>n>=70?'良好':n>=35?'落ち着いている':'すれ違いがある';
 document.getElementById('lifeDetails').innerHTML='<summary>詳しい状態</summary><p>所属：'+escapeHTML(state.organization?.name||'これまでの組織')+' · 内部の不満：'+(state.orgDiscontent>=60?'高い':state.orgDiscontent>=30?'くすぶっている':'低い')+'</p><p>危険度は0〜100の指標で、逮捕・死亡確率そのものではありません。月間のゲーム内予測：摘発 '+displayPercent(r.arrest)+'% · '+(senior?'襲撃':'抗争等の暴力被害')+' '+displayPercent(r.assassination)+'%。通常の襲撃は即死確定ではなく、襲撃時の直接致命化は'+displayPercent(ordinaryFatalChance()*100)+'%、それ以外は健康25〜50減（護衛加入時は15軽減）（低い健康では活動終了もあり）。全て創作設定。</p><p>借金は立替金と未払い生活費。未受取の手当は別管理。</p><p>ストレス：'+(state.stress>=70?'強い負担':state.stress>=40?'疲れ気味':'落ち着いている')+' · 街：'+(state.safety>=65?'比較的穏やか':state.safety>=35?'緊張がある':'不安が強い')+'</p><p>人間関係は家族・友人・恋人とのつながりをまとめた目安。個別の関係も影響する。</p><p>家族：'+bond(state.familyBond)+' · 親友：'+(state.friendAlive?bond(state.friendship):'失った')+' · 恋人：'+({none:'なし',dating:'交際中',committed:'一緒に暮らしている',lost:'死別'})[state.partner]+'</p><p>家族への送金：受取手当の'+Math.round(state.remittanceRate*100)+'% · 累計 '+moneyText(state.familyTransferred)+'</p>'+(state.betrayalMonths>0?'<p>旧組織への発覚率：毎月 '+displayPercent(state.betrayalExposure*20)+'% · 残り'+state.betrayalMonths+'か月（創作設定）。通常の危険予測とは別判定。</p>':'')+(state.probationMonths>0?'<p>処分：残り'+state.probationMonths+'か月</p>':'')+(state.obligation>0?'<p>'+escapeHTML(state.obligationCreditor||'支援者')+'への義理が残る。</p>':'')+(senior&&!state.boss?'<p>幹部の支持：'+state.leadershipSupport+' / 3以上で後継候補</p>':'');
-document.getElementById('openSpending').disabled=['intro','origin','end'].includes(state.phase);renderPlaybackControls();document.getElementById('auxStatus').innerHTML='<span>経験は昇進条件と審査に影響。ストレス70以上が続くと健康にも影響。</span>';
+document.getElementById('openSpending').disabled=['intro','origin','end'].includes(state.phase);renderPlaybackControls();document.getElementById('auxStatus').innerHTML='<span>月間の見込み：摘発 約'+monthlyRiskPercent(r.arrest)+'／襲撃 約'+monthlyRiskPercent(r.assassination)+'。</span><button type="button" class="secondary" id="statsRiskOptions">危険への対策を見る</button>';document.getElementById('auxStatus').innerHTML='';document.getElementById('riskSummaryAction').onclick=openRiskManagement;
 }
 let deferredDecisionMonth=null;
+function lifeDialogOpen(){return ['decisionDialog','spendDialog','careerDialog','riskOptionsDialog','casinoDialog','diceDialog','originDialog'].some(id=>document.getElementById(id)?.open)}
 function scheduleProgress(){
-clearTimeout(progressTimer);if(state.isPaused||state.diceSession||document.getElementById('spendDialog').open)return;
+clearTimeout(progressTimer);if(lifeDialogOpen())return;if(state.isPaused||state.diceSession||document.getElementById('spendDialog').open)return;
 if(journalBusy||!['game','custody','prison'].includes(state.phase))return;
 if(state.currentEvent&&deferredDecisionMonth===state.month)return;
 const delay=state.currentEvent?Math.max(0,(state.nextDecisionAt||0)-Date.now()):3000/gameSpeed();
 progressTimer=setTimeout(()=>{
-if(state.isPaused||state.diceSession||document.getElementById('spendDialog').open)return;if(document.hidden){scheduleProgressAfterVisibility();return}
+if(lifeDialogOpen()||state.isPaused||state.diceSession||document.getElementById('spendDialog').open)return;if(document.hidden){scheduleProgressAfterVisibility();return}
 if(journalBusy||!['game','custody','prison'].includes(state.phase))return;
 if(state.currentEvent)showDecision();else advanceQuietMonth();
 },delay);
 }
 function scheduleProgressAfterVisibility(){clearTimeout(progressTimer);progressTimer=setTimeout(scheduleProgress,1000)}
+function ensureAffordableResponse(e){
+ if(!e||state.phase!=='game'||!Array.isArray(e.options))return;
+ if(e.id==='community'&&!e.options.some(o=>o.affordableResponse))e.options.push({title:'住民の話を聞き、組織に改善を求める',desc:'出費なし。時間を使い、街の緊張を少し和らげる。',fx:{safety:2,stress:2},affordableResponse:true});
+ if((e.id==='var_housing_1'||e.title==='住まいの修繕費を求められた')&&!e.options.some(o=>o.affordableResponse))e.options.push({title:'今回は修繕を見送る',desc:'出費なし。不便な暮らしの負担を今回だけ受ける。',fx:{health:-4,stress:3},affordableResponse:true});
+}
+function ensurePayableDecision(e){
+ if(state.phase!=='game'||!e||!e.options?.length)return;
+ if(e.options.some(o=>!o.cost||state.money>=o.cost))return;
+ if(e.options.some(o=>o.unaffordableFallback))return;
+ e.options.push({title:'今は払えないと伝える',desc:'今回の支出なし。既存の借金と月末の生活費は残る。',fx:{},unaffordableFallback:true});
+}
 function showDecision(force=false){
 if(state.diceSession)return;
 if(state.isPaused&&!force)return;
@@ -540,7 +572,10 @@ if(Date.now()<(state.nextDecisionAt||0)){scheduleProgress();return}
 
 const dialog=document.getElementById('decisionDialog');
 if(journalBusy||!['game','custody','prison'].includes(state.phase)||!state.currentEvent||(deferredDecisionMonth===state.month&&!force))return;
+clearTimeout(progressTimer);
 const e=state.currentEvent;
+ensureAffordableResponse(e);
+ensurePayableDecision(e);
 document.getElementById('decisionDate').textContent=ageText();
 document.getElementById('decisionTitle').textContent=e.title;
 document.getElementById('decisionText').textContent=e.text.replace(/（\d+歳・[^）]*）$/,'');
@@ -604,13 +639,15 @@ function choose(index){
 if(journalBusy||(state.phase!=="game"&&state.phase!=="custody"&&state.phase!=="prison"))return;let e=state.currentEvent,o=e.options[index];if(!o||(o.cost&&state.money<o.cost))return;document.getElementById("decisionDialog").close();clearTimeout(progressTimer);deferredDecisionMonth=null;state.nextDecisionAt=Date.now()+10000/gameSpeed();if(state.isPaused)state.pausedAt=Date.now();
 if(o.gambleStart){openDice();return}if(o.gambleDecline)state.gambleCooldown=state.month+6;
 if(['custody','prison'].includes(state.phase)){chooseLegal(o);return}
-if(o.contractKind){resolveContract(o.contractKind);if(state.phase==='custody')return}else if(o.legalExit){state.phase='end';state.endReason='legal_exit';addFeed('組織を離れ、合法の暮らしを選んだ。','end')}else if(resolveContextChoice(e,o)){}else if(e.id==="large_case"&&index===0){if(Math.random()<.20){state.orgFunds+=1000000*MXN_PER_USD/MXN_PER_UNIT;let reward=10000*MXN_PER_USD/MXN_PER_UNIT;state.money=clamp(state.money+reward,1000000);state.earned+=reward;state.rank=clamp(state.rank+30,state.boss?150:149);addFeed("案件は成功した。","choice","成功率20%（ゲーム設定） · 組織の収益 +US$1,000,000 · 本人への1%報酬 +US$10,000")}else{const priorRank=state.rank;state.rank=Math.max(0,state.rank-60);beginCustody("large",priorRank);return}}
+if(o.choiceCashCost)state.money-=o.choiceCashCost;
+if(o.contractKind){resolveContract(o.contractKind);if(state.phase==='custody')return}else if(o.legalExit){state.phase='end';state.endReason='legal_exit';addFeed('組織を離れ、合法の暮らしを選んだ。','end')}else if(o.unaffordableFallback){addFeed('支払える資金がなく、今回の支出を見送った。','choice','既存の借金と月末の生活費は通常どおり。')}else if(resolveContextChoice(e,o)){}else if(e.id==="large_case"&&index===0){if(Math.random()<.20){state.orgFunds+=1000000*MXN_PER_USD/MXN_PER_UNIT;let reward=10000*MXN_PER_USD/MXN_PER_UNIT;state.money=clamp(state.money+reward,1000000);state.earned+=reward;state.rank=clamp(state.rank+30,state.boss?150:149);addFeed("案件は成功した。","choice","成功率20%（ゲーム設定） · 組織の収益 +US$1,000,000 · 本人への1%報酬 +US$10,000")}else{const priorRank=state.rank;state.rank=Math.max(0,state.rank-60);beginCustody("large",priorRank);return}}
 else if(e.id==="promotion_offer"&&index===0){if(Math.random()<promotionChance()){state.rank=clamp(state.rank+30,state.boss?150:149);addFeed("推薦が通り、昇進した。","choice","昇進見込み "+exactPercent(promotionChance())+"%（ゲーム調整値）")}else{state.rank=Math.max(0,state.rank-3);addFeed("推薦は通らなかった。","choice","信用 −2（下限では残り分のみ）")}}
-else if(o.bossBid){if(Math.random()<.12){state.rank=150;state.boss=true;addFeed("後継者に選ばれ、ボスに就任した。","end","就任率12%は創作のゲーム設定。実際の昇進確率ではない。")}else{state.rank=Math.max(0,state.rank-15);state.leadershipSupport=Math.max(0,state.leadershipSupport-1);apply({stress:10,threat:6});addFeed("後継争いに敗れた。","risk","信用・地位 -10/100 · 幹部の支持 -1")}}else{if(o.story)Object.assign(state,o.story);if(o.supportGain)state.leadershipSupport=Math.min(10,state.leadershipSupport+o.supportGain);if(o.roleChange){state.roleChosen=true;state.role=o.roleChange;addFeed("役割が"+ROLE_NAMES[state.role]+"になった。","normal")}if(o.trySmoking){state.smoking=Math.random()<.35?1:0;addFeed(state.smoking?"喫煙が習慣になった。":"この一本きりで、喫煙の習慣はつかなかった。","normal","習慣化35%はゲーム独自の仮設定。")}let actual={...o.fx};const beforeRank=state.rank;apply(actual);if(Object.prototype.hasOwnProperty.call(actual,"rank"))actual.rank=state.rank-beforeRank;addFeed(o.title+"を選んだ。","choice",effectText(actual))}
+else if(o.bossBid){if(Math.random()<.12){state.rank=150;state.boss=true;addFeed("後継者に選ばれ、ボスに就任した。","end","就任率12%は創作のゲーム設定。実際の昇進確率ではない。")}else{state.rank=Math.max(0,state.rank-15);state.leadershipSupport=Math.max(0,state.leadershipSupport-1);apply({stress:10,threat:6});addFeed("後継争いに敗れた。","risk","信用・地位 -10/100 · 幹部の支持 -1")}}else{if(o.story)Object.assign(state,o.story);if(o.supportGain)state.leadershipSupport=Math.min(10,state.leadershipSupport+o.supportGain);if(o.roleChange){state.roleChosen=true;state.role=o.roleChange;addFeed("役割が"+ROLE_NAMES[state.role]+"になった。","normal")}if(o.trySmoking){state.smoking=Math.random()<.35?1:0;addFeed(state.smoking?"喫煙が習慣になった。":"この一本きりで、喫煙の習慣はつかなかった。","normal","習慣化35%はゲーム独自の仮設定。")}let actual={...o.fx};const beforeRank=state.rank;apply(actual);if(Object.prototype.hasOwnProperty.call(actual,"rank"))actual.rank=state.rank-beforeRank;if(o.choiceFamilyAmount)state.familyTransferred+=o.choiceFamilyAmount;addFeed(o.title+"を選んだ。","choice",effectText(actual)+(o.choiceCashCost?" · 費用 −"+moneyText(o.choiceCashCost):""))}
 if(state.phase==="end"){save();render();return}if(!state.boss&&state.rank>=150){state.boss=true;addFeed(state.name+"は組織のボスになった。収益が増える一方、身を狙う者と捜査の目も増えた。","end")}
-state.nextDecisionMonth=state.month+2+Math.floor(Math.random()*3);finishMonth();
+state.currentEvent=null;state.nextDecisionMonth=state.month+2+Math.floor(Math.random()*3);finishMonth();
 }
 function finishMonth(){
+if(lifeDialogOpen()||state.currentEvent)return;
 if(!advanceConsequences()){save();render();return}settleMonth();if(!advanceWellbeing()){save();render();return}
 const rates=riskRates();
 if(Math.random()*100<rates.arrest){beginCustody('ordinary');return}
@@ -726,6 +763,7 @@ if(o.pressureJob){state.obligation=clamp(state.obligation-15);if(Math.random()<.
 return false;
 }
 function advanceConsequences(){
+if(state.phase==='game')state.heat=Math.max(0,state.heat-(leaveActive()?2.5:state.lightDuty?1.5:.5));
 if(state.arrestPressureMonths>0){state.arrestPressureMonths--}else state.arrestPressure=0;
 if(state.probationMonths>0)state.probationMonths--;
 if(state.betrayalMonths>0){state.betrayalMonths--;
@@ -743,10 +781,26 @@ if(option.pressureJob)return '<div class="contract-breakdown">資産変化0・�
 if(option.transferMode==='secret'){const monthly=betrayalExposureFor(option)*.2;return '<div class="risknote">毎月の発覚率 '+displayPercent(monthly*100)+'% · 6か月継続<br>6か月以内の発覚目安 '+displayPercent((1-(1-monthly)**6)*100)+'% · 発覚時の致命的報復65%（創作設定）</div>'}
 if(option.transferMode==='negotiated'){const p=Math.max(.1,Math.min(.85,.6+state.skill*.002-state.orgDiscontent*.003-state.obligation*.004));return '<div class="risknote">移籍の了承見込み '+exactPercent(p)+'%（創作設定）</div>'}return '';
 }
-function openSpending(){
-if(['intro','origin','end'].includes(state.phase)||document.getElementById('decisionDialog').open)return;
-clearTimeout(progressTimer);renderSpending();document.getElementById('spendDialog').showModal();
+function openMoneyManagement(focusRisk=false){
+ if(['intro','origin','end'].includes(state.phase))return;
+ clearTimeout(progressTimer);
+ const dialog=document.getElementById('spendDialog');
+ // Keep the current decision and manual pause intact; put management above it.
+ if(!dialog.open)dialog.showModal();
+ try{
+  renderSpending();
+  selectSpendingTab(focusRisk?'risk':'use');
+  if(focusRisk){const group=document.getElementById('spendRiskGroup');if(group){group.open=true;group.scrollIntoView({block:'start'});group.querySelector('summary')?.focus({preventScroll:true})}}
+ }catch(error){
+  console.error('Money management rendering failed',error);
+  const message=document.getElementById('spendMessage');
+  message.textContent='画面の表示に失敗しました：'+(error?.message||String(error));
+  // The initial header is outside the clipped body until layout setup succeeds.
+  if(!dialog.querySelector('.spend-header')){const header=document.createElement('div');header.className='spend-header';header.append(dialog.querySelector('.decision-top'),document.getElementById('spendSummary'),message);dialog.prepend(header)}
+ }
 }
+function openSpending(){openMoneyManagement(false)}
+
 function renderSpending(message=''){
 const rate=Math.round(state.remittanceRate*100),pending=state.pendingRemittanceRate;
 document.getElementById('spendSummary').textContent='資産 '+moneyText(state.money)+' · 借金 '+moneyText(debtTotal())+' · 月の生活費目安 '+moneyText(localLife().living+(state.partner==="committed"?10:0))+'（共同生活の創作予算）';
@@ -870,13 +924,13 @@ ordinary('lethal_contract','殺害の依頼を持ちかけられた','架空の�
 ],{minRank:60,when:s=>s.month>=12&&s.month>=(s.contractCooldown||0),weight:1})
 );
 function contractHTML(kind){
- const j=JOBS[kind];if(!j)return '';
+ const j=JOBS[kind];if(!j)return '';if(j.opportunity)return opportunityHTML(j);
  const extra=Math.min(j.pressure,100-state.arrestPressure),duration=Math.max(j.months,state.arrestPressureMonths),stress=clamp(state.stress+j.stress)-state.stress,injury=state.health-clamp(state.health-j.healthLoss);
  const points=extra*.03,pressureText=points>0&&points<1?'1ポイント未満':Math.round(points)+'ポイント';
  return '<div class="contract-breakdown"><b>今回の結果</b><ul><li>成功 '+Math.round(j.success*100)+'%：US$'+j.reward.toLocaleString('en-US')+'、信用 '+signed(exactCredit(j.credit*1.5))+'、ストレス＋'+stress+'</li><li>逮捕 '+Math.round(j.arrest*100)+'%：信用 '+signed(exactCredit(-j.loss*1.5))+'、審理へ</li><li>負傷 '+Math.round(j.injury*100)+'%：健康−'+injury+'、信用 '+signed(exactCredit(-j.loss*1.5))+'、ストレス＋'+stress+'</li><li>死亡 '+Math.round(j.death*100)+'%：人生終了</li></ul><p>引受後'+duration+'か月は、普段より摘発されやすい状態が続く。</p><details class="event-evidence"><summary>危険の内訳</summary><p>依頼を引き受けると追加の圧力＋'+extra+'/100。月間の摘発確率に約'+pressureText+'を加算する。追加の圧力の合計上限は100、重なる期間は長い方を採用。生存して活動を続ける場合は、その月の通常の収支と危険判定も行う。</p></details></div>';
 }
 function resolveContract(kind){
-const j=JOBS[kind];if(!j)return;
+const j=JOBS[kind];if(!j)return;if(j.opportunity){resolveOpportunityContract(j);return}
 state.contractCooldown=state.month+(kind==='lethal'?12:3);state.arrestPressure=Math.min(100,state.arrestPressure+j.pressure);state.arrestPressureMonths=Math.max(state.arrestPressureMonths,j.months);
 const roll=Math.random();
 if(roll<j.success){const reward=dollarsToUnits(j.reward),before=state.rank;apply({money:reward,rank:j.credit*1.5,stress:j.stress});state.earned+=reward;if(kind==='lethal')state.lethalOrders++;addFeed(kind==='lethal'?'殺害依頼は実行されたと伝えられ、報酬を受け取った。':'危険な役目を終え、報酬を受け取った。','choice',moneyText(reward)+' · 信用 '+rankChange(state.rank-before));return}
@@ -897,7 +951,7 @@ save();render();
 }
 function varietyBasePersonalizeEvent(e){
 const result=economyBasePersonalizeEvent(e);
-if(e.id==='large_case')result.options=result.options.filter(o=>o.title!=='信頼する仲間に任せる').map((o,i)=>i===0?{...o,desc:'成功20%：本人報酬US$10,000、組織収益US$1,000,000、信用＋20。失敗80%：報酬0、信用−40、逮捕・審理へ。通常月の危険判定は別。全て創作値。'}:o);
+if(e.id==='large_case'&&!result.options[0]?.contractKind)result.options=result.options.filter(o=>o.title!=='信頼する仲間に任せる').map((o,i)=>i===0?{...o,desc:'成功20%：本人報酬US$10,000、組織収益US$1,000,000、信用＋20。失敗80%：報酬0、信用−40、逮捕・審理へ。通常月の危険判定は別。全て創作値。'}:o);
 if(['dangerous_contract','lethal_contract'].includes(e.id))result.options=result.options.filter(o=>o.title!=='信頼する仲間に任せる');
 return {...result,balanceVersion:5};
 }
@@ -1123,16 +1177,16 @@ if(key==='money'){if(delta)row('資産',signedMoney(delta));const debt=Math.max(
 else if(PLAYER_VISIBLE_METRICS.has(key))row(EFFECT_LABELS[key]||key,signed(delta)+(delta===0?'（上限・下限）':''));
 }else if(key==='partner')row('恋人との状態',({none:'交際なし',dating:'交際中',committed:'同居',lost:'死別'})[after.partner]||after.partner);
 }
-const current=riskRates(),projected=riskAt(after.rank,after.heat,after.threat,after.safety,after.boss);
-const score=projected.arrestScore-current.arrestScore,assassination=projected.assassinationScore-current.assassinationScore;
-if(score)row('摘発リスク',signed(score)+'/100');
-if(assassination)row('襲撃リスク',signed(assassination)+'/100');
+const current=riskRates(),projected=riskAfter(()=>{for(const key of new Set([...Object.keys(fx),...Object.keys(story)])){const value=after[key];state[key]=value&&typeof value==='object'?JSON.parse(JSON.stringify(value)):value}});
+const arrestChange=riskChangeValue(current.arrest,projected.arrest),attackChange=riskChangeValue(current.assassination,projected.assassination);
+if(arrestChange)row('摘発',arrestChange);
+if(attackChange)row('襲撃',attackChange);
 return rows.length?'<div class="exact-grid">'+rows.join('')+'</div>':'';
 }
 function exactMetadata(o){
 const parts=[],put=text=>parts.push('<p>'+text+'</p>');
 if(o.gambleStart)put('次の卓でちんちろ・ポーカーを選べます。手数料5%。ルール・賭け額・結果別の損益を確認してから参加。借入なし、断った場合の信用低下なし。');
-if(o.cost)put('費用：資産 −'+moneyText(o.cost)+'。資産不足なら選べず、借入で自動補填しない。');
+if(o.cost)put('費用：'+moneyText(o.cost)+(state.money<o.cost?'。手持ち不足：あと'+moneyText(o.cost-state.money):'')+'。自動借入なし。');
 if(o.roleChange){
 const afterRank=clamp(state.rank+(o.fx.rank||0),state.boss?150:149),current=salaryForecast(state.organization,state.rank,state.boss),next=salaryForecast(state.organization,afterRank,state.boss);
 put('役割 → '+ROLE_NAMES[o.roleChange]+'。役割そのものによる給与補正は0%。信用など選択肢の補正に使う役割です。');
@@ -1149,7 +1203,7 @@ if(o.legalRepayment){const gross=dollarsToUnits(o.legalRepayment),paid=Math.min(
 if(o.transferMode){const target=state.currentEvent?.targetOrganization,carry=o.transferMode==='secret'?.4:.65;if(target)put('成立時：信用 '+signed(Number(rankDisplay(Math.floor(state.rank*carry)))-Number(rankDisplay(state.rank)))+'、幹部の支持 −'+state.leadershipSupport+'、旧組織の未受取金 −'+moneyText(state.payArrears)+'、借金変化0。所属→'+escapeHTML(target.name)+'、内部不満→'+(target.delay>.2?30:10)+'。');if(o.transferMode==='negotiated')put('了承されなければ移籍なし：信用 '+signed(exactCredit(-7.5))+'、ストレス＋6、疑念＋8。');}
 if(o.bossBid){put('就任12%：信用 '+signed(100-Number(rankDisplay(state.rank)))+'、ボスに就任。失敗88%：信用 '+signed(exactCredit(-15))+'、幹部の支持 '+signed(Math.max(0,state.leadershipSupport-1)-state.leadershipSupport)+'、ストレス＋10、対立の脅威＋6。');}
 if(o.promotionAttempt)put('昇進 '+exactPercent(promotionChance())+'%：信用 '+signed(exactCredit(30))+'。失敗 '+exactPercent(1-promotionChance())+'%：信用 '+signed(exactCredit(-3))+'。');
-if(state.currentEvent?.id==='large_case'&&state.currentEvent.options[0]===o)put('成功20%：資産＋US$10,000、累計稼ぎ＋US$10,000、組織収益＋US$1,000,000、信用 '+signed(exactCredit(30))+'。失敗80%：報酬0、信用 '+signed(exactCredit(-60))+'、逮捕・審理へ。');
+if(state.currentEvent?.id==='large_case'&&state.currentEvent.options[0]===o&&!o.contractKind)put('成功20%：資産＋US$10,000、累計稼ぎ＋US$10,000、組織収益＋US$1,000,000、信用 '+signed(exactCredit(30))+'。失敗80%：報酬0、信用 '+signed(exactCredit(-60))+'、逮捕・審理へ。');
 if(o.legalAction==='contact'){parts.push(effectRows({familyBond:4,stress:-3}));put('刑期は最大3か月進む。連絡後の家族関係が60以上なら30%でUS$20の援助（稼ぎに含めない）、70%は援助0。');}
 if(o.legalAction==='study'){parts.push(effectRows({skill:2,stress:-2}));put('刑期は最大3か月進む。');}
 if(o.legalAction==='work'){parts.push(effectRows({money:dollarsToUnits(20)*Math.min(3,state.sentenceMonths)/3,health:-2,stress:3}));put('作業収入は累計稼ぎにも加算。通常給与・送金は0。刑期は最大3か月進む。')}
@@ -1193,7 +1247,7 @@ if(betting){
 const options=[{label:'US$20',amount:dollarsToUnits(20)},{label:'US$100',amount:dollarsToUnits(100)},...[.10,.25,.50].map(p=>({label:'資産の'+Math.round(p*100)+'%',amount:dollarsToUnits(Math.floor(state.money*MXN_PER_UNIT/MXN_PER_USD*p*100)/100)}))];
 document.getElementById('diceStakes').innerHTML=options.map((o,i)=>'<button type="button" class="secondary" data-dice-stake="'+o.amount+'" '+(o.amount<=0||o.amount+diceFee(o.amount)>state.money?'disabled':'')+' aria-pressed="'+(Math.abs(s.stake-o.amount)<.00001)+'">'+o.label+'<small>'+diceMoney(o.amount)+'</small></button>').join('');
 document.querySelectorAll('[data-dice-stake]').forEach(b=>b.onclick=()=>{s.stake=+b.dataset.diceStake;save();renderDice()});
-const odds='勝ち41.67%・負け41.67%・引分16.67%。双方の出目は独立した1〜6。';
+const odds='勝ち・負けはそれぞれ約42%、残りは引分。双方の出目は独立した1〜6。';
 if(s.stake){const n=diceOutcomeNumbers(s.stake);document.getElementById('diceTerms').innerHTML='<b>賭け金 '+diceMoney(s.stake)+' ＋ 手数料 '+diceMoney(n.fee)+'（5%）</b><p>勝ち：資産 '+diceSigned(n.win)+' ／ 負け：'+diceSigned(n.loss)+' ／ 引分：'+diceSigned(n.tie)+'</p><p>'+odds+'</p><small>倍率で勝率は変わらない。手数料があるので繰り返すほど期待収支はマイナス。通常の月末収支は対戦後に別途発生。</small>'}
 else document.getElementById('diceTerms').innerHTML='<p>賭け額を選んでください。'+odds+'</p><small>手数料は賭け金の5%。架空の資産だけで遊ぶミニゲームです。</small>';
 document.getElementById('diceResult').textContent='賭け額を選ぶ';
@@ -1217,7 +1271,7 @@ document.getElementById('diceArena').classList.remove('dice-rolling');save();ren
 function finishDice(){
 if(!state.diceSession||state.diceSession.stage==='rolling')return;
 if(state.diceSession.stage==='betting')addFeed('賭けには参加しなかった。','choice','資産変化0。');
-clearTimeout(diceTimer);state.diceSession=null;state.gambleCooldown=state.month+12;document.getElementById('diceDialog').close();deferredDecisionMonth=null;
+clearTimeout(diceTimer);state.diceSession=null;if(state.currentEvent?.id==='dice_invitation')state.currentEvent=null;state.gambleCooldown=state.month+12;document.getElementById('diceDialog').close();deferredDecisionMonth=null;
 state.nextDecisionAt=Date.now()+10000/gameSpeed();if(state.isPaused)state.pausedAt=Date.now();state.nextDecisionMonth=state.month+2+Math.floor(Math.random()*3);finishMonth();
 }
 function resumeDice(){
@@ -1246,7 +1300,7 @@ personalizeEvent=function(e){const r=lifePersonalizeEvent(e);if(r.id==='occupati
  r.options=r.options.map(o=>({...o,desc:'普段の職務と関連する出来事が変わります。'}));
  }return {...r,balanceVersion:9}};
 
-const PROTECTION={guard:{label:'ボディーガード',fee:150,detail:'通常の襲撃による負傷を15軽減。直接致命傷の判定率を半分にする。襲撃の発生率・依頼・裏切りの別判定は変わらない。'},medical:{label:'医療プラン',fee:30,detail:'加入した翌月以降の通常襲撃で、治療費US$300→US$60。負傷そのもの・直接致命傷は軽減しない。'}};
+const PROTECTION={guard:{label:'ボディーガード',fee:150,detail:'通常の襲撃による負傷を15軽減。直接致命傷の判定率を半分にする。襲撃の発生率・依頼・裏切りの別判定は変わらない。'},medical:{label:'医療プラン',fee:30,detail:'加入した翌月以降の通常襲撃で治療費の80%を補償。自己負担は軽傷US$40、中程度130、重傷400。負傷そのもの・直接致命傷は軽減しない。'}};
 function covered(kind){return (state.protectionThrough?.[kind]??-1)>=state.month}
 function renderProtection(){
  let box=document.getElementById('protectionOptions');if(!box)return;
@@ -1269,9 +1323,9 @@ ordinaryAttack=function(){
  addFeed('襲撃で負傷した。','risk','健康 −'+(before-state.health)+'（基礎 '+raw+'・護衛軽減 '+reduction+'） · ストレス＋'+(state.stress-priorStress));
  if(state.health<=0){state.pendingAfterAttack=null;state.phase='end';state.endReason='health';addFeed('負傷が重なり、組織での活動を続けられなくなった。','end');return false}return true;
 };
-function afterAttackEvent(){const a=state.pendingAfterAttack,cost=a.insured?60:300;
- return ordinary('attack_aftermath','襲撃のあと、どう立て直す？','負傷は健康−'+a.damage+'。この対応では月を進めず、追加の通常襲撃判定も行いません。医療補償：'+(a.insured?'適用':'対象外')+'。',[
- ['治療を受ける','資産 −US$'+cost+'、健康＋25。資産不足なら選べません。',{health:25},{cost:dollarsToUnits(cost),aftermath:'care'}],
+function afterAttackEvent(){const a=state.pendingAfterAttack,severity=a.damage>=35||state.health<40?'重傷':a.damage>=20?'中程度の負傷':'軽い負傷',full=severity==='重傷'?2000:severity==='中程度の負傷'?650:200,cost=a.insured?Math.round(full*.2):full,recovery=severity==='重傷'?30:severity==='中程度の負傷'?25:15;
+ return ordinary('attack_aftermath','襲撃のあと、どう立て直す？',severity+'。負傷は健康−'+a.damage+'。この対応だけでは月を進めません。医療補償：'+(a.insured?'適用':'対象外')+'。',[
+ ['治療を受ける','費用 US$'+cost+'、健康＋'+recovery+'。資金不足なら選べません。',{health:recovery},{cost:dollarsToUnits(cost),aftermath:'care'}],
  ['静養する','費用なし。健康＋10、ストレス−6、信用・地位−3。',{health:10,stress:-6,rank:-4.5},{aftermath:'rest'}],
  ['報復に踏み切る','資産−US$500。成功35%：信用＋10、対立の脅威−10。失敗65%：健康−20、信用−5。どちらも捜査の注目＋15・対立の脅威＋15。失敗時に健康が0なら活動終了。方法や標的の操作はありません。',{}, {cost:dollarsToUnits(500),aftermath:'retaliate'}],
  ['治療せず日常に戻る','費用なし。健康・信用の変化なし。ストレス＋3。',{stress:3},{aftermath:'return'}]
@@ -1696,11 +1750,11 @@ renderSpending=function(message=''){expenseRenderSpending(message);renderExpense
 // Fictional cause-based risk and organizational disputes. No operational methods.
 function riskStory(){if(!state.riskStory)state.riskStory={request:null,peaceUntil:0,reconcile:null,lightSince:0,factionExposure:0,war:{stage:0,nextAt:12,pending:false,stance:'neutral',enemy:'隣接地区の組織',extended:false}};return state.riskStory}
 function authorityRank(){return state.boss?150:state.occupationChosen?[15,45,80,110][ensureCareer()?.stage||0]:0}
-function roleExposure(){return (state.workRiskFactor??1)*(state.lightDuty?.7:1)}
+function roleExposure(){return (state.workRiskFactor??1)*(state.lightDuty?.5:1)}
 function warExposure(){const s=riskStory(),w=s.war,base=w.stage===2?1:w.stage===1?.25:w.stage===3?.3:0;return base*(w.stance==='distance'?.25:w.stance==='support'?.6:w.stance==='front'?1.25:1)}
 arrestComponents=function(rank=state.rank,heat=state.heat,boss=state.boss){const p=(boss?150:authorityRank())/150;return {work:(heat*.0125+p*p*.8)*roleExposure(),investigation:.1+heat*.0125+p*p*1.2+(boss?1.5:0),contract:state.arrestPressure*.03}};
 riskAt=function(rank,heat,threat,safety,boss){const p=(boss?150:authorityRank())/150,s=riskStory(),w=warExposure(),parts=arrestComponents(rank,heat,boss),f=roleExposure(),faction=s.factionExposure;
- return {arrest:Math.min(20,parts.work+parts.investigation+parts.contract+w*.15),assassination:Math.min(15,.08+threat*.025+p*p*2.5*(state.lightDuty?.7:1)+(100-safety)*.008+(boss?2.5:0)+w*.4+faction*.005),arrestScore:Math.round(clamp(heat*.375*(1+f)+threat*.3+(100-safety)*.2+p*p*(12+8*f)+(boss?10:0)+state.arrestPressure+w*5)),assassinationScore:Math.round(clamp(threat*.65+(100-safety)*.25+p*p*25*(state.lightDuty?.7:1)+(boss?10:0)+w*10+faction*.15))};
+ return {arrest:Math.min(20,parts.work+parts.investigation+parts.contract+w*.15),assassination:Math.min(15,.08+threat*.025+p*p*2.5*(state.lightDuty?.7:1)+(100-safety)*.008+(boss?2.5:0)+w*.4+faction*.005),arrestScore:Math.round(clamp(heat*.375*(1+f)+p*p*(12+8*f)+(boss?10:0)+state.arrestPressure+w*5)),assassinationScore:Math.round(clamp(threat*.65+(100-safety)*.25+p*p*25*(state.lightDuty?.7:1)+(boss?10:0)+w*10+faction*.15))};
 };
 ordinaryFatalChance=function(){return Math.min(.25,.1+state.threat*.001+authorityRank()/150*.05)*(covered('guard')?.5:1)};
 const lightPayBase=payBase;
@@ -1709,7 +1763,7 @@ const lightCareerRequirements=careerRequirements;
 careerRequirements=function(){const r=lightCareerRequirements();return r&&state.lightDuty?{...r,ready:false}:r};
 const lightRequirementsText=careerRequirementsText;
 careerRequirementsText=function(){return state.lightDuty?'負担の軽い担当中。手当は通常の80%、昇進用の実働は停止。通常の担当に戻るまで推薦は受けない。':lightRequirementsText()};
-function causeText(kind){const p=authorityRank()/150,w=warExposure(),s=riskStory();const rows=kind==='arrest'?[['捜査の注目',state.heat*.375],['職務・役職',state.heat*.375*roleExposure()+p*p*20],['最近の依頼',state.arrestPressure],['組織間の抗争',w*5]]:[['周囲との対立',state.threat*.65],['職務・役職',p*p*25],['街の緊張',(100-state.safety)*.25],['組織間の抗争',w*10],['派閥との近さ',s.factionExposure*.15]];return rows.filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]).slice(0,2).map(([label])=>label).join('／')||'目立った原因なし'}
+function causeText(kind){const p=authorityRank()/150,w=warExposure(),s=riskStory();const rows=kind==='arrest'?[['捜査の注目',state.heat*.375+p*p*12+(state.boss?10:0)],['職務・役職',state.heat*.375*roleExposure()+p*p*8*roleExposure()],['最近の依頼',state.arrestPressure],['組織間の抗争',w*5]]:[['周囲との対立',state.threat*.65],['職務・役職',p*p*25],['街の緊張',(100-state.safety)*.25],['組織間の抗争',w*10],['派閥との近さ',s.factionExposure*.15]];return rows.filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]).slice(0,2).map(([label])=>label).join('／')||'目立った原因なし'}
 function riskQuestEvent(type){const s=riskStory(),c=ensureCareer();const make=(title,text,options)=>({id:'risk_quest',title,text,options:options.map(([title,desc,fx,action])=>({title,desc,fx,riskAction:action})),balanceVersion:9});
  if(type==='light')return make('担当を軽くする相談を持ちかけた','上役は、負担の軽い担当へ回す代わりに、手当を減らすと言う。少なくとも6か月はその担当を続ける条件だ。',[
  ['条件を受ける','手当は通常の80%。職務由来の危険を軽減し、昇進用の実働を停止。捜査・対立・依頼の影響は残る。',{},'light'],['今の担当を続ける','変更しない。',{},'cancel']]);
@@ -1783,7 +1837,8 @@ function renderRiskOptions(){const s=riskStory(),c=ensureCareer(),r=riskRates();
  document.getElementById('riskContent').innerHTML='<p>摘発 '+r.arrestScore+'/100：'+causeText('arrest')+'</p><p>襲撃 '+r.assassinationScore+'/100：'+causeText('attack')+'</p><p>相談は次の通常の選択で届く。条件を聞いてから断ることもできる。</p>'+actions.map(([label,id])=>'<button type="button" class="secondary" data-risk-request="'+(id||'')+'" '+(!id?'disabled':'')+'>'+label+'</button>').join('')+(s.request?'<p>相談を予約済み。今出ている選択はそのまま続けられる。</p>':'')+(s.reconcile?'<p>相手の返事を待っている。</p>':'')+'<p>護衛・医療・休業は、戻った「お金の管理」で選べる。</p>';
  document.getElementById('riskContent').querySelectorAll('[data-risk-request]').forEach(b=>b.onclick=()=>{if(state.phase!=='game'||!b.dataset.riskRequest)return;s.request=b.dataset.riskRequest;save();renderRiskOptions()});
 }
-document.getElementById('openRiskOptions').onclick=()=>{if(state.phase!=='game'||state.diceSession||state.casinoSession)return;clearTimeout(progressTimer);renderRiskOptions();document.getElementById('riskOptionsDialog').showModal()};
+function openRiskManagement(){if(state.phase==='game')openMoneyManagement(true)}
+document.getElementById('openRiskOptions').onclick=openRiskManagement;
 document.getElementById('closeRiskOptions').onclick=()=>document.getElementById('riskOptionsDialog').close();
 document.getElementById('riskOptionsDialog').addEventListener('close',()=>{render();scheduleProgress()});
 const questRenderStats=renderStats;
@@ -1922,7 +1977,7 @@ custodyTime=function(months){const before=state.month;budgetCustody(months);cons
 const spendingV3=renderSpending;
 renderSpending=function(message=''){spendingV3(message);const b=personalBudget(),active=state.phase==='game',box=document.getElementById('personalPurchases');
  const button=(key,title,disabled=false)=>'<button type="button" class="secondary" data-budget="'+key+'" '+(disabled?'disabled':'')+'>'+title+'</button>';
- box.innerHTML='<h3>住まい・車・付き合い</h3><p>手持ち '+moneyText(state.money)+' · 車の売却目安 '+moneyText(carResale())+' · 敷金 '+moneyText(b.deposit)+'</p><section><h4>自分の部屋</h4><p>初期 '+moneyText(pesos(5000))+'（返る敷金 '+moneyText(pesos(4000))+'＋引越し '+moneyText(pesos(1000))+'）。家賃 '+moneyText(pesos(4000))+'／月、今月から。共同生活費の住居相当を置換。ストレス−2／月。収監中も家賃継続。</p>'+button(b.rent?'leaveRent':'rent',b.rent?'解約して共同生活に戻る':'部屋を借りる',!b.rent&&(!active||state.money<pesos(5000)))+'</section><section><h4>私用の中古車</h4><p>購入 '+moneyText(pesos(150000))+'。翌月から維持 '+moneyText(pesos(1500))+'／月、ストレス−1。休止・収監中 '+moneyText(pesos(500))+'／月。維持費不足なら使用停止、借入なし。</p>'+(b.car?button('useCar',b.car.using?'使用を休止する':'使用を再開する',!active)+button('sellCar',moneyText(carResale())+'を目安に売却'):button('car','中古車を買う',!active||state.money<pesos(150000)))+'</section><section><h4>仲間にごちそうする</h4><p>'+moneyText(pesos(600))+' · 人間関係＋2。3か月に一度。</p>'+button('meal','食事をごちそうする',!active||state.friendAlive===false||state.money<pesos(600)||state.month<b.mealAfter)+'</section><details><summary>金額の考え方</summary><p>家賃はCONASAMIの2024年住宅推計、中古車は販売例、燃料費はINEGIのENIGH2024を参考に丸めた予算。敷金・引越し・維持費の内訳・食事・効果・中古車の月0.5%減価と売却時15%控除はゲーム設定。</p></details>';
+ box.innerHTML='<h3>住まい・車・付き合い</h3><p>手持ち '+moneyText(state.money)+' · 車の売却目安 '+moneyText(carResale())+' · 敷金 '+moneyText(b.deposit)+'</p><section><h4>自分の部屋</h4><p>初期 '+moneyText(pesos(5000))+'（返る敷金 '+moneyText(pesos(4000))+'＋引越し '+moneyText(pesos(1000))+'）。家賃 '+moneyText(pesos(4000))+'／月、今月から。共同生活費の住居相当を置換。ストレス−2／月。収監中も家賃継続。</p>'+button(b.rent?'leaveRent':'rent',b.rent?'解約して共同生活に戻る':'部屋を借りる',!b.rent&&(!active||state.money<pesos(5000)))+'</section><section><h4>私用の中古車</h4><p>購入 '+moneyText(pesos(150000))+'。翌月から維持 '+moneyText(pesos(1500))+'／月、ストレス−1。休止・収監中 '+moneyText(pesos(500))+'／月。維持費不足なら使用停止、借入なし。</p>'+(b.car?button('useCar',b.car.using?'使用を休止する':'使用を再開する',!active)+button('sellCar',moneyText(carResale())+'を目安に売却'):button('car','中古車を買う',!active||state.money<pesos(150000)))+'</section><section><h4>仲間にごちそうする</h4><p>'+moneyText(pesos(600))+' · 人間関係＋2。3か月に一度。</p>'+button('meal','食事をごちそうする',!active||state.friendAlive===false||state.money<pesos(600)||state.month<b.mealAfter)+'</section><details><summary>金額の考え方</summary><p>家賃はCONASAMIの2024年住宅推計、中古車は販売例、燃料費はINEGIのENIGH2024を参考に丸めた予算。敷金・引越し・維持費の内訳・食事・効果・中古車の減価（月1%未満）と売却時15%控除はゲーム設定。</p></details>';
  document.querySelectorAll('[data-budget]').forEach(el=>el.onclick=()=>budgetAction(el.dataset.budget));
  document.getElementById('spendSummary').textContent+=' · 車維持 '+moneyText(b.car?pesos(b.car.using&&active?1500:500):0)+'／月';
 };
@@ -2099,7 +2154,7 @@ renderStats=function(){relationshipStats();const s=relationshipRisks();if(s.pool
 
 
 // Monthly scheduled averages in MXN. The bands are gameplay estimates, not national cartel salary statistics.
-const ROLE_MONTHLY_PAY=[12000,15000,24000,45000],BOSS_MONTHLY_DRAW=140000;
+const ROLE_MONTHLY_PAY=[12000,13800,17400,23400],BOSS_MONTHLY_DRAW=42000;
 function payRoleStage(occupation=state.occupation){return state.occupationChosen&&occupation===state.occupation?Math.max(0,Math.min(3,ensureCareer()?.stage||0)):0}
 function rolePayBase(organization,stage,boss=false,occupation=state.occupation){return (boss?BOSS_MONTHLY_DRAW:ROLE_MONTHLY_PAY[stage])*(organization?.pay||1)*(boss?1:OCCUPATIONS[occupation]?.pay||1)/(MXN_PER_UNIT*.725)*(state.lightDuty?.8:1)}
 careerBasePay=function(rank,organization,boss=false){return (boss?BOSS_MONTHLY_DRAW:ROLE_MONTHLY_PAY[payRoleStage()])*(organization?.pay||1)/(MXN_PER_UNIT*.725)};
@@ -2145,17 +2200,29 @@ const simpleLeave=renderLeave;
 renderLeave=function(){simpleLeave();const handler=document.getElementById('buyLeave')?.onclick,box=document.getElementById('leaveOptions'),pending=state.leaveEndMonth>state.month;box.innerHTML='<h3>3か月、仕事を休む</h3>'+spendEffects([['資金','調整費 −US$2,000。翌月から3か月無給、生活費は継続'],['危険度','職務由来の摘発部分を毎月軽減、通常の40%まで。捜査・依頼・襲撃は残る'],['経験','職務実働・昇進停止'],['ストレス','休業中 月−3']])+(pending?'<p>休業'+(leaveActive()?'中':'は翌月から')+'。拘束で中断、返金なし。</p>':'<button type="button" class="secondary" id="buyLeave" '+(state.phase!=='game'||state.money<dollarsToUnits(2000)?'disabled':'')+'>休業を申し出る</button>');const button=document.getElementById('buyLeave');if(button)button.onclick=handler};
 
 function riskAfter(change){const original=state;try{state=JSON.parse(JSON.stringify(original));change();return riskRates()}finally{state=original}}
-function riskTransition(before,after){return '摘発 '+before.arrestScore+'→'+after.arrestScore+'／襲撃 '+before.assassinationScore+'→'+after.assassinationScore+'（100点換算）'}
+function monthlyRiskPercent(n){return n>0&&n<1?'1%未満':n<100&&n>99?'99%超':Math.round(n)+'%'}
+function riskChangeValue(before,after){
+ const a=monthlyRiskPercent(before),b=monthlyRiskPercent(after);
+ if(Math.abs(before-after)<1e-9)return '';
+ return a===b?(after<before?'少し下がる':'少し上がる')+'（月 '+b+'）':'月 '+a+' → '+b;
+}
+function riskTransition(before,after){
+ return [['摘発',before.arrest,after.arrest],['襲撃',before.assassination,after.assassination]].map(([label,a,b])=>{const text=riskChangeValue(a,b);return text?label+'：'+text:''}).filter(Boolean).join('／')||'発生率は変わらない';
+}
+function riskActionCard(title,price,effect,details,button){
+ return '<article class="risk-action-card"><h4>'+title+'</h4><p class="risk-action-price">'+price+'</p><p class="risk-action-effect">'+effect+'</p>'+(details?'<details><summary>条件・詳細</summary>'+details+'</details>':'')+button+'</article>';
+}
+
 function renderWorkRiskCards(target){const s=riskStory(),c=ensureCareer(),now=riskRates(),items=[];
  if(!state.lightDuty){const after=riskAfter(()=>{state.lightDuty=true});items.push(['light','仕事の負担を減らす',[['資金','給与80%'],['危険度',riskTransition(now,after)],['経験','昇進用の実働停止。最低6か月']]])}
  else if(state.month>=s.lightSince+6){const after=riskAfter(()=>{state.lightDuty=false});items.push(['return','通常の担当へ戻る',[['資金','通常給与へ戻る'],['危険度',riskTransition(now,after)],['経験','昇進用の実働を再開']]])}
  if(c&&c.stage>0&&!state.boss){const after=riskAfter(()=>{state.career.stage--;state.rank=Math.max(0,state.rank-15);state.leadershipSupport=0});items.push(['stepdown','今の役目を返す',[['資金','一つ下の役目の給与へ'],['信用・地位','信用−10、幹部の支持を失う'],['危険度',riskTransition(now,after)],['経験','今の段階の実働を0、審査まで12か月']]])}
  if(state.threat>=20&&state.month>=s.peaceUntil&&!s.reconcile){const after=riskAfter(()=>{state.threat=clamp(state.threat-20)});items.push(['reconcile','対立を収める話をする',[['信用・地位','譲歩なら信用−5。仲裁なら幹部の支持−1'],['危険度','合意できれば '+riskTransition(now,after)],['人間関係','合意できれば親友との関係＋3'],['ストレス','譲歩なら＋3。返事は数か月後']]])}
  if(s.factionExposure>0||state.leadershipSupport>0){const after=riskAfter(()=>{riskStory().factionExposure=0});items.push(['faction','派閥から距離を置く',[['信用・地位','信用−3、幹部の支持を失う'],['危険度',riskTransition(now,after)],['経験','推薦まで最低6か月']]])}
- const box=document.getElementById(target);box.innerHTML='<h3>仕事と対立を見直す</h3><p>次の相談で決定。予約だけでは数値は変わらない。</p>'+items.map(([id,title,rows])=>'<article><b>'+title+'</b>'+spendEffects(rows)+'<button type="button" class="secondary" data-work-risk="'+id+'" '+(state.phase!=='game'?'disabled':'')+'>この相談を予約する</button></article>').join('')+(s.request?'<p>相談を予約済み。</p>':'')+'<small>記載以外は直接変化なし。変化は上下限で調整。</small>';box.querySelectorAll('[data-work-risk]').forEach(b=>b.onclick=()=>{if(state.phase!=='game')return;s.request=b.dataset.workRisk;save();renderSpending('相談を予約しました。')})
+ const box=document.getElementById(target);box.innerHTML='<h3>仕事と対立を見直す</h3><p>主な原因：摘発は'+causeText('arrest')+'。襲撃は'+causeText('attack')+'。</p><p>次の相談で決定。予約だけでは変わりません。</p>'+items.map(([id,title,rows])=>riskActionCard(title,rows.find(([k])=>k==='資金')?.[1]||'支出なし',(rows.find(([k])=>k==='危険度')?.[1]||'')+'<small>'+({light:'昇進の実働停止・最低6か月',return:'昇進の実働を再開',stepdown:'信用−10・実働リセット・審査まで12か月',reconcile:'譲歩や仲裁が必要。返事は数か月後',faction:'信用−3・幹部の支持を失う・推薦まで最低6か月'}[id]||'')+'</small>',spendEffects(rows.filter(([k])=>!['資金','危険度'].includes(k))),'<button type="button" class="secondary" data-work-risk="'+id+'" '+(state.phase!=='game'?'disabled':'')+'>'+(s.request===id?'予約済み':'相談を予約する')+'</button>')).join('')+(s.request?'<p>相談を予約済み。</p>':'')+'';box.querySelectorAll('[data-work-risk]').forEach(b=>b.onclick=()=>{if(state.phase!=='game')return;s.request=b.dataset.workRisk;save();renderSpending('相談を予約しました。')})
 }
 renderRiskOptions=function(){renderWorkRiskCards('riskContent')};
-renderProtection=function(){const box=document.getElementById('protectionOptions'),senior=state.boss||(ensureCareer()?.stage||0)>=3;const keys=Object.keys(PROTECTION).filter(k=>senior||state.protectionPlans?.[k]||covered(k));box.hidden=!keys.length;if(!keys.length){box.innerHTML='';return}const now=riskRates();box.innerHTML='<h3>護衛・医療の契約</h3><p>月契約。資金不足で更新停止、借入なし。解約後も支払済み月は有効。</p>'+keys.map(k=>{const p=PROTECTION[k],after=riskAfter(()=>{state.protectionThrough={...state.protectionThrough,[k]:state.month}}),rows=[['資金','月 −US$'+p.fee],['借金','自動借入なし']];if(k==='guard')rows.push(['健康','通常襲撃の負傷を15軽減。直接致命傷の判定率を半減']);if(k==='medical')rows.push(['治療費','翌月から通常襲撃時 US$300→60']);if(k==='delegation')rows.push(['危険度',riskTransition(now,after)+'。職務由来の摘発部分30%減'],['経験','支払済み月は昇進実働・審査停止']);if(k==='guardPlus')rows.push(['危険度',riskTransition(now,after)+'。通常襲撃の発生率25%減']);return '<article><b>'+p.label+'</b>'+spendEffects(rows)+'<small>'+(covered(k)?'今月有効':'未加入')+' · 更新'+(state.protectionPlans?.[k]?'ON':'OFF')+'</small><button type="button" class="secondary" data-clean-protect="'+k+'" '+(state.phase!=='game'?'disabled':'')+'>'+(state.protectionPlans?.[k]?'更新を止める':covered(k)?'更新を再開する':'初月分を払って加入')+'</button></article>'}).join('')+'<small>依頼・裏切りの別判定は対象外。記載以外は直接変化なし。変化は上下限で調整。代役は給与受取前、他は月末更新。</small>';box.querySelectorAll('[data-clean-protect]').forEach(b=>b.onclick=()=>{const k=b.dataset.cleanProtect;if(state.phase!=='game'||(!senior&&!state.protectionPlans?.[k]&&!covered(k)))return;if(state.protectionPlans[k])state.protectionPlans[k]=false;else{if(!covered(k)){const fee=dollarsToUnits(PROTECTION[k].fee);if(state.money<fee)return;state.money-=fee;state.protectionThrough[k]=state.month;if(k==='medical')state.medicalEligibleFrom=state.month+1;addFeed(PROTECTION[k].label+'に加入した。','choice','手持ち資金 −'+moneyText(fee))}state.protectionPlans[k]=true}save();renderStats();renderSpending()})};
+renderProtection=function(){const box=document.getElementById('protectionOptions'),senior=state.boss||(ensureCareer()?.stage||0)>=3;const keys=Object.keys(PROTECTION).filter(k=>senior||state.protectionPlans?.[k]||covered(k));box.hidden=!keys.length;if(!keys.length){box.innerHTML='';return}const now=riskRates();box.innerHTML='<h3>お金で備える</h3>'+keys.map(k=>{const p=PROTECTION[k],without=riskAfter(()=>{state.protectionThrough={...state.protectionThrough,[k]:state.month-1}}),after=riskAfter(()=>{state.protectionThrough={...state.protectionThrough,[k]:state.month}}),rows=[['資金','月 US$'+p.fee]];if(k==='guard')rows.push(['健康','通常襲撃の負傷を15軽減。直接致命傷の判定率を半減']);if(k==='medical')rows.push(['治療費','翌月から通常襲撃の治療費：軽傷 US$200→40、中程度650→130、重傷2,000→400']);if(k==='delegation')rows.push(['危険度',riskTransition(without,after)],['経験','支払済み月は昇進実働・審査停止']);if(k==='guardPlus')rows.push(['危険度',riskTransition(without,after)]);const active=covered(k),effect=rows.filter(([label])=>label!=='資金').map(([label,text])=>text).join('。');return riskActionCard(p.label,'月 US$'+p.fee,effect,'<p>依頼・裏切りの別判定は対象外。資金不足で更新停止、借入なし。解約後も支払済み月は有効。</p><p>'+(k==='delegation'?'給与受取前に更新。':'活動月の月末に更新。')+'</p>', '<small>'+(active?'今月有効':'未加入')+' · 自動更新'+(state.protectionPlans?.[k]?'あり':'なし')+'</small><button type="button" class="secondary" data-clean-protect="'+k+'" '+(state.phase!=='game'||(!active&&state.money<dollarsToUnits(p.fee))?'disabled':'')+'>'+(state.protectionPlans?.[k]?'自動更新を止める':active?'自動更新を再開':'加入する')+'</button>')}).join('')+'';box.querySelectorAll('[data-clean-protect]').forEach(b=>b.onclick=()=>{const k=b.dataset.cleanProtect;if(state.phase!=='game'||(!senior&&!state.protectionPlans?.[k]&&!covered(k)))return;if(state.protectionPlans[k])state.protectionPlans[k]=false;else{if(!covered(k)){const fee=dollarsToUnits(PROTECTION[k].fee);if(state.money<fee)return;state.money-=fee;state.protectionThrough[k]=state.month;if(k==='medical')state.medicalEligibleFrom=state.month+1;addFeed(PROTECTION[k].label+'に加入した。','choice','手持ち資金 −'+moneyText(fee))}state.protectionPlans[k]=true}save();renderStats();renderSpending()})};
 const cleanSpending=renderSpending;
 renderSpending=function(message=''){cleanSpending(message);const b=personalBudget(),r=richLife(),active=state.phase==='game',v=vehicleInfo(),box=document.getElementById('personalPurchases');let html='<details open><summary>暮らし方'+(r.unlocked?'・資産管理':'')+'</summary><p>記載以外は直接変化なし。変化は上下限で調整。購入は手持ち資金の範囲内、ローンなし。</p><section><h3>住まい</h3>';
  if(r.home)html+=spendEffects([['資金','維持 月 −'+moneyText(pesos(1500))+'。家賃なし'],['ストレス','月−3'],['借金','維持費は収監中も継続。不足は未払へ']])+spendButton('sellHome',moneyText(r.home.price*.95)+'を目安に家を売る');
@@ -2181,7 +2248,7 @@ function livingTotal(p=monthlyLivingParts()){return Object.values(p).reduce((a,b
 localLife=function(){const p=monthlyLivingParts();return {label:livingRegion().label,living:livingTotal(p)-p.cohab}};
 workLiving=function(){return livingTotal()};
 function initialWageMaximum(organization){const p=organization?.pay||1,factor=p>1?1.025:p<1?p:1;return 12000*(23/30)*factor*livingRegion().wage}
-rolePayBase=function(organization,stage,boss=false,occupation=state.occupation){const normal=stage===0&&!boss?initialWageMaximum(organization):(boss?BOSS_MONTHLY_DRAW:ROLE_MONTHLY_PAY[stage])*(organization?.pay||1)*(boss?1:OCCUPATIONS[occupation]?.pay||1)/.975;return normal/MXN_PER_UNIT*(state.lightDuty?.8:1)};
+rolePayBase=function(organization,stage,boss=false,occupation=state.occupation){const ratio=(boss?BOSS_MONTHLY_DRAW:ROLE_MONTHLY_PAY[stage])/ROLE_MONTHLY_PAY[0],job=boss||stage===0?1:1+((OCCUPATIONS[occupation]?.pay||1)-1)*.5;const normal=initialWageMaximum(organization)*ratio*job;return normal/MXN_PER_UNIT*(state.lightDuty?.8:1)};
 careerBasePay=function(rank,organization,boss=false){return rolePayBase(organization,payRoleStage(),boss)};
 roleSalaryForecast=function(organization,stage,boss=false,occupation=state.occupation){const base=rolePayBase(organization,stage,boss,occupation),delay=organization?.delay??.12;return {low:Math.round(base*.95),high:Math.round(base),monthly:base*.975*(1-delay),scheduledMonthly:base*.975,delay}};
 function setEssentialBudget(key,value){const e=essentialBudget();if(!['game','prison','custody'].includes(state.phase))return;if(key==='mode'&&!['standard','frugal'].includes(value))return;if(key==='dependent'&&![0,1].includes(value))return;e.pending={...(e.pending||{mode:e.mode,dependent:e.dependent}),[key]:value,effective:state.month+1};save();renderSpending('翌月からの生活予算を保存しました。')}
@@ -2295,7 +2362,7 @@ const HOBBY_LUCK={fishing:{p:.01,amount:150,text:'釣り大会で入賞した'},
 function hobbyState(){if(!state.hobbies){const seed=Math.floor(Math.random()*4294967296),score=id=>{let n=seed;for(const c of id)n=Math.imul(n^c.charCodeAt(0),16777619)>>>0;return n},pick=categories=>HOBBIES.filter(h=>categories.includes(h.category)).sort((a,b)=>score(a.id)-score(b.id))[0].id;state.hobbies={version:1,seed,offers:[pick(['outdoor','sport']),pick(['creative','social']),pick(['home']),pick(['luck'])],selected:{},equipment:[],lastMonth:-1,pending:null,disputeAfter:0}}return state.hobbies}
 function hobbyById(id){return HOBBIES.find(h=>h.id===id)}
 function hobbyCostPreview(month=state.month+1){const s=state.hobbies;if(!s||state.phase!=='game')return 0;return Object.entries(s.selected).reduce((sum,[id,e])=>sum+(!e.paused&&e.start<=month?dollarsToUnits(hobbyById(id).monthly):0),0)}
-function hobbyOddsText(h){const luck=HOBBY_LUCK[h.lucky],parts=[];if(luck)parts.push('臨時収入 '+Math.round(luck.p*10000)/100+'%：US$'+luck.amount);if(h.lucky==='casino')parts.push('1.5%でUS$1,000、10%でUS$100、残りは戻りなし。ストレスは35%で−3／65%で＋2。手動の卓とは別精算');if(h.lucky==='lottery')parts.push('参加月ごとに100万分の1でUS$1,000,000、3%でUS$25、それ以外は戻りなし');if(h.risk==='injury')parts.push('1.5%で軽いけが：健康−4');if(h.risk==='gear')parts.push('1%で道具の不調：ストレス＋5');if(h.risk==='late')parts.push('2%で夜更かし：健康−1・ストレス＋4');if(h.risk==='upset')parts.push('15%で応援する側が敗れ、ストレス＋4');if(h.risk==='fake')parts.push('1%で偽物と分かり、ストレス＋6');if(h.risk==='dispute')parts.push('0.6%で友人との金銭トラブル。対応次第で人間関係が下がる');return parts.join('。')}
+function hobbyOddsText(h){const luck=HOBBY_LUCK[h.lucky],parts=[];if(luck)parts.push('臨時収入 '+displayPercent(luck.p*100)+'%：US$'+luck.amount);if(h.lucky==='casino')parts.push('約2%でUS$1,000、10%でUS$100、残りは戻りなし。ストレスは35%で−3／65%で＋2。手動の卓とは別精算');if(h.lucky==='lottery')parts.push('参加月ごとに100万分の1でUS$1,000,000、3%でUS$25、それ以外は戻りなし');if(h.risk==='injury')parts.push('約2%で軽いけが：健康−4');if(h.risk==='gear')parts.push('1%で道具の不調：ストレス＋5');if(h.risk==='late')parts.push('2%で夜更かし：健康−1・ストレス＋4');if(h.risk==='upset')parts.push('15%で応援する側が敗れ、ストレス＋4');if(h.risk==='fake')parts.push('1%で偽物と分かり、ストレス＋6');if(h.risk==='dispute')parts.push('1%未満の確率で友人との金銭トラブル。対応次第で人間関係が下がる');return parts.join('。')}
 function hobbyAction(action,id){if(!['game','prison','custody'].includes(state.phase)||(action==='start'&&state.phase!=='game'))return;const s=hobbyState(),h=hobbyById(id);if(!h||!s.offers.includes(id))return;const e=s.selected[id];
  if(action==='start'){if(e||Object.keys(s.selected).length>=3)return;const cost=s.equipment.includes(id)?0:dollarsToUnits(h.setup);if(state.money<cost)return;state.money-=cost;if(!s.equipment.includes(id))s.equipment.push(id);s.selected[id]={start:state.month+1,paused:false};addFeed(h.name+'を趣味として始めた。','choice',(cost?'初期費用 −'+moneyText(cost)+' · ':'')+'翌月から月 '+moneyText(dollarsToUnits(h.monthly))+'。')}
  else if(action==='stop'&&e){delete s.selected[id];addFeed(h.name+'をやめた。','choice','翌月以降の活動費なし。支払済みの費用・結果は戻らない。')}
@@ -2413,29 +2480,43 @@ if(state.phase==='prison'&&state.currentEvent?.prisonMenuVersion!==3){preparePri
 if(state.phase==='game'&&state.currentEvent?.id==='occupation_offer'&&!state.temperament&&!state.occupationChosen)state.currentEvent=temperamentEvent();
 if(state.phase==='game'&&state.currentEvent?.id==='temperament'){state.currentEvent=temperamentEvent();save()}
 // UI only. Reuse live DOM nodes so existing purchase handlers remain attached.
+function selectSpendingTab(key){
+ const dialog=document.getElementById('spendDialog'),allowed=['use','risk','living','debt','forecast'];
+ if(!allowed.includes(key))key='use';
+ dialog.dataset.spendingTab=key;
+ dialog.querySelectorAll('[data-spending-pane]').forEach(el=>{el.hidden=el.dataset.spendingPane!==key});
+ dialog.querySelectorAll('[data-spending-tab]').forEach(el=>el.setAttribute('aria-pressed',String(el.dataset.spendingTab===key)));
+ const body=dialog.querySelector('.spend-body');if(body)body.scrollTop=0;
+}
 function setupReadableSpending(){
  const dialog=document.getElementById('spendDialog');
  if(dialog.querySelector('.spend-body'))return;
- const get=id=>document.getElementById(id),header=document.createElement('div'),body=document.createElement('div');
- header.className='spend-header';body.className='spend-body';
- const remittance=get('remittanceRates').closest('section'),casino=get('openCasino').closest('section'),repayment=get('repayDollars').closest('section');
- header.append(dialog.querySelector('.decision-top'),get('spendSummary'),get('spendMessage'));
- const title=document.createElement('h3');title.textContent='暮らしと楽しみに使う';body.append(title,get('personalPurchases'),get('hobbyOptions'),casino);
- casino.classList.add('spend-card');
- function fold(id,label,nodes){const detail=document.createElement('details'),summary=document.createElement('summary');detail.id=id;detail.className='spend-fold';summary.textContent=label;detail.append(summary,...nodes);body.append(detail)}
- fold('spendMonthlyGroup','毎月の生活費・家族への送金',[get('essentialBudgetOptions'),remittance]);
- fold('spendRiskGroup','仕事の負担・危険への対策',[get('workRiskActions'),get('openRiskOptions'),get('protectionOptions'),get('leaveOptions')]);
- fold('spendDebtGroup','借金を返す',[repayment]);
- fold('spendForecastGroup','翌月の収支を確認する',[get('expenseOverview')]);
+ const get=id=>document.getElementById(id);
+ // Retain references before moving nodes into detached layout containers.
+ const refs=Object.fromEntries(['spendSummary','spendMessage','personalPurchases','hobbyOptions','essentialBudgetOptions','protectionOptions','workRiskActions','openRiskOptions','leaveOptions','expenseOverview','entrustedFunds'].map(id=>[id,get(id)]));
+ const top=dialog.querySelector('.decision-top'),remittance=get('remittanceRates').closest('section'),casino=get('openCasino').closest('section'),repayment=get('repayDollars').closest('section');
+ const header=document.createElement('div'),body=document.createElement('div'),nav=document.createElement('nav');
+ header.className='spend-header';body.className='spend-body';nav.className='spend-tabs';nav.setAttribute('aria-label','お金の管理の項目');
+ header.append(top,refs.spendSummary,refs.spendMessage);
+ for(const [key,label]of [['use','使う'],['risk','対策'],['living','生活費'],['debt','返済'],['forecast','収支']]){const button=document.createElement('button');button.type='button';button.dataset.spendingTab=key;button.textContent=label;button.onclick=()=>selectSpendingTab(key);nav.append(button)}
+ header.append(nav);
+ function pane(key,id,label,nodes){const el=document.createElement('div'),heading=document.createElement('h3');el.id=id;el.className='spending-pane';el.dataset.spendingPane=key;heading.textContent=label;el.append(heading,...nodes);body.append(el)}
+ pane('use','spendUseGroup','暮らしと楽しみに使う',[refs.personalPurchases,refs.hobbyOptions,casino]);
+ pane('risk','spendRiskGroup','身を守る・働き方を変える',[refs.protectionOptions,refs.workRiskActions,refs.leaveOptions]);
+ pane('living','spendMonthlyGroup','毎月の生活費・家族への送金',[refs.essentialBudgetOptions,remittance]);
+ pane('debt','spendDebtGroup','借金を返す',[repayment]);
+ pane('forecast','spendForecastGroup','翌月の収支',[refs.expenseOverview]);
+ // Keep the legacy entry available to existing handlers without showing a duplicate.
+ refs.openRiskOptions.hidden=true;body.append(refs.openRiskOptions,refs.entrustedFunds);
  dialog.querySelectorAll(':scope>.expense-group-title').forEach(el=>el.remove());
- // This legacy element is kept for older renderers, which still address its ID.
- body.append(get('entrustedFunds'));
- dialog.append(header,body);remittance.classList.add('spend-card');repayment.classList.add('spend-card');
+ dialog.append(header,body);casino.classList.add('spend-card');remittance.classList.add('spend-card');repayment.classList.add('spend-card');
+ selectSpendingTab(dialog.dataset.spendingTab||'use');
 }
+
 function readableSpendingDetailKey(el){const scope=el.closest('[id]');return el.id||((scope?.id||'spending')+':'+(el.querySelector(':scope>summary')?.textContent||''))}
 const readablePreviousSpending=renderSpending;
 renderSpending=function(...args){
- const dialog=document.getElementById('spendDialog'),scroll=dialog.scrollTop,focused=document.activeElement;
+ const dialog=document.getElementById('spendDialog'),scroller=dialog.querySelector('.spend-body')||dialog,scroll=scroller.scrollTop,focused=document.activeElement;
  const focusId=dialog.contains(focused)?focused.id:'',focusData=dialog.contains(focused)?Object.entries(focused.dataset).filter(([k])=>k!=='readableCard'):[];
  const opened=new Map([...dialog.querySelectorAll('details')].map(el=>[readableSpendingDetailKey(el),el.open]));
  readablePreviousSpending(...args);
@@ -2453,12 +2534,12 @@ renderSpending=function(...args){
  cards.push(...dialog.querySelectorAll('#personalPurchases article,#hobbyOptions article,#workRiskActions article,#protectionOptions article'),document.getElementById('essentialBudgetOptions'),document.getElementById('leaveOptions'));
  for(const card of cards){
   card.classList.add('spend-card');
-  // Put the existing cost text at the right; never recalculate or omit a fee.
+  // Keep cost below the heading, in reading order. Never recalculate or omit a fee.
   const list=card.querySelector(':scope>.spend-effects'),term=list&&[...list.children].find(el=>el.tagName==='DT'&&el.textContent==='資金');
   if(term&&term.nextElementSibling?.tagName==='DD'){
    const value=term.nextElementSibling,price=document.createElement('div');price.className='spend-price';price.setAttribute('aria-label','費用');
-   for(const part of value.textContent.split('／')){const line=document.createElement('span');line.textContent=part;price.append(line)}
-   card.prepend(price);term.remove();value.remove();
+   for(const part of value.textContent.split(/[／。]|(?=家賃 月)|(?=維持 月)/).filter(s=>s.trim())){const line=document.createElement('span');line.textContent=part;price.append(line)}
+   const heading=card.querySelector(':scope>h4,:scope>h3,:scope>b');if(heading)heading.after(price);else card.prepend(price);term.remove();value.remove();
   }
  }
  for(const card of dialog.querySelectorAll('#hobbyOptions article')){
@@ -2466,14 +2547,14 @@ renderSpending=function(...args){
   const parts=facts.textContent.split(' · ');if(parts.length<4)continue;
   const price=document.createElement('div');price.className='spend-price';price.setAttribute('aria-label','費用');
   for(const part of parts.splice(0,2)){const line=document.createElement('span');line.textContent=part;price.append(line)}
-  card.prepend(price);facts.textContent=parts.join(' · ');
+  const heading=card.querySelector(':scope>h4,:scope>h3,:scope>b');if(heading)heading.after(price);else card.prepend(price);facts.textContent=parts.join(' · ');
  }
  for(const detail of dialog.querySelectorAll('details')){if(detail===outer)continue;const key=readableSpendingDetailKey(detail);if(opened.has(key))detail.open=opened.get(key)}
  // Restore keyboard position when an action redraws its card.
  if(!focused?.isConnected&&focusId){document.getElementById(focusId)?.focus({preventScroll:true})}else if(!focused?.isConnected&&focusData.length){
   const replacement=[...dialog.querySelectorAll('button')].find(b=>focusData.every(([k,v])=>b.dataset[k]===v));replacement?.focus({preventScroll:true});
  }
- dialog.scrollTop=scroll;
+ (dialog.querySelector('.spend-body')||dialog).scrollTop=scroll;
 };
 
 // New hands use no-limit rules; saved hands without noLimit retain limit rules.
@@ -2768,15 +2849,31 @@ function renderRoulette(){
  if(result&&!spinning){html+='<div class="roulette-result '+(s.won?'roulette-win':'roulette-loss')+'"><strong>'+(s.won?'WIN':'LOSE')+'</strong><p>'+escapeHTML(bet.name)+' · 払戻し '+holdMoney(s.received)+'</p><p>今回の差引 '+diceSigned(s.net)+'（手数料込み）</p>'+(s.received<s.payout?'<small>保有資金の上限を超えた分は受け取れません。</small>':'')+'</div><button type="button" class="primary" id="rouletteAgain">次の条件を見る</button>'}
  if(!result){
   const seen=new Set(),offers=[{n:2000,label:'定額'},{n:10000,label:'定額'},...[.1,.25,.5].map(p=>({n:Math.floor(cash*p),label:'手持ちの'+Math.round(p*100)+'%'}))].filter(o=>{if(o.n<1||holdUnits(o.n+Math.round(o.n*.05))>state.money||seen.has(o.n))return false;seen.add(o.n);return true});
-  html+='<section class="casino-entry-section"><h3>1 · 遊ぶゲーム</h3><div class="casino-game-choice"><button type="button" class="secondary" data-roulette-game="holdem">ホールデム</button><button type="button" class="secondary" data-roulette-game="chinchiro">ちんちろ</button><button type="button" class="secondary" aria-pressed="true">ルーレット</button></div></section><section class="casino-entry-section"><h3>2 · 賭け先を選ぶ</h3><p class="roulette-caption">1回につき1種類。倍率は賭け金を含む払戻しです。</p><div class="roulette-outside">'+ROULETTE_OUTSIDE.map(b=>'<button type="button" class="secondary '+(b[0]==='red'?'roulette-red':b[0]==='black'?'roulette-black':'')+'" data-roulette-bet="'+b[0]+'" aria-pressed="'+(s.betKey===b[0])+'"><b>'+b[1]+'</b><small>払戻し '+b[2]+'倍</small></button>').join('')+'</div><details class="roulette-numbers" '+(bet?.number!==undefined?'open':'')+'><summary>数字を1つ選ぶ · 払戻し36倍</summary><div class="roulette-number-grid">'+Array.from({length:37},(_,n)=>'<button type="button" class="roulette-number roulette-'+rouletteColor(n)+'" data-roulette-bet="number:'+n+'" aria-pressed="'+(s.betKey==='number:'+n)+'">'+n+'</button>').join('')+'</div></details></section><section class="casino-entry-section"><h3>3 · 賭け金</h3><div class="casino-budget-grid">'+offers.map(o=>'<button type="button" class="secondary" data-roulette-budget="'+o.n+'" aria-pressed="'+(s.budget===o.n)+'"><strong>'+holdMoney(o.n)+'</strong><span>'+o.label+'</span></button>').join('')+'</div>'+(!offers.length?'<p class="roulette-caption">手持ちで参加できる額がありません。</p>':'')+'</section>';
-  if(bet&&s.budget){const winNet=Math.min(1000000,state.money-holdUnits(cost)+holdUnits(s.budget*bet.multiple))-state.money;html+='<div class="casino-entry-condition"><h3>今回の条件 · '+escapeHTML(bet.name)+'</h3>'+spendEffects([['的中率',Math.round(bet.count/37*100)+'%（'+bet.count+'/37）'],['賭け金',holdMoney(s.budget)],['手数料（5%）',holdMoney(fee)],['支払う合計・最大損失',holdMoney(cost)],['的中時の払戻し（賭け金込み）',holdMoney(s.budget*bet.multiple)],['的中時の差引',diceSigned(winNet)]])+'<p>0は緑。赤黒・偶奇・範囲・列の賭けは、0が出ると外れです。</p></div>'}
+  html+='<section class="casino-entry-section"><h3>1 · 遊ぶゲーム</h3><div class="casino-game-choice"><button type="button" class="secondary" data-roulette-game="holdem">ホールデム</button><button type="button" class="secondary" data-roulette-game="chinchiro">ちんちろ</button><button type="button" class="secondary" aria-pressed="true">ルーレット</button></div></section><section class="casino-entry-section"><h3>2 · 賭け先を選ぶ</h3><p class="roulette-caption">1回につき1種類。倍率は賭け金を含む払戻しです。</p><div class="roulette-outside">'+ROULETTE_OUTSIDE.filter(b=>!b[0].startsWith('column')).map(b=>'<button type="button" class="secondary '+(b[0]==='red'?'roulette-red':b[0]==='black'?'roulette-black':'')+'" data-roulette-bet="'+b[0]+'" aria-pressed="'+(s.betKey===b[0])+'"><b>'+b[1]+'</b><small>払戻し '+b[2]+'倍</small></button>').join('')+'</div><div class="roulette-number-entry"><label for="rouletteNumber">数字を1つ入力（0〜36）</label><input id="rouletteNumber" type="text" inputmode="numeric" pattern="[0-9]{1,2}" maxlength="2" autocomplete="off" value="'+escapeHTML(s.rouletteNumberDraft??(bet?.number!==undefined?String(bet.number):''))+'" aria-describedby="rouletteNumberHint"><button type="button" class="secondary" id="rouletteSelectNumber" aria-pressed="'+(bet?.number!==undefined)+'">この数字に1点賭け · 払戻し36倍</button><small id="rouletteNumberHint" role="status">0〜36の整数を入力して選んでください。</small></div></section><section class="casino-entry-section"><h3>3 · 賭け金</h3><div class="casino-budget-grid">'+offers.map(o=>'<button type="button" class="secondary" data-roulette-budget="'+o.n+'" aria-pressed="'+(s.budget===o.n)+'"><strong>'+holdMoney(o.n)+'</strong><span>'+o.label+'</span></button>').join('')+'</div>'+(!offers.length?'<p class="roulette-caption">手持ちで参加できる額がありません。</p>':'')+'</section>';
+  if(bet&&s.budget){const winNet=Math.min(1000000,state.money-holdUnits(cost)+holdUnits(s.budget*bet.multiple))-state.money;html+='<div class="casino-entry-condition"><h3>今回の条件 · '+escapeHTML(bet.name)+'</h3>'+spendEffects([['的中率',Math.round(bet.count/37*100)+'%（'+bet.count+'/37）'],['賭け金',holdMoney(s.budget)],['手数料（5%）',holdMoney(fee)],['支払う合計・最大損失',holdMoney(cost)],['的中時の払戻し（賭け金込み）',holdMoney(s.budget*bet.multiple)],['的中時の差引',diceSigned(winNet)]])+'<p>0は緑。赤黒・偶奇・範囲の賭けは、0が出ると外れです。</p></div>'}
   html+='<button type="button" class="primary casino-entry-start" id="rouletteSpin" '+(!bet||!s.budget||holdUnits(cost)>state.money?'disabled':'')+'>この条件で回す</button><p class="roulette-caption">ゲーム内の手持ち資金だけで参加。追加購入・卓用借入なし。</p>';
  }
- html+='<div class="casino-preferences"><button type="button" class="secondary" id="rouletteSound" aria-pressed="'+!!state.tableSound+'">音 '+(state.tableSound?'ON':'OFF')+'</button><button type="button" class="secondary" id="rouletteMotion" aria-pressed="'+(state.casinoMotion!==false)+'">演出 '+(state.casinoMotion!==false?'ON':'OFF')+'</button>'+(spinning?'<button type="button" class="secondary" id="rouletteSkip">演出をスキップ</button>':'')+'</div>'+(history.length?'<div class="roulette-history"><span>直近の出目</span>'+history.map(n=>'<b class="roulette-'+rouletteColor(n)+'">'+n+'</b>').join('')+'</div>':'')+'<details class="event-evidence"><summary>ルールと配当</summary><p>0〜36は各1/37で抽選。赤黒・偶奇・1〜18／19〜36は払戻し2倍、12数字と縦列は3倍、数字1点は36倍。すべて賭け金を含みます。1の列は1・4・7…34、2の列は2・5・8…35、3の列は3・6・9…36です。</p><p>既存のカジノと同じ手数料5%を別に払い、セント単位に丸めます。最低手数料の追加なし。回転中は人生の時間が止まり、結果を見てから次の賭け先と金額を選び直します。</p></details>';
+ html+='<div class="casino-preferences"><button type="button" class="secondary" id="rouletteSound" aria-pressed="'+!!state.tableSound+'">音 '+(state.tableSound?'ON':'OFF')+'</button><button type="button" class="secondary" id="rouletteMotion" aria-pressed="'+(state.casinoMotion!==false)+'">演出 '+(state.casinoMotion!==false?'ON':'OFF')+'</button>'+(spinning?'<button type="button" class="secondary" id="rouletteSkip">演出をスキップ</button>':'')+'</div>'+(history.length?'<div class="roulette-history"><span>直近の出目</span>'+history.map(n=>'<b class="roulette-'+rouletteColor(n)+'">'+n+'</b>').join('')+'</div>':'')+'<details class="event-evidence"><summary>ルールと配当</summary><p>0〜36は各1/37で抽選。赤黒・偶奇・1〜18／19〜36は払戻し2倍、12数字は3倍、数字1点は36倍。すべて賭け金を含みます。</p><p>既存のカジノと同じ手数料5%を別に払い、セント単位に丸めます。最低手数料の追加なし。回転中は人生の時間が止まり、結果を見てから次の賭け先と金額を選び直します。</p></details>';
  const dialog=document.getElementById('casinoDialog'),scroll=dialog.scrollTop;box.innerHTML=html;dialog.scrollTop=scroll;
  const el=id=>document.getElementById(id);
  box.querySelectorAll('[data-roulette-game]').forEach(b=>b.onclick=()=>rouletteSwitch(b.dataset.rouletteGame));
- box.querySelectorAll('[data-roulette-bet]').forEach(b=>b.onclick=()=>{if(s.stage!=='betting')return;s.betKey=b.dataset.rouletteBet;save();renderCasino();document.querySelector('[data-roulette-bet="'+s.betKey+'"]')?.focus({preventScroll:true})});
+ box.querySelectorAll('[data-roulette-bet]').forEach(b=>b.onclick=()=>{if(s.stage!=='betting')return;s.betKey=b.dataset.rouletteBet;delete s.rouletteNumberDraft;save();renderCasino();document.querySelector('[data-roulette-bet="'+s.betKey+'"]')?.focus({preventScroll:true})});
+ const numberInput=el('rouletteNumber'),selectNumber=el('rouletteSelectNumber');
+ if(numberInput){
+  const valid=()=>/^[0-9]{1,2}$/.test(numberInput.value)&&Number(numberInput.value)<=36;
+  selectNumber.disabled=!valid();
+  numberInput.oninput=()=>{
+   if(s.stage!=='betting')return;
+   s.rouletteNumberDraft=numberInput.value;delete s.betKey;save();
+   selectNumber.disabled=!valid();selectNumber.setAttribute('aria-pressed','false');
+   numberInput.setAttribute('aria-invalid',String(!valid()));
+   el('rouletteNumberHint').textContent=valid()?'「この数字に1点賭け」で選んでください。':'0〜36の整数を入力してください。';
+   el('rouletteSpin').disabled=true;box.querySelector('.casino-entry-condition')?.remove();
+   box.querySelectorAll('[data-roulette-bet]').forEach(b=>b.setAttribute('aria-pressed','false'));
+  };
+  selectNumber.onclick=()=>{if(s.stage!=='betting'||!valid())return;s.betKey='number:'+Number(numberInput.value);s.rouletteNumberDraft=String(Number(numberInput.value));save();renderCasino();el('rouletteSelectNumber')?.focus({preventScroll:true})};
+  numberInput.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();selectNumber.onclick()}};
+ }
  box.querySelectorAll('[data-roulette-budget]').forEach(b=>b.onclick=()=>{if(s.stage!=='betting')return;s.budget=+b.dataset.rouletteBudget;save();renderCasino();document.querySelector('[data-roulette-budget="'+s.budget+'"]')?.focus({preventScroll:true})});
  if(el('rouletteSpin'))el('rouletteSpin').onclick=rouletteSpin;if(el('rouletteAgain'))el('rouletteAgain').onclick=casinoNewHand;if(el('rouletteSkip'))el('rouletteSkip').onclick=rouletteFinishReveal;
  el('rouletteSound').onclick=()=>{state.tableSound=!state.tableSound;save();casinoTone('tap');el('rouletteSound').textContent='音 '+(state.tableSound?'ON':'OFF');el('rouletteSound').setAttribute('aria-pressed',!!state.tableSound)};
@@ -2895,6 +2992,82 @@ document.getElementById('diceLeave').onclick=finishDice;document.getElementById(
 const invitation=events.find(e=>e.id==='dice_invitation');invitation.text='仲間がちんちろと5枚ドローポーカーの卓を囲んでいる。参加するなら、手持ちから賭け金を決める。借入はできない。';
 if(state.currentEvent?.id==='dice_invitation'){state.currentEvent.text=invitation.text}
 
+// Apply to raw templates once. Never transform an already displayed choice or change a saved wallet.
+function economyCashOption(option,dollars){const o={...option,fx:{...option.fx},moneyIsFixed:true};delete o.fx.money;delete o.cost;delete o.choiceCashCost;if(dollars){o.cost=dollarsToUnits(dollars);o.choiceCashCost=o.cost}return o}
+function economyEvent(id,change){const e=events.find(e=>e.id===id);if(e)change(e)}
+function economyPrice(id,index,dollars){economyEvent(id,e=>{if(e.options[index])e.options[index]=economyCashOption(e.options[index],dollars)})}
+economyPrice('learning_offer',0,120);
+economyEvent('learning_offer',e=>{const eligible=e.when;e.when=s=>(!eligible||eligible(s))&&s.skill<96});
+economyPrice('poor_sleep',0,60);
+economyEvent('poor_sleep',e=>{e.text='疲れが残っている。休日に費用を使って休むか、普段の生活のリズムを整えるか。';e.options[0].title='休日に休む環境を整える';e.options[0].desc='費用を払い、健康とストレスを回復する。通常の勤務は続ける。'});
+economyPrice('body_check',0,100);economyPrice('smoke_habit',1,75);economyPrice('family_pressure',0,80);
+economyPrice('arrested_friend',0,300);
+economyEvent('arrested_friend',e=>{e.options[0].desc='弁護費用の一部を援助する。釈放を保証する支払いではない。'});
+economyPrice('community',0,150);
+economyEvent('community',e=>{e.options[0].desc='自分の取り分から援助し、街の緊張を和らげる。'});
+economyPrice('police',1,0);economyPrice('hideout',0,0);economyPrice('fraud',0,0);
+economyEvent('fraud',e=>{e.options[0].desc='費用なし。相談先を探す時間を使う。';e.options[0].fx.stress=2});
+economyEvent('share',e=>{e.title='臨時の手当の使い道を決める';e.text='US$150の臨時手当が出る。親友は今月の生活費が足りないと話していた。';e.options=[{title:'全額を手元に残す',desc:'自分の暮らしと備えに回す。',fx:{money:dollarsToUnits(150)},moneyIsFixed:true},{title:'親友にUS$100を分ける',desc:'自分にはUS$50が残る。',fx:{money:dollarsToUnits(50),friendship:5,stress:-2},moneyIsFixed:true}]});
+economyPrice('partner_time',0,45);economyPrice('partner_meet',0,25);economyPrice('partner_future',0,180);
+economyEvent('family',e=>{e.text='家族から今月の生活費が足りないと連絡が来た。自分の暮らしも維持しながら、援助するか決める。';e.options[0]=economyCashOption({...e.options[0],desc:'生活費を援助し、家族との関係を支える。',fx:{familyBond:6,familyNeedsIndex:-10}},150);e.options[0].choiceFamilyAmount=dollarsToUnits(150);e.options[1]={title:'今月は援助できないと伝える',desc:'出費なし。家族の不足は残る。',fx:{stress:2}}});
+economyEvent('small_reward',e=>{e.text='上役からUS$35の謝礼を受け取った。貯めるか、身近な人と分けるか。';e.options=[{title:'全額を貯める',desc:'手持ちに残す。',fx:{money:dollarsToUnits(35)},moneyIsFixed:true},{title:'親友と食事する',desc:'謝礼から食事代US$25を払い、残りを手元に残す。',fx:{money:dollarsToUnits(10),friendship:3,stress:-4},moneyIsFixed:true},{title:'家族にUS$30を送る',desc:'残りUS$5は手元に残す。',fx:{money:dollarsToUnits(5),familyBond:4,familyNeedsIndex:-3},choiceFamilyAmount:dollarsToUnits(30),moneyIsFixed:true}]});
+economyEvent('old_friend',e=>{e.options=e.options.filter(o=>o.title!=='短い挨拶で別れる');e.options=e.options.map(o=>o.title==='また会う約束をする'?economyCashOption({...o,desc:'別の日に食事する約束をし、今回その費用を確保する。'},25):o)});
+economyEvent('crew_loss',e=>{e.options=e.options.filter(o=>o.title!=='一人で静かに過ごす');e.options[0]={title:'仲間と静かに過ごす',desc:'役目から少し離れ、気持ちを整理する。',fx:{stress:-5}}});
+economyEvent('credit_dispute',e=>{e.options=e.options.filter(o=>o.title!=='何も言わない')});
+economyEvent('family_boundary',e=>{e.options=e.options.filter(o=>o.title!=='返事を後回しにする')});
+economyPrice('leadership_test',0,100);economyPrice('leadership_test',1,40);
+economyEvent('leadership_test',e=>{e.options[0].fx.skill=3;e.options[0].maxSkill=95});
+economyPrice('grief_after',0,100);
+const ECONOMY_THEME_COSTS={housing:[[120,80,150,100],[0,35,0,0]],family_requests:[[100,80,150,35],[0,0,0,0]],partner_routine:[[45,0,80,40],[0,0,0,0]],friend_boundaries:[[50,25,0,0],[0,0,0,0]],education:[[120,100,120,90],[0,0,0,0]],paperwork:[[15,20,25,0],[0,0,0,0]],grief:[[0,100,0,0],[0,0,0,0]],fatigue:[[60,100,0,40],[0,0,0,0]],recovery:[[120,90,180,100],[0,0,0,0]],debt_budget:[[60,50,40,20],[0,0,0,0]],ordinary_future:[[100,75,120,0],[0,0,0,0]],community_life:[[45,100,80,35],[0,0,0,0]],reward_fairness:[[25,35,45,40],[0,0,0,0]]};
+for(const [theme,costs]of Object.entries(ECONOMY_THEME_COSTS))for(let i=0;i<4;i++)economyEvent('var_'+theme+'_'+i,e=>{e.options=e.options.map((o,n)=>economyCashOption(o,costs[n][i]));if(theme==='family_requests'&&[0,2].includes(i)){e.options[0].choiceFamilyAmount=dollarsToUnits(costs[0][i]);e.options[0].fx.familyNeedsIndex=-6}});
+for(let i=0;i<4;i++)economyEvent('var_education_'+i,e=>{const eligible=e.when;e.when=s=>(!eligible||eligible(s))&&s.skill<96});
+for(const theme of ['facility_life','kitchen_shared'])for(let i=0;i<4;i++)economyEvent('var_'+theme+'_'+i,e=>{e.options=e.options.map(o=>economyCashOption(o,0));if(theme==='facility_life'){e.text+=' 必要な経費は組織に申請する。';e.options[0].title=['改善を業者に依頼する','別の場所の利用を申請する','清掃を依頼する','日用品の補充を申請する'][i];delete e.options[0].fx.safety;e.options[0].fx.stress=-2}else{e.options[0].title=['食費の追加予算を申請する','負担を減らす予算を申請する','必要な買い物を申請する','皆で食べる場を用意する'][i];delete e.options[0].fx.familyBond;e.options[0].fx.stress=-2}});
+for(let i=0;i<4;i++)economyEvent('var_repair_duties_'+i,e=>{e.options=e.options.map(o=>({...o,fx:{...o.fx},moneyIsFixed:true}));e.options[0].fx.money=dollarsToUnits([80,100,0,70][i]);e.options[1]=economyCashOption(e.options[1],0);if(i===0){e.text+=' 専門家の確認費は組織が負担する。'}if(i===3){e.options[1].title='組織の支援を相談し、外部に頼む'}});
+for(let i=0;i<4;i++)economyEvent('var_care_peers_'+i,e=>{e.options[0]=economyCashOption(e.options[0],[35,0,80,0][i]);delete e.options[1].fx.health;e.options[1].fx.skill=2;if(i===3)e.options[0].title='補助の人員を上役に求める'});
+for(const theme of ['leadership_daily','senior_choices'])for(let i=0;i<4;i++)economyEvent('var_'+theme+'_'+i,e=>{e.options=e.options.map(o=>economyCashOption(o,0));if(theme==='senior_choices'&&i===2)e.options[0]=economyCashOption(e.options[0],45)});
+economyEvent('work_accounts_0',e=>{e.options[0].fx.stress=1});
+
+// Fictional paid opportunities; no operational criminal methods.
+const OPPORTUNITIES=[
+ {key:'shopHelp',id:'opportunity_shop_help',level:1,title:'知人の店の繁忙期を手伝う',text:'店主から休日の応援を頼まれた。合法の短期仕事だが、休む時間は減る。',reward:150,success:.90,failure:.10,injury:0,arrest:0,death:0,stress:5,credit:0,healthLoss:0,pressure:0,months:0,cooldown:6,minStage:0},
+ {key:'homeRepair',id:'opportunity_home_repair',level:2,title:'共同住居の改修をまとめる',text:'業者と住民の希望が食い違っている。組織が工事代を負担し、調整を終えた場合に謝礼を出す。',reward:500,success:.80,failure:.20,injury:0,arrest:0,death:0,stress:8,credit:1,healthLoss:0,pressure:0,months:0,cooldown:12,minStage:1},
+ {key:'shopRebuild',id:'opportunity_shop_rebuild',level:3,title:'組織が出資する店の立て直しを任される',text:'赤字と従業員の対立を抱えた店から相談が来た。出資者である組織への捜査に巻き込まれる危険もある。事業費は依頼側が出す。',reward:1500,success:.65,failure:.25,injury:.08,arrest:.02,death:0,stress:10,credit:2,healthLoss:18,pressure:4,months:3,cooldown:18,minStage:1},
+ {key:'districtReopen',id:'opportunity_district_reopen',level:4,title:'対立が続く地区の事業再開を引き受ける',text:'閉まった事業を再開したいという。地区の対立は収まらず、前任者も負傷している。必要な事業費は依頼側が負担する。',reward:5000,success:.50,failure:.30,injury:.15,arrest:.05,death:0,stress:14,credit:3,healthLoss:25,pressure:10,months:6,cooldown:24,minStage:2},
+ {key:'majorRebuild',id:'large_case',level:5,title:'幹部から大規模事業の再建を託される',text:'複数の責任者と上役の利害がぶつかる大きな仕事だ。必要な資金は組織が出すが、あなた自身も捜査や暴力に巻き込まれ得る。',reward:15000,success:.40,failure:.30,injury:.16,arrest:.12,death:.02,stress:18,credit:5,healthLoss:35,pressure:18,months:9,cooldown:36,minStage:3}
+];
+for(const job of OPPORTUNITIES){
+ JOBS[job.key]={...job,opportunity:true};
+ const template=ordinary(job.id,job.title,job.text,[
+  ['条件を確認して引き受ける','成功した場合だけ報酬。結果と仕事の負担は下記。',{},{contractKind:job.key}],
+  ['断る','この依頼による出費・信用低下・危険の追加なし。',{}]
+ ],{theme:'paid_opportunity',weight:2,when:s=>s.phase==='game'&&!leaveActive()&&!s.lightDuty&&s.month>=3&&(s.boss||((s.career?.stage||0)>=job.minStage))&&s.month>=Math.max(s.contractCooldown||0,s.opportunityAfter?.[job.key]||0)});
+ const index=events.findIndex(e=>e.id===job.id);if(index<0)events.push(template);else events[index]=template;
+}
+// Retire old offers, retaining their definitions/resolvers for already displayed choices.
+for(const id of ['dangerous_contract','lethal_contract','debt_relief_work','debt_front_work']){const e=events.find(e=>e.id===id);if(e)e.when=()=>false}
+function opportunityHTML(j){
+ const stress=clamp(state.stress+j.stress)-state.stress,injury=Math.min(state.health,j.healthLoss),credit=exactCredit(j.credit*1.5);
+ const outcomes=[['成功',j.success,'報酬 '+moneyText(dollarsToUnits(j.reward))+(j.credit?'、信用'+signed(credit):'')],['報酬なしで終了',j.failure,'報酬0、追加の処分なし'],['負傷',j.injury,'報酬0、健康−'+injury],['逮捕',j.arrest,'報酬0、審理へ'],['死亡',j.death,'この人生は終了']].filter(([,p])=>p>0);
+ return '<div class="contract-breakdown"><b>難度 '+j.level+'/5 · 結果はいずれか一つ</b><ul>'+outcomes.map(([name,p,result])=>'<li>'+name+' '+Math.round(p*100)+'%：'+result+'</li>').join('')+'</ul><p>引受時：ストレス＋'+stress+'。'+(j.pressure?'捜査による月間摘発確率を最大'+displayPercent(j.pressure*.03)+'ポイント追加、'+j.months+'か月継続。':'この依頼による摘発・死亡の追加判定なし。')+'</p><p>自己資金の持出しなし。同じ案件の再依頼は引受後'+j.cooldown+'か月以上先。通常の給与・月末の危険判定は別。</p></div>';
+}
+function resolveOpportunityContract(j){
+ // A displayed offer stays valid across role changes; only the accepted-job lock is checked.
+ if(state.month<(state.contractCooldown||0)||state.month<(state.opportunityAfter?.[j.key]||0))return;
+ state.opportunityAfter={...state.opportunityAfter,[j.key]:state.month+j.cooldown};state.contractCooldown=state.month+3;
+ state.arrestPressure=Math.min(100,state.arrestPressure+j.pressure);state.arrestPressureMonths=Math.max(state.arrestPressureMonths,j.months);
+ apply({stress:j.stress});const roll=Math.random();
+ if(roll<j.success){const before=state.money,beforeRank=state.rank;apply({money:dollarsToUnits(j.reward),rank:j.credit*1.5});const paid=state.money-before;state.earned+=paid;addFeed(j.title+'を終え、報酬を受け取った。','choice','受取 '+moneyText(paid)+(j.credit?' · 信用 '+rankChange(state.rank-beforeRank):'')+(paid<dollarsToUnits(j.reward)?'。保有資金の上限に達した。':''));return}
+ if(roll<j.success+j.failure){addFeed(j.title+'はまとまらず、報酬を得られなかった。','choice','報酬0。引受時の負担は残るが、この失敗による処分はない。');return}
+ if(roll<j.success+j.failure+j.injury){apply({health:-j.healthLoss});addFeed('案件の混乱に巻き込まれ、負傷した。','risk','報酬0 · 健康−'+j.healthLoss);if(state.health<=0){state.phase='end';state.endReason='health';addFeed('負傷により、活動を続けられなくなった。','end')}return}
+ if(roll<j.success+j.failure+j.injury+j.arrest){addFeed('案件に関わる捜査で身柄を拘束された。','risk','報酬0。審理へ進む。');beginCustody(j.level===5?'large':'ordinary');return}
+ state.phase='end';state.endReason='violent_job';addFeed('案件をめぐる暴力に巻き込まれ、命を失った。','end','報酬0。');
+}
+// Correct only the misleading quote in an old unresolved case. Keep its original rules.
+if(state.currentEvent?.id==='large_case'&&!state.currentEvent.options?.[0]?.contractKind){
+ state.currentEvent.options[0].desc=state.currentEvent.options[0].desc.replaceAll('US$100,000','US$10,000');save();
+}
+
+document.querySelectorAll('dialog').forEach(dialog=>dialog.addEventListener('close',()=>scheduleProgress()));
 renderRegionOdds();render();if(state.diceSession)resumeDice();if(state.casinoSession)resumeCasino();
 </script></body></html>
 
