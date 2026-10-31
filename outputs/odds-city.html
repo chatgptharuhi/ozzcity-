@@ -1608,6 +1608,7 @@ function compactDecision(e){
  if(e.id==='new_face'&&options.length>3)options=options.filter(o=>o.title!=='食事をおごる');
  if(e.id==='leadership_burden'&&options.length>3)options=options.filter(o=>o.title!=='急がない相談は翌月に回す');
  if(e.id==='quiet_month'&&options.length>3)options=options.filter(o=>o.title!=='普段の役目を続ける');
+  const DROP_DUD={crew_argument:'何もせず様子を見る',public_praise:'短く礼を言う',younger_voice:'今は答えを保留する',senior_table:'今回は聞き役に回る',friend_doubt:'距離を置く',debt_family:'何も話さない',leadership_burden:'仲間に分担を頼む'};if(DROP_DUD[e.id]&&options.length>2)options=options.filter(o=>o.title!==DROP_DUD[e.id]);
  return options.length?{...e,options,choiceCountVersion:1}:e;
 }
 const compactPersonalize=personalizeEvent;
@@ -1646,7 +1647,7 @@ function checkPrisonIncident(){const s=prisonStory(),key=state.custodyStartMonth
  if(state.custodyElapsed<s.nextAt||Math.random()>=.18)return null;
  let pool=s.met?['unrest','protection','visit','transfer',...(s.bribeUsed?[]:['bribe']),...(s.favours?['favour']:[])]:['meet'];
  const fresh=pool.filter(k=>!s.recent.includes(k));if(fresh.length)pool=fresh;
- s.pending=pool[Math.floor(Math.random()*pool.length)];s.recent=[...s.recent,s.pending].slice(-3);s.nextAt=state.custodyElapsed+12;
+ s.pending=pool[Math.floor(Math.random()*pool.length)];s.recent=[...s.recent,s.pending].slice(-3);s.nextAt=state.custodyElapsed+12;s.lastAt=state.custodyElapsed;
  return prisonIncident(s.pending);
 }
 function prisonMenu(view='repeat',allowIncident=true){
@@ -2076,11 +2077,11 @@ beginCustody=function(kind='ordinary',priorRank=state.rank){state.custodyCareer=
 const continuityTime=custodyTime;
 custodyTime=function(months){const imprisoned=state.phase==='prison',s=['custody','prison'].includes(state.phase)?custodyCareer():null;continuityTime(months);if(imprisoned&&s){s.served+=months;if(s.served>=s.nextNews)s.newsPending=true}};
 function custodySeatChance(s=custodyCareer()){const base=s.served>=60?.15:s.served>=36?.35:s.served>=12?.65:.95;return Math.round(Math.max(.05,Math.min(s.served>=60?.85:.95,base+s.oversight*.006-s.delegated*.002))*100)}
-function outsideNewsEvent(){const s=custodyCareer(),name=s.boss?'代行の幹部ミゲル':'後任の責任者';return {id:'prison_outside_news',title:s.served>=60?'長い不在で、組織の顔ぶれが変わった':'外に残した仕事の話が届いた',text:name+'が日々の判断を担い、周囲から頼られるようになった。あなたへの連絡も減っている。今後の付き合いをどうするか。',options:[{title:'仲間とのつながりを保ち、復帰の意思を伝える',desc:'ストレス＋4、家族との関係−2。元の役目へ戻れる見込みを高める。',fx:{stress:4,familyBond:-2},outsideAction:'maintain'},{title:'代行者に裁量を渡し、協力を求める',desc:'ストレス−2。協力を取り付けるが、代行者の発言力も増す。復帰への効果は小さい。',fx:{stress:-2},outsideAction:'delegate'},{title:'今は所内の暮らしを優先する',desc:'ストレス−4。外での立場を守る働きかけはしない。',fx:{stress:-4},outsideAction:'distance'}],prisonMenuVersion:3}}
+function outsideNewsEvent(){const s=custodyCareer(),name=s.boss?'代行の幹部ミゲル':'後任の責任者';return {id:'prison_outside_news',title:s.served>=60?'長い不在で、組織の顔ぶれが変わった':'外に残した仕事の話が届いた',text:(state.prisonStory?.lastAt!=null&&state.custodyElapsed-state.prisonStory.lastAt<12?'この1年は所内で事件があった。':'この1年、所内は大きな揉め事なく過ぎた。')+name+'が日々の判断を担い、周囲から頼られるようになった。あなたへの連絡も減っている。次の1年をどう使うか。',options:[{title:'所内の立場を固める',desc:'所内のつながり＋4、ストレス−2。外での立場を守る働きかけはしない。',fx:{prisonSupport:4,stress:-2},outsideAction:'support'},{title:'外の仕事を守る',desc:'ストレス＋4、家族との関係−2。元の役目へ戻れる見込みを高める。',fx:{stress:4,familyBond:-2},outsideAction:'maintain'},{title:'出所後に備える',desc:'ストレス＋2。学びと作業を積み、元の役目へ戻れる見込みを少し高める。',fx:{stress:2},outsideAction:'prepare'}],prisonMenuVersion:3}}
 const continuityMenu=prisonMenu;
 prisonMenu=function(view='repeat',allowIncident=true){continuityMenu(view,allowIncident);if(state.currentEvent?.id==='prison_quarter'&&custodyCareer().newsPending)state.currentEvent=outsideNewsEvent()};
 const outsideChoose=choose;
-choose=function(index){const e=state.currentEvent,o=e?.options[index];if(!o?.outsideAction)return outsideChoose(index);if(journalBusy||state.phase!=='prison'||!custodyCareer().newsPending)return;const s=custodyCareer();document.getElementById('decisionDialog').close();clearTimeout(progressTimer);apply(o.fx);if(o.outsideAction==='maintain')s.oversight+=12;if(o.outsideAction==='delegate'){s.oversight+=6;s.delegated+=8}s.newsPending=false;s.nextNews=s.served+12;addFeed(o.title+'。','choice',effectText(o.fx)+'。この対応だけでは刑期は進まない。');prisonMenu('repeat',false);save();render();showDecision(true)};
+choose=function(index){const e=state.currentEvent,o=e?.options[index];if(!o?.outsideAction)return outsideChoose(index);if(journalBusy||state.phase!=='prison'||!custodyCareer().newsPending)return;const s=custodyCareer();document.getElementById('decisionDialog').close();clearTimeout(progressTimer);apply(o.fx);if(o.outsideAction==='maintain')s.oversight+=12;if(o.outsideAction==='prepare')s.oversight+=6;if(o.outsideAction==='delegate'){s.oversight+=6;s.delegated+=8}s.newsPending=false;s.nextNews=s.served+12;addFeed(o.title+'。','choice',effectText(o.fx)+'。この対応だけでは刑期は進まない。');prisonMenu('repeat',false);save();render();showDecision(true)};
 const continuityAxis=axisEffectsHTML;
 axisEffectsHTML=function(o){return o.outsideAction?effectRows(o.fx):continuityAxis(o)};
 function custodyReturnPlan(s,outcome){const stage=s.career?.stage||0;let nextStage=stage,boss=false;if(outcome==='retained')boss=s.boss;else if(outcome==='reorganized')nextStage=s.boss?2:Math.max(0,stage-2);else nextStage=s.boss?3:Math.max(0,stage-1);return {outcome,job:s.job,chosen:s.chosen,stage:nextStage,boss,rank:boss?150:Math.min(149,Math.max(0,s.rank-(outcome==='retained'?0:15))),service:s.service,career:s.career?{...s.career,stage:nextStage,months:nextStage===stage?s.career.months:0,reviewAfter:state.month+6}:null,support:Math.max(0,s.support-(outcome==='retained'?0:1))}}
